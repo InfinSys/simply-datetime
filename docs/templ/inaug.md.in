@@ -1,8 +1,11 @@
-# @RESOLVED_SFTW_NAME@
-###### @RESOLVED_SFTW_PUBLISHER@
 
-<br/>
-<br/>
-
-Project Start Date
-### <START_DATE>
+<div>
+    <h1>@RESOLVED_SFTW_NAME@ Library</h1>
+    <h6>@RESOLVED_SFTW_PUBLISHER@ 2023</h6>
+    </br></br>
+    <div align="center">
+        <p>Project Start Date</p>
+        <h3>June 28th, 2024</h3>
+        <h4>Legacy: April of 2023</h4>
+    </div>
+</div>

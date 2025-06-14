@@ -29,11 +29,6 @@ create_template_reference(SFTW_MAIN_BINARY  MAIN_BINARY_NAME)
 create_template_reference(SFTW_META_PREFIX  META_PREFIX)
 
 configure_template(
-    "${CMAKE_SOURCE_DIR}/docs/templ/LICENSE.in"
-    "${CMAKE_SOURCE_DIR}/LICENSE"
-)
-
-configure_template(
     "${CMAKE_SOURCE_DIR}/docs/templ/README.md.in"
     "${CMAKE_SOURCE_DIR}/README.md"
 )
