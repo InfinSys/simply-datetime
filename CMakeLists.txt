@@ -1,15 +1,20 @@
 
-#==========================================
+# Copyright (C) 2023,2025 by Jamon T. Bailey and Infinity Systems, LLC. All rights reserved.
+# Released under the terms of the GNU Affero General Public License version 3.
+
+#=======================================
 #
-#     X-Platform C++ Project Template
+#     Simply Datetime Library -
+#     Build Generation Script
+#
 #     (Root CMakeLists.txt Script)
 #
-#==========================================
+#=======================================
 
 cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
 
-set(PRJ_NAME "XPlatformTemplate")
-set(PRJ_SCOPE "XPTEMP")
+set(PRJ_NAME "Simply_Datetime")
+set(PRJ_SCOPE "SIMPLYDT")
 set(PRJ_C_STANDARD 23)
 set(PRJ_CXX_STANDARD 20)
 

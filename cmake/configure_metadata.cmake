@@ -7,15 +7,14 @@ include(utility/metadata_tools)
 
 set(TEMP_CACHE_VARS "")
 
-# TODO: Personalize software metadata...
-set_metadata(PUBLISHER "<Publisher/Creator>" DESCRIPTION "Product publisher")
-set_metadata(PRODUCT_TYPE "<Executable, Library, or Firmware>" DESCRIPTION "Software type")
-set_metadata(INTERFACE_TYPE "<GUI, CLI, API, or HSI>" DESCRIPTION "Product interface")
-set_metadata(UUID "<Unique identifier>" DESCRIPTION "Product unique identifier")
-set_metadata(LICENSE_TYPE "<MIT, GPLv3, Proprietary, etc.>" DESCRIPTION "Product license type")
-set_metadata(FULL_NAME "<Software name>" DESCRIPTION "Product name")
-set_metadata(SHORT_NAME "<Software shorter name>" DESCRIPTION "Product short name")
-set_metadata(MAIN_BINARY_NAME "demo" DESCRIPTION "Main binary")
+set_metadata(PUBLISHER "Infinity Systems, LLC." DESCRIPTION "Product publisher")
+set_metadata(PRODUCT_TYPE "Library" DESCRIPTION "Software type")
+set_metadata(INTERFACE_TYPE "API" DESCRIPTION "Product interface")
+set_metadata(UUID "ISJTB-CXX-XL20230401-000001" DESCRIPTION "Product unique identifier")
+set_metadata(LICENSE_TYPE "AGPLv3" DESCRIPTION "Product license type")
+set_metadata(FULL_NAME "Simply Datetime" DESCRIPTION "Product name")
+set_metadata(SHORT_NAME "Simply Datetime" DESCRIPTION "Product short name")
+set_metadata(MAIN_BINARY_NAME "simplydt" DESCRIPTION "Main binary")
 set_metadata(META_PREFIX "${PRJ_SCOPE}" DESCRIPTION "Project metadata prefix")
 
 # Temporarily cached variables for code generation

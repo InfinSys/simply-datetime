@@ -9,13 +9,13 @@
 inline void ProjectInfoOut() noexcept
 {
 	std::cout << '\n'
-		<< "\n\tCopyright (C) " << XPTEMP_PUBLISHER << "\n"
-		<< "\n\t[ " << XPTEMP_FULL_NAME << " ]"
+		<< "\n\tCopyright (C) " << SIMPLYDT_PUBLISHER << "\n"
+		<< "\n\t[ " << SIMPLYDT_FULL_NAME << " ]"
 		<< "\n\t-> (Dev CLI executable)\n"
-		<< "\n\tRelease: " << (int)XPTEMP_VERSION_MAJOR
-		<< ", Version: " << (int)XPTEMP_VERSION_MINOR
-		<< ", Patch: " << (int)XPTEMP_VERSION_PATCH
-		<< ", Tweak: " << (int)XPTEMP_VERSION_TWEAK
+		<< "\n\tRelease: " << (int)SIMPLYDT_VERSION_MAJOR
+		<< ", Version: " << (int)SIMPLYDT_VERSION_MINOR
+		<< ", Patch: " << (int)SIMPLYDT_VERSION_PATCH
+		<< ", Tweak: " << (int)SIMPLYDT_VERSION_TWEAK
 		<< "\n\t > CLI Debug Executable"
 		<< "\n\t > C++ 20"
 		<< "\n\n" << std::endl;
