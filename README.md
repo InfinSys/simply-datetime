@@ -1,6 +1,6 @@
 
 <div>
-    <h1>Simply Datetime</h1>
+    <h1>Simply Datetime Library</h1>
     <h5>Infinity Systems, LLC.</h5>
 </div>
 
