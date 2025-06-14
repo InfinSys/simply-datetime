@@ -3,9 +3,9 @@ name: Windows Build
 
 on:
   push:
-    branches: [ "api-style" ]
+    branches: [ "v0.x" ]
   pull_request:
-    branches: [ "api-style" ]
+    branches: [ "v0.x" ]
 
 jobs:
   build:
