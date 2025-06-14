@@ -15,9 +15,9 @@ target_compile_features(
     cxx_std_20
 )
 
-#target_link_libraries(
-#    host_cli_debug
-#
-#    PRIVATE
-#    [Source targets]
-#)
+target_link_libraries(
+    dev_cli_debug
+
+    PRIVATE
+    ${MAIN_BINARY_NAME}
+)

@@ -10,13 +10,9 @@ include(utility/project_tools)
 
 set(MAIN_BINARY_NAME "${${PRJ_SCOPE}_MAIN_BINARY_NAME}")
 
-# TODO: Handle source targets...
+# Simply Datetime Library Target
+add_library("${MAIN_BINARY_NAME}" STATIC)
 
-# Example: primary target
-set(ENTRY_POINT_SRC main.cpp)
-add_executable(${MAIN_BINARY_NAME} ${ENTRY_POINT_SRC})
-
-# Example: include directories
 target_include_directories(
     ${MAIN_BINARY_NAME}
 
@@ -24,7 +20,7 @@ target_include_directories(
     ${PRJ_INCLUDE_DIRS}
 )
 
-# Example: project-wide C++ standard
+# Set library-wide C++ standard
 use_project_cxx_standard(GLOBAL_CXX_OPTIONS INTERFACE)
 
 target_link_options(
@@ -34,7 +30,7 @@ target_link_options(
     ${GLOBAL_LINK_FLAGS}
 )
 
-# Example: add 'main.cpp' to library
+# NOTE: Subdirs go here; remove call below...
 target_sources(
     ${MAIN_BINARY_NAME}
 
