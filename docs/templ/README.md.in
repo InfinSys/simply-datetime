@@ -1,7 +1,10 @@
-# @RESOLVED_SFTW_NAME@
-##### @RESOLVED_SFTW_PUBLISHER@
 
-<br/>
+<div>
+    <h1>@RESOLVED_SFTW_NAME@</h1>
+    <h5>@RESOLVED_SFTW_PUBLISHER@</h5>
+</div>
+
+</br>
 
 ![Static Badge](https://img.shields.io/badge/version-@CMAKE_PROJECT_VERSION_MAJOR@.@CMAKE_PROJECT_VERSION_MINOR@.@CMAKE_PROJECT_VERSION_PATCH@.@CMAKE_PROJECT_VERSION_TWEAK@-blue)
 
@@ -13,4 +16,6 @@
 
 <br/>
 
-### ( ***Nothing here yet, come back soon!*** )
+<div align="center">
+    <h3>( <strong><em>Nothing here yet, come back soon!</em></strong> )</h3>
+</div>
