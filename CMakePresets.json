@@ -12,7 +12,8 @@
                 "CMAKE_C_COMPILER": "cl.exe",
                 "CMAKE_CXX_COMPILER": "cl.exe",
                 "CMAKE_ASM_COMPILER": "cl.exe",
-                "SIMPLYDT_CLI_DEBUG": "ON"
+                "SIMPLYDT_CLI_DEBUG": "ON",
+                "SIMPLYDT_FORMAT": "ON"
             }
         },
         {
