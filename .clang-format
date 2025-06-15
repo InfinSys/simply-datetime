@@ -115,7 +115,7 @@ LambdaBodyIndentation: Signature
 
 MaxEmptyLinesToKeep: 2
 
-NamespaceIndentation: Inner
+NamespaceIndentation: All
 
 PackConstructorInitializers: BinPack
 PointerAlignment: Left
