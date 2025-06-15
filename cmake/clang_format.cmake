@@ -3,7 +3,6 @@
 #     CODEBASE FORMATTING MODULE (Clang-Format)
 #====================================================
 
-# TODO: Configure which directories clang-format visits recursively...
 set(
     FORMAT_SEARCH_DIRS
     "${CMAKE_SOURCE_DIR}/lib"
