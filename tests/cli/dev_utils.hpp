@@ -15,8 +15,7 @@ inline void ProjectInfoOut() noexcept
               << "\n\tRelease: " << (int)SIMPLYDT_VERSION_MAJOR
               << ", Version: " << (int)SIMPLYDT_VERSION_MINOR
               << ", Patch: " << (int)SIMPLYDT_VERSION_PATCH
-              << ", Tweak: " << (int)SIMPLYDT_VERSION_TWEAK
-              << "\n\t > CLI Debug Executable"
+              << ", Tweak: " << (int)SIMPLYDT_VERSION_TWEAK << "\n\t > CLI Debug Executable"
               << "\n\t > C++ 20"
               << "\n\n"
               << std::endl;
