@@ -1,2 +1,5 @@
 
-int doNothing() { return 0; }
+int doNothing()
+{
+    return 0;
+}

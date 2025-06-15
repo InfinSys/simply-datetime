@@ -1,7 +1,6 @@
 
 #include "dev_utils.hpp"
 
-
 /* /// \\\ /// \\\ /// | TO-DO | \\\ /// \\\ /// \\\ *\
 *
 * ~ CLI Debug Executable Notes / TO-DO List ~
@@ -13,10 +12,10 @@
 
 int main(int argc, char* argv[])
 {
-	ProjectInfoOut();
+    ProjectInfoOut();
 
-	//\\//
-	//
+    //\\//
+    //
 
-	return 0;
+    return 0;
 }
