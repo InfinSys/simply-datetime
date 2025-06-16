@@ -9,7 +9,7 @@
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
-#include "simplydt/common/stl_chrono_defs.hpp"
+#include "simplydt/common/stl_chrono_utils.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     //\\//
     using namespace simplydt;
 
-    stl::SysTimePoint test = std::chrono::system_clock::now();
+    stl::SysTimePoint test = stl::nowTimePoint();
 
     std::cout << test << std::endl;
     //
