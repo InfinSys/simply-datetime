@@ -40,13 +40,31 @@ namespace simplydt::stl
      * @brief
      * System clock time point.
      */
-    using SysTimePoint = std::chrono::time_point<SystemClock>;
+    using TimePoint = std::chrono::time_point<SystemClock>;
 
     /*!
      * @brief
      * System clock duration.
      */
-    using SysDuration = SystemClock::duration;
+    using TimeDuration = SystemClock::duration;
+
+    /*!
+     * @brief
+     * Unambiguous numerical calendar timestamp.
+     *
+     * @details
+     * The `std::time_t` type is implementation-defined.
+     * The way this type is used in Simply Datetime
+     * assumes it measures seconds elapsed since the Unix
+     * epoch (January 1, 1970 00:00:00.000).
+     */
+    using UnixTimestamp = std::time_t;
+
+    /*!
+     * @brief
+     * Broken-down calendar components.
+     */
+    using CalendarDateTime = std::tm;
 
 } // namespace simplydt::stl
 
