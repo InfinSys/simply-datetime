@@ -27,15 +27,15 @@ namespace simplydt::stl
      * @return
      * Current system clock time point
      */
-    [[nodiscard]] inline SysTimePoint nowTimePoint() noexcept
+    [[nodiscard]] inline TimePoint nowTimePoint() noexcept
     {
         return std::chrono::system_clock::now();
     }
 
     /*!
      * @brief
-     * Populate calendar structure using a system clock
-     * timestamp.
+     * Populate calendar component structure using a system
+     * clock timestamp.
      *
      * @details
      * Wraps platform-dependent call to interpret a system
@@ -47,8 +47,8 @@ namespace simplydt::stl
      * @return
      * True on success
      */
-    [[nodiscard]] inline bool TimestampToSystemLocalTime(
-        const std::time_t* timestamp, std::tm* out_tm
+    [[nodiscard]] inline bool timestampToLocalDateTime(
+        const UnixTimestamp* timestamp, CalendarDateTime* out_tm
     )
     {
 #if defined(_WIN32) || defined(_WIN64)
