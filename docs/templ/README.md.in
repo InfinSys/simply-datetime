@@ -6,7 +6,7 @@
 
 </br>
 
-![Static Badge](https://img.shields.io/badge/version-@CMAKE_PROJECT_VERSION_MAJOR@.@CMAKE_PROJECT_VERSION_MINOR@.@CMAKE_PROJECT_VERSION_PATCH@-blue)
+[![Static Badge](https://img.shields.io/badge/version-@CMAKE_PROJECT_VERSION_MAJOR@.@CMAKE_PROJECT_VERSION_MINOR@.@CMAKE_PROJECT_VERSION_PATCH@-blue)](https://github.com/InfinSys/simply-datetime/releases)
 
 </br>
 

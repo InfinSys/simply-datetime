@@ -1,7 +1,6 @@
 
 #include "dev_utils.hpp"
 
-
 /* /// \\\ /// \\\ /// | TO-DO | \\\ /// \\\ /// \\\ *\
 *
 * ~ CLI Debug Executable Notes / TO-DO List ~
@@ -10,13 +9,15 @@
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
+#include "simplydt/common/stl_chrono_utils.hpp"
 
 int main(int argc, char* argv[])
 {
-	ProjectInfoOut();
+    ProjectInfoOut();
 
-	//\\//
-	//
+    //\\//
+    using namespace simplydt;
+    //
 
-	return 0;
+    return 0;
 }
