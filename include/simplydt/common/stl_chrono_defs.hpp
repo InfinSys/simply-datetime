@@ -8,11 +8,11 @@
  * @file stl_chrono_defs.hpp
  *
  * @brief
- * STL chrono type aliases.
+ * STL date and time library aliases.
  *
  * @details
- * Type aliases of Standard Template Library chronological
- * header symbols.
+ * Type aliases for Standard Template Library date and time
+ * symbols.
  */
 
 
@@ -32,21 +32,21 @@ namespace simplydt::stl
 
     /*!
      * @brief
-     * System clock wrapper.
+     * System wall-clock wrapper.
      */
     using SystemClock = std::chrono::system_clock;
 
     /*!
      * @brief
-     * System clock time point.
+     * Point in time derived from system clock.
      */
-    using TimePoint = std::chrono::time_point<SystemClock>;
+    using SystemTimePoint = std::chrono::time_point<SystemClock>;
 
     /*!
      * @brief
-     * System clock duration.
+     * Duration measured using system clock.
      */
-    using TimeDuration = SystemClock::duration;
+    using SystemDuration = SystemClock::duration;
 
     /*!
      * @brief

@@ -8,7 +8,7 @@
  * @file stl_chrono_utils.hpp
  *
  * @brief
- * STL chrono header utilities.
+ * STL date and time library utilities.
  */
 
 
@@ -22,12 +22,12 @@ namespace simplydt::stl
 
     /*!
      * @brief
-     * Get system clock timestamp.
+     * Get system wall-clock timestamp.
      *
      * @return
      * Current system clock time point
      */
-    [[nodiscard]] inline TimePoint nowTimePoint() noexcept
+    [[nodiscard]] inline SystemTimePoint nowSystemTime() noexcept
     {
         return SystemClock::now();
     }
