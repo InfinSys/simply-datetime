@@ -63,7 +63,7 @@ namespace simplydt::stl
     /*!
      * @brief
      * Broken-down calendar components.
-     * 
+     *
      * @details
      * This type is a C-style struct that stores individual
      * components of a calendar time point and contains two
