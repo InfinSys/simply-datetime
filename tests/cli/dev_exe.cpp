@@ -17,10 +17,6 @@ int main(int argc, char* argv[])
 
     //\\//
     using namespace simplydt;
-
-    stl::TimePoint test = stl::nowTimePoint();
-
-    std::cout << test << std::endl;
     //
 
     return 0;
