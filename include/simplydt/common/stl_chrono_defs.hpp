@@ -63,6 +63,13 @@ namespace simplydt::stl
     /*!
      * @brief
      * Broken-down calendar components.
+     * 
+     * @details
+     * This type is a C-style struct that stores individual
+     * components of a calendar time point and contains two
+     * key fields to be mindful of: `tm_mon` which measures
+     * the number of months ***since*** January, and `tm_year`
+     * which measures the number of years ***since*** 1900.
      */
     using CalendarDateTime = std::tm;
 
