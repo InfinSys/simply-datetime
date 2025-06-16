@@ -29,7 +29,7 @@ namespace simplydt::stl
      */
     [[nodiscard]] inline TimePoint nowTimePoint() noexcept
     {
-        return std::chrono::system_clock::now();
+        return SystemClock::now();
     }
 
     /*!
