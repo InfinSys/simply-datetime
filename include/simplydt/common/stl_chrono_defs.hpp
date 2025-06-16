@@ -25,7 +25,7 @@
  * @namespace simplydt::stl
  *
  * @brief
- * Simply Datetime C++ Standard Template Library support.
+ * C++ Standard Template Library support.
  */
 namespace simplydt::stl
 {
