@@ -9,6 +9,9 @@
  *
  * @brief
  * Gregorian calendar date flags.
+ *
+ * @details
+ * Gregorian calendar date characteristic flags.
  */
 
 #ifndef SIMPLYDT_LIB_GREGORIAN_DATE_FLAGS_H_
