@@ -23,15 +23,15 @@ namespace simplydt::utc
 {
 
     /*!
-    * @brief
-    * Coordinated Universal Time flags.
-    * 
-    * @details
-    * These flags describe structural characteristics
-    * of a Coordinated Universal Time point that can
-    * be derived from the Coordinated Universal Time
-    * system independently.
-    */
+     * @brief
+     * Coordinated Universal Time flags.
+     *
+     * @details
+     * These flags describe structural characteristics
+     * of a Coordinated Universal Time point that can
+     * be derived from the Coordinated Universal Time
+     * system independently.
+     */
     enum class TimeFlag : uint32_t {
         NONE          = 0,       ///< No time flags
         INVALID       = 1 << 1,  ///< Invalid time
@@ -111,6 +111,6 @@ namespace simplydt::utc
         return lhs;
     }
 
-}
+} // namespace simplydt::utc
 
 #endif // SIMPLYDT_LIB_UTC_TIME_FLAGS_H_
