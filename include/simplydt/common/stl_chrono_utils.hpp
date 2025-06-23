@@ -27,7 +27,7 @@ namespace simplydt::stl
      * @return
      * Current system clock time point
      */
-    [[nodiscard]] inline SystemTimePoint nowSystemTime() noexcept
+    [[nodiscard]] inline SystemTimePoint getNowSystemTime() noexcept
     {
         return SystemClock::now();
     }
@@ -47,7 +47,7 @@ namespace simplydt::stl
      * @return
      * True on success
      */
-    [[nodiscard]] inline bool timestampToLocalDateTime(
+    [[nodiscard]] inline bool deriveLocalDateTimeFromTimestamp(
         const UnixTimestamp* timestamp, CalendarDateTime* out_tm
     )
     {
