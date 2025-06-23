@@ -20,6 +20,7 @@
 #define SIMPLYDT_LIB_STL_CHRONO_ALIASES_H_
 
 #include <chrono>
+#include <cstdint>
 
 /*!
  * @namespace simplydt::stl
@@ -58,7 +59,7 @@ namespace simplydt::stl
      * assumes it measures seconds elapsed since the Unix
      * epoch (January 1, 1970 00:00:00.000).
      */
-    using UnixTimestamp = std::time_t;
+    using UnixTimestamp = int64_t;
 
     /*!
      * @brief
