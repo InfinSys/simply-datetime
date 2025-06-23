@@ -45,7 +45,7 @@ namespace simplydt::stl
 
     /*!
      * @brief
-     * Duration measured using system clock.
+     * Duration of time measured using system clock.
      */
     using SystemDuration = SystemClock::duration;
 
