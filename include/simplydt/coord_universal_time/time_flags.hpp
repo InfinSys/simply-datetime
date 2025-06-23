@@ -45,9 +45,9 @@ namespace simplydt::utc
         MIDDLE_OF_DAY = 1 << 26, ///< Mid hour of day (12:00:00 - 12:59:59)
         END_OF_DAY    = 1 << 27, ///< Final hour of day (23:00:00 - 23:59:59)
 
-        EARLY_HOUR    = 1 << 28, ///< First 25 minutes of the hour (XX:00:00 - XX:24:59)
-        MID_HOUR      = 1 << 29, ///< Median 10 minutes of the hour (XX:25:00 - XX:34:59)
-        LATE_HOUR     = 1 << 30  ///< Final 25 minutes of the hour (XX:35:00 - XX:59:59)
+        EARLY_HOUR    = 1 << 28, ///< First 20 minutes of the hour (XX:00:00 - XX:19:59)
+        MID_HOUR      = 1 << 29, ///< Median 20 minutes of the hour (XX:20:00 - XX:39:59)
+        LATE_HOUR     = 1 << 30  ///< Final 20 minutes of the hour (XX:40:00 - XX:59:59)
     };
 
     /*!
