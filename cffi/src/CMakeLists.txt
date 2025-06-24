@@ -3,7 +3,7 @@
 #     /cffi/src Directory Script
 #=====================================
 
-set(CFFI_BINARY_NAME "${MAIN_BINARY_NAME}_c")
+set(CFFI_BINARY_NAME "${${PRJ_SCOPE}_MAIN_BINARY_NAME}_c")
 
 # Simply Datetime C Library Target
 add_library("${CFFI_BINARY_NAME}" SHARED)
