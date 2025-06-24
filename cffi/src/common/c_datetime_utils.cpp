@@ -7,7 +7,7 @@
 #include "simplydt/common/c_datetime_utils.h"
 #include "simplydt/common/stl_chrono_utils.hpp"
 
-simplydt_UnixTimestamp simplydt_get_now_system_time_secs()
+simplydt_UnixTimestamp simplydt_get_now_system_time_secs(void)
 {
     return static_cast<simplydt_UnixTimestamp>(
         std::chrono::duration_cast<std::chrono::seconds>(
