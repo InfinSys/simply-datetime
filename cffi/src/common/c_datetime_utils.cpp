@@ -12,6 +12,7 @@ simplydt_UnixTimestamp simplydt_get_now_system_time_secs(void)
     return static_cast<simplydt_UnixTimestamp>(
         std::chrono::duration_cast<std::chrono::seconds>(
             simplydt::stl::SystemClock::now().time_since_epoch()
-        ).count()
+        )
+            .count()
     );
 }

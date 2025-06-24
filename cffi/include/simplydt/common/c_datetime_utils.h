@@ -23,13 +23,13 @@ extern "C"
 #endif
 
 /*!
-* @brief
-* Get system wall-clock timestamp in seconds
-* since epoch.
-*
-* @return
-* Current system clock time point in seconds
-*/
+ * @brief
+ * Get system wall-clock timestamp in seconds
+ * since epoch.
+ *
+ * @return
+ * Current system clock time point in seconds
+ */
 simplydt_UnixTimestamp simplydt_get_now_system_time_secs(void);
 
 #ifdef __cplusplus
