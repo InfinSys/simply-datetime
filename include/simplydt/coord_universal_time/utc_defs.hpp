@@ -21,7 +21,7 @@
  * @namespace simplydt::utc
  *
  * @brief
- * Proleptic Julian calendar system.
+ * Standard Coordinated Universal Time system.
  */
 namespace simplydt::utc
 {

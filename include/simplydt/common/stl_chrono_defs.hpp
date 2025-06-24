@@ -20,6 +20,7 @@
 #define SIMPLYDT_LIB_STL_CHRONO_ALIASES_H_
 
 #include <chrono>
+#include <cstdint>
 
 /*!
  * @namespace simplydt::stl
@@ -32,7 +33,7 @@ namespace simplydt::stl
 
     /*!
      * @brief
-     * System wall-clock wrapper.
+     * System-wide real time wall-clock wrapper.
      */
     using SystemClock = std::chrono::system_clock;
 
@@ -44,25 +45,27 @@ namespace simplydt::stl
 
     /*!
      * @brief
-     * Duration measured using system clock.
+     * Interval of time.
      */
     using SystemDuration = SystemClock::duration;
 
     /*!
      * @brief
-     * Unambiguous numerical calendar timestamp.
+     * Time point in seconds since Unix epoch.
      *
      * @details
      * The `std::time_t` type is implementation-defined.
-     * The way this type is used in Simply Datetime
-     * assumes it measures seconds elapsed since the Unix
-     * epoch (January 1, 1970 00:00:00.000).
+     * Simply Datetime does not use this type because it
+     * needs guarantee that the type representing seconds
+     * since the Unix epoch (January 1, 1970 00:00:00.000)
+     * is a 64-bit signed integer. This is to mitigate the
+     * '2038' year overflow.
      */
-    using UnixTimestamp = std::time_t;
+    using UnixTimestamp = int64_t;
 
     /*!
      * @brief
-     * Broken-down calendar components.
+     * Broken-down calendar component struct.
      *
      * @details
      * This type is a C-style struct that stores individual

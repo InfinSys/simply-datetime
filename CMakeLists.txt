@@ -50,6 +50,7 @@ set(UNIT_TESTING OFF)
 set(BENCHMARKING OFF)
 
 set(FORMATTING OFF)
+set(CFFI_BUILD OFF)
 # Do not modify the variables above
 
 if(DEFINED CACHE{${PRJ_SCOPE}_CLI_DEBUG} AND ${PRJ_SCOPE}_CLI_DEBUG)
@@ -70,6 +71,11 @@ if(DEFINED CACHE{${PRJ_SCOPE}_BENCHMARK} AND ${PRJ_SCOPE}_BENCHMARK)
     add_subdirectory(3rdparty/benchmark)
 endif()
 
+if(DEFINED CACHE{${PRJ_SCOPE}_C_LIB} AND ${PRJ_SCOPE}_C_LIB)
+    message(STATUS "${PRJ_NAME} C interface build - enabled")
+    set(CFFI_BUILD ON)
+endif()
+
 if(DEFINED CACHE{${PRJ_SCOPE}_FORMAT} AND ${PRJ_SCOPE}_FORMAT)
     find_program(CLANG_FORMAT_EXECUTABLE clang-format)
 
@@ -88,6 +94,11 @@ include_directories(${PRJ_INCLUDE_DIRS})
 # Sources
 add_subdirectory(lib)
 add_subdirectory(src)
+
+# C Interface Source
+if(CFFI_BUILD)
+    add_subdirectory(cffi)
+endif()
 
 # Testing
 add_subdirectory(tests)
