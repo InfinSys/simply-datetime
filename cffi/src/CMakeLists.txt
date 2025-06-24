@@ -3,32 +3,55 @@
 #     /cffi/src Directory Script
 #=====================================
 
-set(CFFI_BINARY_NAME "${${PRJ_SCOPE}_MAIN_BINARY_NAME}_c")
+set(ORIGINAL_BINARY_NAME "${${PRJ_SCOPE}_MAIN_BINARY_NAME}")
 
-# Simply Datetime C Library Target
-add_library("${CFFI_BINARY_NAME}" SHARED)
+set(STATIC_CFFI_BINARY_NAME "${ORIGINAL_BINARY_NAME}_c")
+set(SHARED_CFFI_BINARY_NAME "${ORIGINAL_BINARY_NAME}_c_s")
+
+# Simply Datetime C Library Target Interface
+add_library(CFFI_LIBRARY_INTERFACE INTERFACE)
 
 target_include_directories(
-    ${CFFI_BINARY_NAME}
+    CFFI_LIBRARY_INTERFACE
 
-    PUBLIC
+    INTERFACE
     ${PRJ_INCLUDE_DIRS}
     ${PRJ_CFFI_INCLUDE_DIRS}
 )
 
 target_link_libraries(
-    ${CFFI_BINARY_NAME}
+    CFFI_LIBRARY_INTERFACE
 
-    PUBLIC
-    ${MAIN_BINARY_NAME}
+    INTERFACE
+    ${ORIGINAL_BINARY_NAME}
 )
+
+target_link_libraries(
+    CFFI_LIBRARY_INTERFACE
+
+    INTERFACE
+    GLOBAL_CXX_OPTIONS
+)
+
+# Static Simply Datetime C Interface Target
+add_library("${STATIC_CFFI_BINARY_NAME}" STATIC)
+
+# Shared Simply Datetime C Interface Target
+add_library("${SHARED_CFFI_BINARY_NAME}" SHARED)
 
 # Sources
 add_subdirectory(common)
 
 target_link_libraries(
-    ${CFFI_BINARY_NAME}
+    ${STATIC_CFFI_BINARY_NAME}
 
     PUBLIC
-    GLOBAL_CXX_OPTIONS
+    CFFI_LIBRARY_INTERFACE
+)
+
+target_link_libraries(
+    ${SHARED_CFFI_BINARY_NAME}
+
+    PUBLIC
+    CFFI_LIBRARY_INTERFACE
 )

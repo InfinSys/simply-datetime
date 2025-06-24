@@ -4,7 +4,7 @@
 #============================================
 
 target_sources(
-    ${CFFI_BINARY_NAME}
+    CFFI_LIBRARY_INTERFACE
 
     PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/c_datetime_utils.cpp"
