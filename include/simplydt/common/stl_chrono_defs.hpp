@@ -33,7 +33,7 @@ namespace simplydt::stl
 
     /*!
      * @brief
-     * System wall-clock wrapper.
+     * System-wide real time wall-clock wrapper.
      */
     using SystemClock = std::chrono::system_clock;
 
@@ -45,13 +45,13 @@ namespace simplydt::stl
 
     /*!
      * @brief
-     * Duration of time measured using system clock.
+     * Interval of time.
      */
     using SystemDuration = SystemClock::duration;
 
     /*!
      * @brief
-     * Seconds since the Unix epoch.
+     * Time point in seconds since Unix epoch.
      *
      * @details
      * The `std::time_t` type is implementation-defined.
