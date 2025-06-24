@@ -65,7 +65,7 @@ namespace simplydt::stl
 
     /*!
      * @brief
-     * Broken-down calendar component struct.
+     * Broken-down calendar datetime component struct.
      *
      * @details
      * This type is a C-style struct that stores individual
