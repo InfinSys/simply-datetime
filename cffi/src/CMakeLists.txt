@@ -33,14 +33,14 @@ target_link_libraries(
     GLOBAL_CXX_OPTIONS
 )
 
+# Sources
+add_subdirectory(common)
+
 # Static Simply Datetime C Interface Target
 add_library("${STATIC_CFFI_BINARY_NAME}" STATIC)
 
 # Shared Simply Datetime C Interface Target
 add_library("${SHARED_CFFI_BINARY_NAME}" SHARED)
-
-# Sources
-add_subdirectory(common)
 
 target_link_libraries(
     ${STATIC_CFFI_BINARY_NAME}
