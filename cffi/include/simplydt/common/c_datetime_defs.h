@@ -23,7 +23,7 @@
  * Seconds since the Unix epoch.
  *
  * @note
- * This type is the C representation of
+ * This type is the C counterpart of
  * `simplydt::stl::UnixTimestamp` type.
  *
  * @details
@@ -37,7 +37,7 @@ typedef int64_t simplydt_UnixTimestamp;
  * Broken-down calendar component struct.
  *
  * @note
- * This type is the C representation of
+ * This type is the C counterpart of
  * `simplydt::stl::CalendarDateTime` type.
  */
 typedef tm simplydt_CalendarDateTime;
