@@ -10,14 +10,15 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "problemMatcher": ["$msCompile", "$gcc"],
             "group": "build",
 
             "windows": {
                 "args": ["--preset", "win32-x64-Debug"],
+                "problemMatcher": ["$msCompile"]
             },
             "linux": {
                 "args": ["--preset", "linux-x64-Debug"],
+                "problemMatcher": ["$gcc"]
             },
         },
 
