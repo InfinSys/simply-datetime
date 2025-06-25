@@ -27,13 +27,8 @@ target_link_options(
     ${GLOBAL_LINK_FLAGS}
 )
 
-# NOTE: Subdirs go here; remove call below...
-target_sources(
-    ${MAIN_BINARY_NAME}
-
-    PUBLIC
-    "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
-)
+# Sources
+add_subdirectory(gregorian_calendar)
 
 target_link_libraries(
     ${MAIN_BINARY_NAME}
