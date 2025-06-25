@@ -14,9 +14,7 @@
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
-#include "simplydt/coord_universal_time/utc_defs.hpp"
-#include "simplydt/gregorian_calendar/gregorian_defs.hpp"
-#include "simplydt/julian_calendar/julian_defs.hpp"
+#include "simplydt/gregorian_calendar/gregorian_date.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -24,6 +22,10 @@ int main(int argc, char* argv[])
 
     //\\//
     using namespace simplydt;
+
+    simplydt::gregorian::Date sample{ 2'001, 2, 23 };
+
+    std::cout << sample << std::endl;
     //
 
     return 0;
