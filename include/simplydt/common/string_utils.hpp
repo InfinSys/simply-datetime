@@ -38,7 +38,7 @@ namespace simplydt
     [[nodiscard]] inline std::string toDoubleDigitStr(const Int_T integer) noexcept
     {
         if (integer < 10)
-            return (std::string{ 0 } + std::to_string(integer));
+            return (std::string{ "0" } + std::to_string(integer));
         else
             return std::to_string(integer % 100);
     }
