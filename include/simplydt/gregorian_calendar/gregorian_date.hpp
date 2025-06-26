@@ -14,8 +14,8 @@
 #ifndef SIMPLYDT_LIB_GREGORIAN_DATE_STRUCT_H_
 #define SIMPLYDT_LIB_GREGORIAN_DATE_STRUCT_H_
 
-#include "simplydt/gregorian_calendar/gregorian_defs.hpp"
 #include "simplydt/common/string_utils.hpp"
+#include "simplydt/gregorian_calendar/gregorian_defs.hpp"
 #include <ostream>
 
 namespace simplydt::gregorian
@@ -59,14 +59,32 @@ namespace simplydt::gregorian
          * @brief
          * Default Gregorian calendar date.
          */
-        static constexpr uint32_t DEFAULT_DATE = ((1'970 * YEAR_FACTOR) + 101);
+        static constexpr Underlying_T DEFAULT_DATE = ((1'970 * YEAR_FACTOR) + 101);
 
+        /*!
+         * @brief
+         * Construct Gregorian date using year, month,
+         * and day values.
+         */
         Date(const YearInt_T year, const uint8_t month, const uint8_t day) noexcept;
 
+        /*!
+         * @brief
+         * Construct Gregorian date using year and month
+         * values; assume first of month.
+         */
         Date(const YearInt_T year, const uint8_t month) noexcept;
 
+        /*!
+         * @brief
+         * Construct Gregorian date from another.
+         */
         Date(const Date& date) noexcept;
 
+        /*!
+         * @brief
+         * Construct default Gregorian date.
+         */
         Date() noexcept;
 
         ~Date() noexcept = default;
@@ -76,6 +94,28 @@ namespace simplydt::gregorian
             os << date.toStr();
             return os;
         }
+
+        /*! @brief Evaluate equivalence of Gregorian dates. */
+        [[nodiscard]] bool operator==(const Date date) const noexcept;
+
+        /*! @brief Determine if left-hand side is sequentially before right-hand side. */
+        [[nodiscard]] bool operator<(const Date date) const noexcept;
+
+        /*! @brief Determine if left-hand side is sequentially after right-hand side. */
+        [[nodiscard]] bool operator>(const Date date) const noexcept;
+
+        [[nodiscard]] bool operator<=(const Date date) const noexcept;
+
+        [[nodiscard]] bool operator>=(const Date date) const noexcept;
+
+        /*!
+         * @brief
+         * Returns requested date component.
+         *
+         * @return
+         * Individual date component value
+         */
+        [[nodiscard]] uint16_t operator[](const CalendarComponent component) const noexcept;
 
         /*!
          * @brief
@@ -124,6 +164,19 @@ namespace simplydt::gregorian
 
         /*!
          * @brief
+         * Returns requested Gregorian date component.
+         *
+         * @details
+         * If the requested calendar component is not a
+         * date component the method returns 0.
+         *
+         * @return
+         * Individual date component value
+         */
+        [[nodiscard]] uint16_t getComponent(const CalendarComponent component) const noexcept;
+
+        /*!
+         * @brief
          * Compose string representation of Gregorian
          * calendar date.
          *
@@ -135,6 +188,7 @@ namespace simplydt::gregorian
       private:
         Underlying_T date; ///< Calendar date
 
+        /*! @brief Store Gregorian date in underlying variable. */
         void assumeGregorianDate(
             const YearInt_T& year, const uint8_t& month, const uint8_t& day
         ) noexcept;
