@@ -29,9 +29,14 @@ namespace simplydt::gregorian
      * This type is meant to serve as a broken-down
      * form of Gregorian calendar dates and only
      * serves this purpose. This type does not
-     * validate the Gregorian dates it is constructed
-     * with, it is only a vehicle for Gregorian Date
-     * values.
+     * validate the date values it is constructed
+     * with beyond disregarding nonsensical values.
+     * Such values are the kind that could obviously
+     * never be a date (i.e, August 32nd, 2015).
+     * However, keep in mind that just because this
+     * type accepts a date you provide does not
+     * necessarily imply that date exists on the
+     * real-world calendar.
      */
     class Date {
 
@@ -142,7 +147,7 @@ namespace simplydt::gregorian
          * @return
          * Month literal
          */
-        [[nodiscard]] const char* monthLiteral() const noexcept;
+        [[nodiscard]] std::string monthLiteral() const noexcept;
 
         /*!
          * @brief
@@ -151,7 +156,7 @@ namespace simplydt::gregorian
          * @return
          * Abbreviated month literal
          */
-        [[nodiscard]] std::string_view monthAbbreviation() const noexcept;
+        [[nodiscard]] std::string monthAbbreviation() const noexcept;
 
         /*!
          * @brief

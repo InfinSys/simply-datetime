@@ -84,18 +84,18 @@ uint8_t simplydt::gregorian::Date::month() const noexcept
     return static_cast<uint8_t>((this->date % YEAR_FACTOR) / MONTH_FACTOR);
 }
 
-const char* simplydt::gregorian::Date::monthLiteral() const noexcept
+std::string simplydt::gregorian::Date::monthLiteral() const noexcept
 {
     const uint8_t monthIndex = this->month() - 1;
 
     return Months[monthIndex];
 }
 
-std::string_view simplydt::gregorian::Date::monthAbbreviation() const noexcept
+std::string simplydt::gregorian::Date::monthAbbreviation() const noexcept
 {
     const uint8_t monthIndex = this->month() - 1;
 
-    return MonthAbbrevs[monthIndex];
+    return std::string{ MonthAbbrevs[monthIndex] };
 }
 
 uint8_t simplydt::gregorian::Date::day() const noexcept
