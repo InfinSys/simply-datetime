@@ -32,12 +32,43 @@ simplydt::gregorian::Date::Date() noexcept : date{ DEFAULT_DATE }
     //
 }
 
-
 //	simplydt::gregorian::Date : STATIC
 //	simplydt::gregorian::Date : STATIC END!
 
 
 //	simplydt::gregorian::Date : OPERATOR
+
+bool simplydt::gregorian::Date::operator==(const Date date) const noexcept
+{
+    return this->date == date.date;
+}
+
+bool simplydt::gregorian::Date::operator<(const Date date) const noexcept
+{
+    return this->date < date.date;
+}
+
+bool simplydt::gregorian::Date::operator>(const Date date) const noexcept
+{
+    return this->date > date.date;
+}
+
+bool simplydt::gregorian::Date::operator<=(const Date date) const noexcept
+{
+    return this->date <= date.date;
+}
+
+bool simplydt::gregorian::Date::operator>=(const Date date) const noexcept
+{
+    return this->date >= date.date;
+}
+
+uint16_t simplydt::gregorian::Date::operator[](const CalendarComponent component
+) const noexcept
+{
+    return this->getComponent(component);
+}
+
 //	simplydt::gregorian::Date : OPERATOR END!
 
 
@@ -72,13 +103,30 @@ uint8_t simplydt::gregorian::Date::day() const noexcept
     return static_cast<uint8_t>((this->date % YEAR_FACTOR) % MONTH_FACTOR);
 }
 
+uint16_t simplydt::gregorian::Date::getComponent(const CalendarComponent component
+) const noexcept
+{
+    switch (component) {
+    case CalendarComponent::YEAR:
+        return static_cast<uint16_t>(this->year());
+
+    case CalendarComponent::MONTH:
+        return static_cast<uint16_t>(this->month());
+
+    case CalendarComponent::DAY:
+        return static_cast<uint16_t>(this->day());
+
+    default:
+        return 0; // Invalid component
+    }
+}
+
 std::string simplydt::gregorian::Date::toStr() const noexcept
 {
     const char delimiter = '-';
 
     std::string dateStr;
     dateStr.reserve(12);
-    dateStr = "";
 
     dateStr += (std::to_string(this->year()) + delimiter);
     dateStr += (toDoubleDigitStr(this->month()) + delimiter);
