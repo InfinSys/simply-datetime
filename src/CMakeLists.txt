@@ -29,6 +29,7 @@ target_link_options(
 
 # Sources
 add_subdirectory(gregorian_calendar)
+add_subdirectory(coord_universal_time)
 
 target_link_libraries(
     ${MAIN_BINARY_NAME}
