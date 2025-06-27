@@ -60,11 +60,11 @@ namespace simplydt::utc
          * @return
          * True on success
          */
-        static bool encodeUTCTimeInInteger(
+        static bool encodeUTCTimeIntoInteger(
             Underlying_T* integer,
-            const uint8_t hour,
-            const uint8_t minute,
-            const uint8_t second
+            const uint8_t& hour,
+            const uint8_t& minute,
+            const uint8_t& second
         ) noexcept;
 
         /*!
@@ -97,7 +97,7 @@ namespace simplydt::utc
 
         friend inline std::ostream& operator<<(std::ostream& os, const Time time) noexcept
         {
-            // os << time.toStr();
+            os << time.toStr();
             return os;
         }
 
@@ -180,6 +180,16 @@ namespace simplydt::utc
          * UTC time as string
          */
         [[nodiscard]] std::string toStr() const noexcept;
+
+        /*!
+         * @brief
+         * Returns raw underlying representation of UTC
+         * time.
+         *
+         * @return
+         * UTC time as integer
+         */
+        [[nodiscard]] Underlying_T underlying() const noexcept;
 
       private:
         Underlying_T time; ///< UTC time
