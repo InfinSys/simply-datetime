@@ -29,19 +29,6 @@ namespace simplydt::gregorian
 
     /*!
      * @brief
-     * Enumeration of broken-down calendar components.
-     */
-    enum CalendarComponent : uint8_t {
-        SECOND, ///< Datetime second component
-        MINUTE, ///< Datetime minute component
-        HOUR,   ///< Datetime hour component
-        DAY,    ///< Datetime day component
-        MONTH,  ///< Datetime month component
-        YEAR    ///< Datetime year component
-    };
-
-    /*!
-     * @brief
      * Gregorian year integer type.
      *
      * @note
