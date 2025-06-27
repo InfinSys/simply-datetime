@@ -68,12 +68,12 @@ namespace simplydt::utc
         ) noexcept;
 
         /*!
-        * @brief
-        * Retrieve hour component from encoded UTC time integer.
-        * 
-        * @return
-        * UTC time hour component
-        */
+         * @brief
+         * Retrieve hour component from encoded UTC time integer.
+         *
+         * @return
+         * UTC time hour component
+         */
         static uint8_t extractEncodedHour(const Underlying_T* time) noexcept;
 
         /*!
