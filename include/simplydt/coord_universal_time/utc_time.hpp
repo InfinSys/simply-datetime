@@ -68,6 +68,33 @@ namespace simplydt::utc
         ) noexcept;
 
         /*!
+        * @brief
+        * Retrieve hour component from encoded UTC time integer.
+        * 
+        * @return
+        * UTC time hour component
+        */
+        static uint8_t extractEncodedHour(const Underlying_T* time) noexcept;
+
+        /*!
+         * @brief
+         * Retrieve minute component from encoded UTC time integer.
+         *
+         * @return
+         * UTC time minute component
+         */
+        static uint8_t extractEncodedMinute(const Underlying_T* time) noexcept;
+
+        /*!
+         * @brief
+         * Retrieve second component from encoded UTC time integer.
+         *
+         * @return
+         * UTC time second component
+         */
+        static uint8_t extractEncodedSecond(const Underlying_T* time) noexcept;
+
+        /*!
          * @brief
          * Construct UTC time using hour, minute, and second
          * values.

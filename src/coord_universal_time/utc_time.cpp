@@ -53,6 +53,21 @@ bool simplydt::utc::Time::encodeUTCTimeIntoInteger(
     return true;
 }
 
+uint8_t simplydt::utc::Time::extractEncodedHour(const Underlying_T* time) noexcept
+{
+    return static_cast<uint8_t>(*time / HOUR_FACTOR);
+}
+
+uint8_t simplydt::utc::Time::extractEncodedMinute(const Underlying_T* time) noexcept
+{
+    return static_cast<uint8_t>((*time % HOUR_FACTOR) / MINUTE_FACTOR);
+}
+
+uint8_t simplydt::utc::Time::extractEncodedSecond(const Underlying_T* time) noexcept
+{
+    return static_cast<uint8_t>((*time % HOUR_FACTOR) % MINUTE_FACTOR);
+}
+
 //	simplydt::utc::Time : STATIC END!
 
 
@@ -95,7 +110,7 @@ uint16_t simplydt::utc::Time::operator[](const CalendarComponent component) cons
 
 uint8_t simplydt::utc::Time::hour() const noexcept
 {
-    return static_cast<uint8_t>(this->time / HOUR_FACTOR);
+    return Time::extractEncodedHour(&this->time);
 }
 
 std::string simplydt::utc::Time::hourPhaseLiteral() const noexcept
@@ -108,25 +123,25 @@ std::string simplydt::utc::Time::hourPhaseLiteral() const noexcept
 
 uint8_t simplydt::utc::Time::minute() const noexcept
 {
-    return static_cast<uint8_t>((this->time % HOUR_FACTOR) / MINUTE_FACTOR);
+    return Time::extractEncodedMinute(&this->time);
 }
 
 uint8_t simplydt::utc::Time::second() const noexcept
 {
-    return static_cast<uint8_t>((this->time % HOUR_FACTOR) % MINUTE_FACTOR);
+    return Time::extractEncodedSecond(&this->time);
 }
 
 uint16_t simplydt::utc::Time::getComponent(const CalendarComponent component) const noexcept
 {
     switch (component) {
     case CalendarComponent::HOUR:
-        return static_cast<uint8_t>(this->hour());
+        return Time::extractEncodedHour(&this->time);
 
     case CalendarComponent::MINUTE:
-        return static_cast<uint8_t>(this->minute());
+        return Time::extractEncodedMinute(&this->time);
 
     case CalendarComponent::SECOND:
-        return static_cast<uint8_t>(this->second());
+        return Time::extractEncodedSecond(&this->time);
 
     default:
         return 0; // Invalid component
