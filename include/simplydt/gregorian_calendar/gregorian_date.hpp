@@ -14,6 +14,7 @@
 #ifndef SIMPLYDT_LIB_GREGORIAN_DATE_STRUCT_H_
 #define SIMPLYDT_LIB_GREGORIAN_DATE_STRUCT_H_
 
+#include "simplydt/common/general_defs.hpp"
 #include "simplydt/common/string_utils.hpp"
 #include "simplydt/gregorian_calendar/gregorian_defs.hpp"
 #include <ostream>
