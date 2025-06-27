@@ -23,6 +23,15 @@ int main(int argc, char* argv[])
 
     //\\//
     using namespace simplydt;
+
+    utc::Time::Underlying_T demo = 0;
+
+    utc::Time::encodeUTCTimeIntoInteger(&demo, 10, 30, 2);
+
+    std::cout << demo << std::endl;
+
+    utc::Time test{ 2, 53, 34 };
+    std::cout << test << std::endl;
     //
 
     return 0;
