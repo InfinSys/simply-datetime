@@ -41,6 +41,12 @@ namespace simplydt
         YEAR    ///< Datetime year component
     };
 
+    /*!
+    * @brief
+    * Invalid literal.
+    */
+    const char* INVALID_LITERAL = "Invalid";
+
 }
 
 #endif // SIMPLYDT_LIB_COMMON_DEFINITIONS_H_
