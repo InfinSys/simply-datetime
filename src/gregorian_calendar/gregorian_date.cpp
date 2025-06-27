@@ -174,6 +174,11 @@ std::string simplydt::gregorian::Date::toStr() const noexcept
     return dateStr;
 }
 
+simplydt::gregorian::Date::Underlying_T simplydt::gregorian::Date::underlying() const noexcept
+{
+    return this->date;
+}
+
 //	simplydt::gregorian::Date : PUBLIC END!
 
 

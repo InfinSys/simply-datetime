@@ -236,6 +236,16 @@ namespace simplydt::gregorian
          */
         [[nodiscard]] std::string toStr() const noexcept;
 
+        /*!
+         * @brief
+         * Returns raw underlying representation of
+         * Gregorian calendar date.
+         *
+         * @return
+         * Gregorian calendar date as integer
+         */
+        [[nodiscard]] Underlying_T underlying() const noexcept;
+
       private:
         Underlying_T date; ///< Calendar date
     };
