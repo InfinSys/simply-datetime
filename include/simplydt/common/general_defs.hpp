@@ -45,7 +45,7 @@ namespace simplydt
     * @brief
     * Invalid literal.
     */
-    const char* INVALID_LITERAL = "Invalid";
+    inline const char* INVALID_LITERAL = "Invalid";
 
 }
 
