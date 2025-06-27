@@ -69,6 +69,51 @@ namespace simplydt::gregorian
 
         /*!
          * @brief
+         * Store encoded Gregorian calendar date at provided
+         * integer address.
+         *
+         * @return
+         * True on success
+         */
+        static bool encodeGregorianDateIntoInteger(
+            Underlying_T* integer,
+            const YearInt_T& year,
+            const uint8_t& month,
+            const uint8_t& day
+        ) noexcept;
+
+        /*!
+         * @brief
+         * Retrieve year component from encoded Gregorian
+         * date integer.
+         *
+         * @return
+         * Gregorian date year component
+         */
+        static YearInt_T extractEncodedYear(const Underlying_T* date) noexcept;
+
+        /*!
+         * @brief
+         * Retrieve month component from encoded Gregorian
+         * date integer.
+         *
+         * @return
+         * Gregorian date month component
+         */
+        static uint8_t extractEncodedMonth(const Underlying_T* date) noexcept;
+
+        /*!
+         * @brief
+         * Retrieve day component from encoded Gregorian
+         * date integer.
+         *
+         * @return
+         * Gregorian date day component
+         */
+        static uint8_t extractEncodedDay(const Underlying_T* date) noexcept;
+
+        /*!
+         * @brief
          * Construct Gregorian date using year, month,
          * and day values.
          */
@@ -193,11 +238,6 @@ namespace simplydt::gregorian
 
       private:
         Underlying_T date; ///< Calendar date
-
-        /*! @brief Store Gregorian date in underlying variable. */
-        void assumeGregorianDate(
-            const YearInt_T& year, const uint8_t& month, const uint8_t& day
-        ) noexcept;
     };
 
 } // namespace simplydt::gregorian
