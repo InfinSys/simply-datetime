@@ -19,6 +19,8 @@
  * definitions.
  */
 
+// NOTE: Should this be called 'api_defs.hpp'?
+
 
 #ifndef SIMPLYDT_LIB_COMMON_DEFINITIONS_H_
 #define SIMPLYDT_LIB_COMMON_DEFINITIONS_H_
@@ -42,11 +44,11 @@ namespace simplydt
     };
 
     /*!
-    * @brief
-    * Invalid literal.
-    */
+     * @brief
+     * Invalid literal.
+     */
     inline const char* INVALID_LITERAL = "Invalid";
 
-}
+} // namespace simplydt
 
 #endif // SIMPLYDT_LIB_COMMON_DEFINITIONS_H_
