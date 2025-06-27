@@ -11,12 +11,10 @@
 *       type.
 * -> [] Need a general place for stuff like
 *       'YEAR_MIN/MAX', 'Invalid' string, etc.
-* -> [] Move 'CalendarComponent' enum out of
-*       'gregorian' namespace to more general
-*       location. (Split Standardized Strategies)
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
+#include "simplydt/coord_universal_time/utc_time.hpp"
 #include "simplydt/gregorian_calendar/gregorian_date.hpp"
 
 int main(int argc, char* argv[])
@@ -25,11 +23,6 @@ int main(int argc, char* argv[])
 
     //\\//
     using namespace simplydt;
-
-    simplydt::gregorian::Date sample1{ 2'001, 2, 23 };
-    simplydt::gregorian::Date sample2{ 2'024, 1, 9 };
-
-    std::cout << (sample1 < sample2) << std::endl;
     //
 
     return 0;
