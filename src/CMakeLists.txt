@@ -3,9 +3,6 @@
 #     /src Directory Script
 #================================
 
-include(compiler/detector)
-include(linker/config)
-
 include(utility/project_tools)
 
 set(MAIN_BINARY_NAME "${${PRJ_SCOPE}_MAIN_BINARY_NAME}")
@@ -30,13 +27,9 @@ target_link_options(
     ${GLOBAL_LINK_FLAGS}
 )
 
-# NOTE: Subdirs go here; remove call below...
-target_sources(
-    ${MAIN_BINARY_NAME}
-
-    PUBLIC
-    "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp"
-)
+# Sources
+add_subdirectory(gregorian_calendar)
+add_subdirectory(coord_universal_time)
 
 target_link_libraries(
     ${MAIN_BINARY_NAME}
