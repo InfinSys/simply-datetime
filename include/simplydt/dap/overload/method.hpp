@@ -11,8 +11,8 @@
  * Base DAP method overload entity definition.
  */
 
-#ifndef SIMPLYDT_LIB_CRTP_METHOD_OVERLOAD_STRUCT_H_
-#define SIMPLYDT_LIB_CRTP_METHOD_OVERLOAD_STRUCT_H_
+#ifndef SIMPLYDT_LIB_DAP_METHOD_OVERLOAD_STRUCT_H_
+#define SIMPLYDT_LIB_DAP_METHOD_OVERLOAD_STRUCT_H_
 
 #include "simplydt/dap/overload/arguments.hpp"
 
@@ -34,4 +34,4 @@ namespace simplydt::dap
 
 } // namespace simplydt::dap
 
-#endif // SIMPLYDT_LIB_CRTP_METHOD_OVERLOAD_STRUCT_H_
+#endif // SIMPLYDT_LIB_DAP_METHOD_OVERLOAD_STRUCT_H_
