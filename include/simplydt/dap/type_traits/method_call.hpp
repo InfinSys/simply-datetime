@@ -14,6 +14,7 @@
 #ifndef SIMPLYDT_LIB_DAP_METHOD_CALL_STRUCT_TRAITS_H_
 #define SIMPLYDT_LIB_DAP_METHOD_CALL_STRUCT_TRAITS_H_
 
+#include "simplydt/dap/overload/method.hpp"
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -25,7 +26,7 @@ namespace simplydt::type_trait
      * @brief
      * Check that type T has a static method named 'call'
      * that respects return and argument types specified.
-     * 
+     *
      * @details
      * This helper trait does not invoke the `T::call()`
      * method for verification. Instead it uses
@@ -69,6 +70,14 @@ namespace simplydt::type_trait
     inline constexpr bool
         has_static_call_signature_v = has_static_call_signature<T, ReturnType, ArgTypesTuple>::
             value;
+
+    /*! @brief Not valid DAP method overload type. */
+    template <typename T>
+    struct is_dap_overload_type : std::false_type { };
+
+    /*! @brief Valid DAP method overload type. */
+    template <typename... Args>
+    struct is_dap_overload_type<dap::Overload<Args...>> : std::true_type { };
 
 } // namespace simplydt::type_trait
 
