@@ -50,10 +50,10 @@ namespace simplydt::type_traits
         } -> std::convertible_to<ReturnType>;
     } > { };
 
-    template <typename T, typename ReturnType, typename... Args>
-    struct has_static_call_signature<T, ReturnType, std::tuple<Args...>> {
+    template <typename T, typename ReturnType, typename... ArgTypes>
+    struct has_static_call_signature<T, ReturnType, std::tuple<ArgTypes...>> {
         static constexpr bool
-            value = has_static_call_signature_impl<T, ReturnType, Args...>::value;
+            value = has_static_call_signature_impl<T, ReturnType, ArgTypes...>::value;
     };
 
     template <typename T, typename ReturnType, typename UnknownType>
@@ -85,9 +85,9 @@ namespace simplydt::type_traits
     template <typename T, typename ArgTypesTuple>
     struct is_overload_derived;
 
-    template <typename T, typename... Args>
-    struct is_overload_derived<T, std::tuple<Args...>> {
-        static constexpr bool value = std::is_base_of_v<dap::Overload<Args...>, T>;
+    template <typename T, typename... ArgTypes>
+    struct is_overload_derived<T, std::tuple<ArgTypes...>> {
+        static constexpr bool value = std::is_base_of_v<dap::Overload<ArgTypes...>, T>;
     };
 
     template <typename T, typename UnknownType>
