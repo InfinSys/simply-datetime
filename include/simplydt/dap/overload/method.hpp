@@ -22,6 +22,18 @@ namespace simplydt::dap
     /*!
      * @brief
      * Method overload implementation struct.
+     *
+     * @details
+     * This type is meant to be inherited by other
+     * structs which will represent the overloaded
+     * implementation of some template method. The
+     * template methods invoke the implementation
+     * detailed by a derivative of this type through
+     * an implicit contract between the two.
+     * Typically the methods implemented by this
+     * type are static, but in most cases there is
+     * no performance difference if they are member
+     * methods.
      */
     template <typename... ArgTypes>
     struct Overload {
