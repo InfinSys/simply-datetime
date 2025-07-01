@@ -19,22 +19,27 @@
 
 namespace simplydt::type_trait
 {
-
-    /*! @brief Not valid method arguments type. */
-    template <typename T>
-    struct is_method_args : std::false_type { };
-
-    /*! @brief Valid method arguments type. */
-    template <typename... Args>
-    struct is_method_args<dap::Arguments<Args...>> : std::true_type { };
+    // TYPE TRAIT : is_method_args
 
     /*!
      * @brief
-     * Determine if type T is a method arguments
-     * struct.
+     * Determine if type T is a method arguments struct.
      */
     template <typename T>
-    inline constexpr bool is_method_args_v = is_method_args<T>::value;
+    struct is_method_args_struct;
+
+    template <typename UnknownType>
+    struct is_method_args_struct : std::false_type {};
+
+    template <typename... Args>
+    struct is_method_args_struct<dap::Arguments<Args...>> : std::true_type {};
+
+    /*!
+     * @brief
+     * Determine if type T is a method arguments struct.
+     */
+    template <typename T>
+    inline constexpr bool is_method_args_struct_v = is_method_args_struct<T>::value;
 
 } // namespace simplydt::type_trait
 
