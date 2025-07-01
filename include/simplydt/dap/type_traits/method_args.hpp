@@ -17,7 +17,7 @@
 #include "simplydt/dap/overload/arguments.hpp"
 #include <type_traits>
 
-namespace simplydt::type_trait
+namespace simplydt::type_traits
 {
     // TYPE TRAIT : is_method_args
 
@@ -41,6 +41,6 @@ namespace simplydt::type_trait
     template <typename T>
     inline constexpr bool is_method_args_struct_v = is_method_args_struct<T>::value;
 
-} // namespace simplydt::type_trait
+} // namespace simplydt::type_traits
 
 #endif // SIMPLYDT_LIB_METHOD_ARGUMENT_TRAITS_H_
