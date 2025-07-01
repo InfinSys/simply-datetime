@@ -19,7 +19,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace simplydt::type_trait
+namespace simplydt::type_traits
 {
     // TYPE TRAIT : has_static_call_signature
 
@@ -71,9 +71,9 @@ namespace simplydt::type_trait
         has_static_call_signature_v = has_static_call_signature<T, ReturnType, ArgTypesTuple>::
             value;
 
-} // namespace simplydt::type_trait
+} // namespace simplydt::type_traits
 
-namespace simplydt::type_trait
+namespace simplydt::type_traits
 {
     // TYPE TRAIT : is_overload_derived
 
@@ -104,6 +104,6 @@ namespace simplydt::type_trait
     inline constexpr bool
         is_overload_derived_v = is_overload_derived<T, ArgTypesTuple>::value;
 
-} // namespace simplydt::type_trait
+} // namespace simplydt::type_traits
 
 #endif // SIMPLYDT_LIB_DAP_METHOD_CALL_STRUCT_TRAITS_H_
