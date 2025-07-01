@@ -71,13 +71,33 @@ namespace simplydt::type_trait
         has_static_call_signature_v = has_static_call_signature<T, ReturnType, ArgTypesTuple>::
             value;
 
-    /*! @brief Not valid DAP method overload type. */
-    template <typename T>
-    struct is_dap_overload_type : std::false_type { };
+    /*!
+     * @brief
+     * Determine if type T inherits from DAP overload
+     * struct.
+     */
+    template <typename T, typename ArgTypesTuple>
+    struct is_dap_overload_derived;
 
-    /*! @brief Valid DAP method overload type. */
-    template <typename... Args>
-    struct is_dap_overload_type<dap::Overload<Args...>> : std::true_type { };
+    /*!
+     * @brief
+     * Determine if type T inherits from DAP overload
+     * struct.
+     */
+    template <typename T, typename... Args>
+    struct is_dap_overload_derived<T, std::tuple<Args...>> {
+        /*! @brief Static analysis result. */
+        static constexpr bool value = std::is_base_of_v<dap::Overload<Args...>, T>;
+    };
+
+    /*!
+     * @brief
+     * Determine if type T inherits from DAP overload
+     * struct.
+     */
+    template <typename T, typename ArgTypesTuple>
+    inline constexpr bool
+        is_dap_overload_derived_v = is_dap_overload_derived<T, ArgTypesTuple>::value;
 
 } // namespace simplydt::type_trait
 
