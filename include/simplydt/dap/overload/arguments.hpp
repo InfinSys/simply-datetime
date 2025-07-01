@@ -25,7 +25,7 @@ namespace simplydt::dap
      */
     template <typename... ArgTypes>
     struct Arguments {
-        /*! @brief Method argument types via tuple. */
+        /*! @brief Method argument types tuple. */
         using Types = std::tuple<ArgTypes...>;
     };
 
