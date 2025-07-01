@@ -19,7 +19,7 @@
 
 namespace simplydt::type_traits
 {
-    // TYPE TRAIT : is_method_args
+    // TYPE TRAIT : is_method_args_struct
 
     /*!
      * @brief
