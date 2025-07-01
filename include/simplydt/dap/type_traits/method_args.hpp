@@ -31,8 +31,8 @@ namespace simplydt::type_traits
     template <typename UnknownType>
     struct is_method_args_struct : std::false_type {};
 
-    template <typename... Args>
-    struct is_method_args_struct<dap::Arguments<Args...>> : std::true_type {};
+    template <typename... ArgTypes>
+    struct is_method_args_struct<dap::Arguments<ArgTypes...>> : std::true_type {};
 
     /*!
      * @brief
