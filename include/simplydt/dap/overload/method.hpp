@@ -8,11 +8,11 @@
  * @file method.hpp
  *
  * @brief
- * Base DAP method overload entity definition.
+ * Method overload entity declaration.
  */
 
-#ifndef SIMPLYDT_LIB_DAP_METHOD_OVERLOAD_STRUCT_H_
-#define SIMPLYDT_LIB_DAP_METHOD_OVERLOAD_STRUCT_H_
+#ifndef SIMPLYDT_LIB_METHOD_OVERLOAD_STRUCT_H_
+#define SIMPLYDT_LIB_METHOD_OVERLOAD_STRUCT_H_
 
 #include "simplydt/dap/overload/arguments.hpp"
 
@@ -21,17 +21,14 @@ namespace simplydt::dap
 
     /*!
      * @brief
-     * Base DAP method overload struct.
+     * Method overload implementation struct.
      */
     template <typename... ArgTypes>
     struct Overload {
         /*! @brief Overload method argument types. */
         using MethodArgs = Arguments<ArgTypes...>;
-
-        /*! @brief Conceptual type identification. */
-        static constexpr bool isOverload() noexcept { return true; }
     };
 
 } // namespace simplydt::dap
 
-#endif // SIMPLYDT_LIB_DAP_METHOD_OVERLOAD_STRUCT_H_
+#endif // SIMPLYDT_LIB_METHOD_OVERLOAD_STRUCT_H_
