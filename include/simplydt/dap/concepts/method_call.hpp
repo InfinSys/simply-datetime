@@ -18,6 +18,17 @@
 #include "simplydt/dap/type_traits/method_call.hpp"
 #include <concepts>
 
+// TODO: Implement custom setup for the macro below
+//       in this file. If you included this file it
+//       means you'll have access to both the macro
+//       and the struct used to evaluate the return
+//       types.
+
+/*! @brief Macro for asserting equality of two types. */
+#define ASSERT_RETURN_TYPES_EQ(TypeA, TypeB)     \
+    static_assert(std::is_same_v<TypeA, TypeB>,  \
+    "Overload return type does not match base!")
+
 namespace simplydt::concepts
 {
 
