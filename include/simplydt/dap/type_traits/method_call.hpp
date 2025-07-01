@@ -21,6 +21,15 @@
 
 namespace simplydt::type_trait
 {
+    // TYPE TRAIT : has_static_call_signature
+
+    /*!
+     * @brief
+     * Determine if type T has an appropriate static
+     * 'call()' method defined.
+     */
+    template <typename T, typename ReturnType, typename ArgTypesTuple>
+    struct has_static_call_signature;
 
     /*!
      * @brief
@@ -35,69 +44,65 @@ namespace simplydt::type_trait
      * to determine the legality of the expression.
      */
     template <typename T, typename ReturnType, typename... ArgTypes>
-        struct has_static_call_signature_impl : std::bool_constant < requires {
+    struct has_static_call_signature_impl : std::bool_constant < requires {
         {
             T::call(std::declval<ArgTypes>()...)
         } -> std::convertible_to<ReturnType>;
-    } > {};
+    } > { };
 
-    /*!
-     * @brief
-     * Determine if type T has an appropriate static
-     * 'call()' method.
-     */
-    template <typename T, typename ReturnType, typename ArgTypesTuple>
-    struct has_static_call_signature;
-
-    /*!
-     * @brief
-     * Determine if type T has an appropriate static
-     * 'call()' method.
-     */
     template <typename T, typename ReturnType, typename... Args>
     struct has_static_call_signature<T, ReturnType, std::tuple<Args...>> {
-        /*! @brief Static analysis result. */
         static constexpr bool
             value = has_static_call_signature_impl<T, ReturnType, Args...>::value;
+    };
+
+    template <typename T, typename ReturnType, typename UnknownType>
+    struct has_static_call_signature {
+        static constexpr bool value = false;
     };
 
     /*!
      * @brief
      * Determine if type T has an appropriate static
-     * 'call()' method.
+     * 'call()' method defined.
      */
     template <typename T, typename ReturnType, typename ArgTypesTuple>
     inline constexpr bool
         has_static_call_signature_v = has_static_call_signature<T, ReturnType, ArgTypesTuple>::
             value;
 
-    /*!
-     * @brief
-     * Determine if type T inherits from DAP overload
-     * struct.
-     */
-    template <typename T, typename ArgTypesTuple>
-    struct is_dap_overload_derived;
+} // namespace simplydt::type_trait
+
+namespace simplydt::type_trait
+{
+    // TYPE TRAIT : is_overload_derived
 
     /*!
      * @brief
-     * Determine if type T inherits from DAP overload
+     * Determine if type T inherits from method overload
      * struct.
      */
+    template <typename T, typename ArgTypesTuple>
+    struct is_overload_derived;
+
     template <typename T, typename... Args>
-    struct is_dap_overload_derived<T, std::tuple<Args...>> {
-        /*! @brief Static analysis result. */
+    struct is_overload_derived<T, std::tuple<Args...>> {
         static constexpr bool value = std::is_base_of_v<dap::Overload<Args...>, T>;
+    };
+
+    template <typename T, typename UnknownType>
+    struct is_overload_derived {
+        static constexpr bool value = false;
     };
 
     /*!
      * @brief
-     * Determine if type T inherits from DAP overload
+     * Determine if type T inherits from method overload
      * struct.
      */
     template <typename T, typename ArgTypesTuple>
     inline constexpr bool
-        is_dap_overload_derived_v = is_dap_overload_derived<T, ArgTypesTuple>::value;
+        is_overload_derived_v = is_overload_derived<T, ArgTypesTuple>::value;
 
 } // namespace simplydt::type_trait
 
