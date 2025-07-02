@@ -8,12 +8,12 @@
 * -> [X] Create concepts::useable_underlying_type<T>
 * -> [] Implement SDT duration configuration
 * -> [] Create concepts::valid_dap_duration
-* -> [] Create contract::dap_duration_compliant
+* -> [] Create contracts::dap_duration_compliant
 * -> [] Create dap::AbstractDatetimeDriver<...>
 * -> [] Implement JDN algorithms
 * -> [] Implement DOW algorithm
 * -> [] Implement SDT datetime configuration
-* -> [] Create contract::dap_datetime_compliant
+* -> [] Create contracts::dap_datetime_compliant
 * -> [] Implement STL duration configuration
 * -> [] Implement STL datetime configuration
 * -> [] Need a general place for stuff like
@@ -121,11 +121,8 @@ int main(int argc, char* argv[])
 
     std::cout << "\nIs default? -> " << std::boolalpha << demo.isDefault() << std::endl;
 
-    // template <concepts::valid_dap_duration DurationImpl, concepts::useable_underlying_type Datetime_T>
-    // class AbstractDatetimeDriver;
-    
-    // template <contract::dap_datetime_compliant Datetime_Impl>
-    // using StandardDatetimeAPI = Datetime_Impl;
+    // template <contracts::dap_duration_compliant DurationImpl, concepts::useable_underlying_type Datetime_T>
+    // class AbstractDatetimeDriver : public AbstractDAPDriver { ... };
 
     return 0;
 }
