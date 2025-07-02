@@ -5,19 +5,8 @@
 *
 * ~ CLI Debug Executable Notes / TO-DO List ~
 *
-* -> [] Advocating for strategy-based datetime
-*       implementation so that it is easy to
-*       swap the logic that drives the datetime
-*       type.
 * -> [] Need a general place for stuff like
 *       'YEAR_MIN/MAX', 'Invalid' string, etc.
-* -> [] Need a concept for what types are appropr.
-*       to be used as an underlying type for a DAP
-*       entity like 'AbstractDurationDriver' and
-*       'AbstractDatetimeDriver'.
-*       -> Needs to be comparable (i.e, <, >=, ==, etc)
-*       -> Needs to be copyable
-*       -> *Needs to be movable?
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
@@ -124,7 +113,6 @@ int main(int argc, char* argv[])
     std::cout << "\nIs default? -> " << std::boolalpha << demo.isDefault() << std::endl;
 
     // 1. Create concepts::useable_underlying_type<T>
-    //    -> Requires type traits
     // 2. Create concepts::valid_dap_duration<T>
     //    -> Requires type traits
     // 3. Create dap::AbstractDatetimeDriver<...>
