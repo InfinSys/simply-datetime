@@ -16,6 +16,7 @@
 
 #include "simplydt/dap/concepts/method_call.hpp"
 #include "simplydt/dap/driver/abstract_tag.hpp"
+#include "simplydt/dap/concepts/repr_types.hpp"
 #include <cstdint>
 
 namespace simplydt::dap
@@ -40,7 +41,7 @@ namespace simplydt::dap
      * contrary, the API extended by a derivative is expected
      * to be public and typically with use of member methods.
      */
-    template <typename Duration_T>
+    template <concepts::useable_underlying_type Duration_T>
     class AbstractDurationDriver : public AbstractDAPDriver {
 
       public:
