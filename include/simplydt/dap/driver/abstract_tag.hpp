@@ -8,7 +8,8 @@
  * @file abstract_tag.hpp
  *
  * @brief
- * Abstract DAP driver tag declaration.
+ * Abstract Datetime Abstraction Protocol driver
+ * tag declaration.
  */
 
 #ifndef SIMPLYDT_LIB_ABSTRACT_DAP_DRIVER_TAG_H_
