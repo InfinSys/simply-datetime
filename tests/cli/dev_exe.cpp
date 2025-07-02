@@ -11,6 +11,13 @@
 *       type.
 * -> [] Need a general place for stuff like
 *       'YEAR_MIN/MAX', 'Invalid' string, etc.
+* -> [] Need a concept for what types are appropr.
+*       to be used as an underlying type for a DAP
+*       entity like 'AbstractDurationDriver' and
+*       'AbstractDatetimeDriver'.
+*       -> Needs to be comparable (i.e, <, >=, ==, etc)
+*       -> Needs to be copyable
+*       -> *Needs to be movable?
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
