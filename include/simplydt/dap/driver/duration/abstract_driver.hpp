@@ -31,14 +31,14 @@ namespace simplydt::dap
      * to be inherited by another class which will then
      * present concrete implementations of the functionality
      * outlined here. The presence of a method definition
-     * in this base class alone does not enforce a
-     * requirement on the derivatives; that is achieved by
-     * using concepts. The API extended by this class is
-     * protected and only accessible by derived entities.
-     * The protected API uses static methods that follow
-     * the "pointer-to-self" convention. On the contrary,
-     * the API extended by a derivative is expected to be
-     * public and typically through use of member methods.
+     * in this base class alone does not automatically
+     * enforce a requirement on the derivatives; that is
+     * achieved by using concepts. The API extended by this
+     * class is protected and only accessible by derived
+     * entities. The protected API uses static methods that
+     * follow the "pointer-to-self" convention. On the
+     * contrary, the API extended by a derivative is expected
+     * to be public and typically with use of member methods.
      */
     template <typename Duration_T>
     class AbstractDurationDriver : public AbstractDAPDriver {
@@ -159,7 +159,7 @@ namespace simplydt::dap
 
         /*! @brief Overload base functionality using provided implementation. */
         template <concepts::valid_template_overload Overload_Impl>
-        static Duration_T displaced(const Duration_T& selfImpl, const Duration_T& durationImpl)
+        static Duration_T calculateDisplace(const Duration_T& selfImpl, const Duration_T& durationImpl)
         {
             ASSERT_RETURN_TYPES_EQ(Duration_T, typename Overload_Impl::ReturnType);
             return Overload_Impl::call(selfImpl, durationImpl);
@@ -167,7 +167,7 @@ namespace simplydt::dap
 
         /*! @brief Overload base functionality using provided implementation. */
         template <concepts::valid_template_overload Overload_Impl>
-        static void displaceDuration(const Duration_T& selfImpl, const Duration_T& durationImpl)
+        static void displace(Duration_T& selfImpl, const Duration_T& durationImpl)
         {
             ASSERT_RETURN_TYPES_EQ(void, typename Overload_Impl::ReturnType);
             return Overload_Impl::call(selfImpl, durationImpl);
