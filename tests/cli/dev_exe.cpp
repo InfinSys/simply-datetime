@@ -122,7 +122,24 @@ int main(int argc, char* argv[])
     FakeDuration demo{};
 
     std::cout << "\nIs default? -> " << std::boolalpha << demo.isDefault() << std::endl;
-    //
+
+    // 1. Create concepts::useable_underlying_type<T>
+    //    -> Requires type traits
+    // 2. Create concepts::valid_dap_duration<T>
+    //    -> Requires type traits
+    // 3. Create dap::AbstractDatetimeDriver<...>
+    // 4. Implement JDN algorithms
+    // 5. Implement DOW algorithm
+    // 6. Implement SDT datetime configuration
+    // 7. Create contract::dap_duration_compliant
+    // 8. Create contract::dap_datetime_compliant
+    // 9. Implement STL datetime configuration
+
+    // template <concepts::valid_dap_duration DurationImpl, concepts::useable_underlying_type Datetime_T>
+    // class AbstractDatetimeDriver;
+    
+    // template <contract::dap_datetime_compliant Datetime_Impl>
+    // using StandardDatetimeAPI = Datetime_Impl;
 
     return 0;
 }
