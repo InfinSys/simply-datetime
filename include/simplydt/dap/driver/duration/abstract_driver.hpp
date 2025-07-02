@@ -143,22 +143,6 @@ namespace simplydt::dap
 
         /*! @brief Overload base functionality using provided implementation. */
         template <concepts::valid_template_overload Overload_Impl>
-        static bool isShorterThan(const Duration_T& selfImpl, const Duration_T& durationImpl)
-        {
-            ASSERT_RETURN_TYPES_EQ(bool, typename Overload_Impl::ReturnType);
-            return Overload_Impl::call(selfImpl, durationImpl);
-        }
-
-        /*! @brief Overload base functionality using provided implementation. */
-        template <concepts::valid_template_overload Overload_Impl>
-        static bool isLongerThan(const Duration_T& selfImpl, const Duration_T& durationImpl)
-        {
-            ASSERT_RETURN_TYPES_EQ(bool, typename Overload_Impl::ReturnType);
-            return Overload_Impl::call(selfImpl, durationImpl);
-        }
-
-        /*! @brief Overload base functionality using provided implementation. */
-        template <concepts::valid_template_overload Overload_Impl>
         static Duration_T calculateDisplace(const Duration_T& selfImpl, const Duration_T& durationImpl)
         {
             ASSERT_RETURN_TYPES_EQ(Duration_T, typename Overload_Impl::ReturnType);
