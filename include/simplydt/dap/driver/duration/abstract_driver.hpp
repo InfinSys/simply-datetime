@@ -33,7 +33,7 @@ namespace simplydt::dap
      * outlined here. The presence of a method definition
      * in this base class alone does not automatically
      * enforce a requirement on the derivatives; that is
-     * achieved by using concepts. The API extended by this
+     * achieved using concepts. The API extended by this
      * class is protected and only accessible by derived
      * entities. The protected API uses static methods that
      * follow the "pointer-to-self" convention. On the
