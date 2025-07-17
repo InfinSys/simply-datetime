@@ -8,11 +8,14 @@
  * @file stl_chrono_defs.hpp
  *
  * @brief
- * STL date and time library aliases.
+ * Type aliases for standard C++ date and time constructs.
  *
  * @details
- * Type aliases for Standard Template Library date and time
- * symbols.
+ * This header defines convenient type aliases for commonly used
+ * C++ Standard Library date and time types, such as clocks,
+ * time points, durations, and calendar representations. These
+ * aliases simplify usage and ensure consistency throughout the
+ * Simply Datetime library.
  */
 
 
@@ -31,50 +34,50 @@
 namespace simplydt::stl
 {
 
-    /*!
-     * @brief
-     * System-wide real time wall-clock wrapper.
-     */
-    using SystemClock = std::chrono::system_clock;
+/*!
+ * @brief
+ * System-wide real time wall-clock wrapper.
+ */
+using SystemClock = std::chrono::system_clock;
 
-    /*!
-     * @brief
-     * Point in time derived from system clock.
-     */
-    using SystemTimePoint = std::chrono::time_point<SystemClock>;
+/*!
+ * @brief
+ * Point in time derived from system clock.
+ */
+using SystemTimePoint = std::chrono::time_point<SystemClock>;
 
-    /*!
-     * @brief
-     * Interval of time.
-     */
-    using SystemDuration = SystemClock::duration;
+/*!
+ * @brief
+ * Interval of time.
+ */
+using SystemDuration = SystemClock::duration;
 
-    /*!
-     * @brief
-     * Time point in seconds since Unix epoch.
-     *
-     * @details
-     * The `std::time_t` type is implementation-defined.
-     * Simply Datetime does not use this type because it
-     * needs guarantee that the type representing seconds
-     * since the Unix epoch (January 1, 1970 00:00:00.000)
-     * is a 64-bit signed integer. This is to mitigate the
-     * '2038' year overflow.
-     */
-    using UnixTimestamp = int64_t;
+/*!
+ * @brief
+ * Time point in seconds since Unix epoch.
+ *
+ * @details
+ * The `std::time_t` type is implementation-defined.
+ * Simply Datetime does not use this type because it
+ * needs guarantee that the type representing seconds
+ * since the Unix epoch (January 1, 1970 00:00:00.000)
+ * is a 64-bit signed integer. This is to mitigate the
+ * '2038' year overflow.
+ */
+using UnixTimestamp = int64_t;
 
-    /*!
-     * @brief
-     * Broken-down calendar datetime component struct.
-     *
-     * @details
-     * This type is a C-style struct that stores individual
-     * components of a calendar time point and contains two
-     * key fields to be mindful of: `tm_mon` which measures
-     * the number of months ***since*** January, and `tm_year`
-     * which measures the number of years ***since*** 1900.
-     */
-    using CalendarDateTime = std::tm;
+/*!
+ * @brief
+ * Broken-down calendar datetime component struct.
+ *
+ * @details
+ * This type is a C-style struct that stores individual
+ * components of a calendar time point and contains two
+ * key fields to be mindful of: `tm_mon` which measures
+ * the number of months ***since*** January, and `tm_year`
+ * which measures the number of years ***since*** 1900.
+ */
+using CalendarDateTime = std::tm;
 
 } // namespace simplydt::stl
 
