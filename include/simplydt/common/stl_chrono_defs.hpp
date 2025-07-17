@@ -65,6 +65,7 @@ using SystemDuration = SystemClock::duration;
  * '2038' year overflow.
  */
 using UnixTimestamp = int64_t;
+// NOTE: I have many concerns about this approach
 
 /*!
  * @brief
