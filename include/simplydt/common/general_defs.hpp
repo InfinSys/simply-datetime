@@ -9,19 +9,18 @@
  *
  * @note
  * This file really shouldn't exist given it's
- * broad nature. However, at the moment I am
- * unsure where to situate some of the ideas in
- * this document. The definitions are likely to
- * later be moved to another translation unit.
+ * broad nature. However, I am unsure where to
+ * situate some of the ideas in this document.
+ * The definitions are likely to later be moved
+ * to another translation unit.
  *
  * @brief
- * Common general Simply Datetime library
- * definitions.
+ * General Simply Datetime library definitions.
  */
 
 
-#ifndef SIMPLYDT_LIB_COMMON_DEFINITIONS_H_
-#define SIMPLYDT_LIB_COMMON_DEFINITIONS_H_
+#ifndef SIMPLYDT_LIB_GENERAL_DEFINITIONS_H_
+#define SIMPLYDT_LIB_GENERAL_DEFINITIONS_H_
 
 #include <cstdint>
 
@@ -33,20 +32,20 @@ namespace simplydt
  * Enumeration of broken-down calendar components.
  */
 enum CalendarComponent : uint8_t {
-    SECOND, ///< Datetime second component
-    MINUTE, ///< Datetime minute component
-    HOUR,   ///< Datetime hour component
-    DAY,    ///< Datetime day component
-    MONTH,  ///< Datetime month component
-    YEAR    ///< Datetime year component
+    SECOND, ///< Time second component
+    MINUTE, ///< Time minute component
+    HOUR,   ///< Time hour component
+    DAY,    ///< Date day component
+    MONTH,  ///< Date month component
+    YEAR    ///< Date year component
 };
 
 /*!
  * @brief
  * Invalid literal.
  */
-inline const char* INVALID_LITERAL = "Invalid";
+inline const char* INVALID_LITERAL = "invalid";
 
 } // namespace simplydt
 
-#endif // SIMPLYDT_LIB_COMMON_DEFINITIONS_H_
+#endif // SIMPLYDT_LIB_GENERAL_DEFINITIONS_H_
