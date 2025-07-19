@@ -11,11 +11,12 @@
  * Type aliases for standard C++ date and time constructs.
  *
  * @details
- * This header defines convenient type aliases for commonly used
- * C++ Standard Library date and time types, such as clocks,
- * time points, durations, and calendar representations. These
- * aliases simplify usage and ensure consistency throughout the
- * Simply Datetime library.
+ * This header defines convenient type aliases for
+ * commonly used C++ Standard Library date and time
+ * types, such as clocks, time points, durations,
+ * and calendar representations. These aliases simplify
+ * usage and ensure consistency throughout the Simply
+ * Datetime library.
  */
 
 
@@ -54,29 +55,33 @@ using SystemDuration = SystemClock::duration;
 
 /*!
  * @brief
- * Time point in seconds since Unix epoch.
+ * Count of seconds since Unix epoch to some time
+ * point.
  *
  * @details
  * The `std::time_t` type is implementation-defined.
- * Simply Datetime does not use this type because it
- * needs guarantee that the type representing seconds
- * since the Unix epoch (January 1, 1970 00:00:00.000)
- * is a 64-bit signed integer. This is to mitigate the
- * '2038' year overflow.
+ * Simply Datetime does not explicitly use this type
+ * because it needs guarantee that the type used to
+ * represent seconds since the Unix epoch (January 1,
+ * 1970 00:00:00.000) is a 64-bit signed integer.
+ * This is to mitigate the '2038' year overflow
+ * internally. Simply Datetime provides a safe method
+ * for converting this type to standard `std::tm`.
  */
 using UnixTimestamp = int64_t;
-// NOTE: I have many concerns about this approach
+// TODO: Need safe conversion method to std::time_t for compatibility
 
 /*!
  * @brief
- * Broken-down calendar datetime component struct.
+ * Broken-down calendar date and time structure.
  *
  * @details
- * This type is a C-style struct that stores individual
- * components of a calendar time point and contains two
- * key fields to be mindful of: `tm_mon` which measures
- * the number of months ***since*** January, and `tm_year`
- * which measures the number of years ***since*** 1900.
+ * This is a C-style struct that stores individual
+ * components of a calendar time point and contains
+ * two key fields to be mindful of: `tm_mon` which
+ * measures the number of months ***since*** January,
+ * and `tm_year` which measures the number of years
+ * ***since*** 1900.
  */
 using CalendarDateTime = std::tm;
 
