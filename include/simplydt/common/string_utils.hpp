@@ -20,28 +20,29 @@
 namespace simplydt
 {
 
-    /*!
-     * @brief
-     * Convert integer value to a double digit string.
-     *
-     * @details
-     * This method takes an integer value of arbitrary type
-     * and converts it to a string that only consist of two
-     * digits. Values less than 10 are prefixed with a '0',
-     * and values greater than 99 are truncated to their
-     * last two digits using modulus division.
-     *
-     * @return
-     * Double-digit string
-     */
-    template <typename Int_T>
-    [[nodiscard]] inline std::string toDoubleDigitStr(const Int_T integer) noexcept
-    {
-        if (integer < 10)
-            return (std::string{ "0" } + std::to_string(integer));
-        else
-            return std::to_string(integer % 100);
-    }
+/*!
+ * @brief
+ * Convert integer value to a double digit string.
+ *
+ * @details
+ * This method takes an integer value of arbitrary type
+ * and converts it to a string that only consist of two
+ * digits. Values less than 10 are prefixed with a '0',
+ * and values greater than 99 are truncated to their
+ * last two digits using modulus division.
+ *
+ * @return
+ * Double-digit string
+ */
+template <typename Int_T>
+requires std::is_integral_v<Int_T>
+[[nodiscard]] inline std::string toDoubleDigitStr(const Int_T integer) noexcept
+{
+    if (integer < 10)
+        return (std::string{"0"} + std::to_string(integer));
+    else
+        return std::to_string(integer % 100);
+}
 
 } // namespace simplydt
 
