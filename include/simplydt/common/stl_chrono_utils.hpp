@@ -8,7 +8,8 @@
  * @file stl_chrono_utils.hpp
  *
  * @brief
- * STL date and time library utilities.
+ * Utilities for standard C++ date and time related
+ * constructs.
  */
 
 
@@ -20,45 +21,34 @@
 namespace simplydt::stl
 {
 
-    /*!
-     * @brief
-     * Get system wall-clock timestamp.
-     *
-     * @return
-     * Current system clock time point
-     */
-    [[nodiscard]] inline SystemTimePoint getNowSystemTime() noexcept
-    {
-        return SystemClock::now();
-    }
-
-    /*!
-     * @brief
-     * Populate calendar component structure using a system
-     * clock timestamp.
-     *
-     * @details
-     * Wraps platform-dependent call to interpret a system
-     * clock time point and populate a calendar component
-     * structure. The underlying calls used, `localtime_s`
-     * for Windows and `localtime_r` for POSIX compliant
-     * systems, are thread-safe.
-     *
-     * @return
-     * True on success
-     */
-    [[nodiscard]] inline bool deriveLocalDateTimeFromTimestamp(
-        const UnixTimestamp* timestamp, CalendarDateTime* out_tm
-    )
-    {
+/*!
+ * @brief
+ * Populate calendar component structure using a system
+ * clock timestamp.
+ *
+ * @details
+ * Wraps platform-dependent call to interpret a system
+ * clock time point and populate a calendar component
+ * structure. The underlying calls used, `localtime_s`
+ * for Windows and `localtime_r` for POSIX compliant
+ * systems, are thread-safe and both apply the systems
+ * local timezone to the populated calendar struct.
+ *
+ * @return
+ * True on success
+ */
+[[nodiscard]] inline bool deriveLocalDateTimeFromTimestamp(
+    const UnixTimestamp* timestamp, CalendarDateTime* out_tm
+)
+{
 #if defined(_WIN32) || defined(_WIN64)
-        // Windows system
-        return localtime_s(out_tm, timestamp) == 0;
+    // Windows based system
+    return localtime_s(out_tm, timestamp) == 0;
 #elif defined(__unix__) || defined(__unix) || defined(__APPLE__)
-        // POSIX compliant system
-        return localtime_r(timestamp, out_tm) != nullptr;
+    // POSIX compliant system
+    return localtime_r(timestamp, out_tm) != nullptr;
 #endif
-    }
+}
 
 } // namespace simplydt::stl
 
