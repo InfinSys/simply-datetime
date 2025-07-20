@@ -55,8 +55,7 @@ using SystemDuration = SystemClock::duration;
 
 /*!
  * @brief
- * Count of seconds since Unix epoch to some time
- * point.
+ * Seconds since Unix epoch.
  *
  * @details
  * The `std::time_t` type is implementation-defined.
@@ -69,7 +68,6 @@ using SystemDuration = SystemClock::duration;
  * for converting this type to standard `std::tm`.
  */
 using UnixTimestamp = int64_t;
-// TODO: Need safe conversion method to std::time_t for compatibility
 
 /*!
  * @brief
