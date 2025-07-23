@@ -8,22 +8,29 @@
  * @file calendar_contract.hpp
  *
  * @brief
- * Calendar implementation conceptual contract.
+ * Conceptual calendar implementation contract.
  */
 
 
 #ifndef SIMPLYDT_LIB_CALENDAR_CONTRACT_CONCEPT_H_
 #define SIMPLYDT_LIB_CALENDAR_CONTRACT_CONCEPT_H_
 
-#include <concepts>
-#include <type_traits>
+#include "simplydt/calendar/concepts/calendar_concepts.hpp"
+#include "simplydt/calendar/type_traits/calendar_traits.hpp"
 
 namespace simplydt::concepts
 {
 
+/*!
+* @brief
+* Concept of a type that meets the criteria to be
+* considered a useable calendar implementation.
+*/
 template <typename T>
 concept contract_abiding_calendar = requires {
+
     requires std::is_same_v<T, T>;
+    // TODO: INCOMPLETE!!!
 };
 
 }
