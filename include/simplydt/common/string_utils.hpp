@@ -35,7 +35,7 @@ namespace simplydt
  * Double-digit string
  */
 template <typename Int_T>
-requires std::is_integral_v<Int_T>
+    requires std::is_integral_v<Int_T>
 [[nodiscard]] inline std::string toDoubleDigitStr(const Int_T integer) noexcept
 {
     if (integer < 10)
