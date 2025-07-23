@@ -14,24 +14,13 @@
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
-#include "simplydt/coord_universal_time/utc_time.hpp"
-#include "simplydt/gregorian_calendar/gregorian_date.hpp"
+// Includes...
 
 int main(int argc, char* argv[])
 {
     ProjectInfoOut();
 
     //\\//
-    using namespace simplydt;
-
-    utc::Time::Underlying_T demo = 0;
-
-    utc::Time::encodeUTCTimeIntoInteger(&demo, 10, 30, 2);
-
-    std::cout << demo << std::endl;
-
-    utc::Time test{ 2, 53, 34 };
-    std::cout << test << std::endl;
     //
 
     return 0;
