@@ -17,6 +17,7 @@
 #define SIMPLYDT_LIB_STL_CHRONO_UTILITIES_H_
 
 #include "simplydt/common/stl_chrono_defs.hpp"
+#include "simplydt/common/simplydt_defs.hpp"
 
 namespace simplydt::stl
 {
@@ -41,11 +42,9 @@ namespace simplydt::stl
     const UnixTimestamp* timestamp, CalendarDateTime* out_tm
 )
 {
-#if defined(_WIN32) || defined(_WIN64)
-    // Windows based system
+#if defined(SIMPLYDT_WIN32)
     return localtime_s(out_tm, timestamp) == 0;
-#elif defined(__unix__) || defined(__unix) || defined(__APPLE__)
-    // POSIX compliant system
+#elif defined(SIMPLYDT_POSIX)
     return localtime_r(timestamp, out_tm) != nullptr;
 #endif
 }
