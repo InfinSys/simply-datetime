@@ -22,11 +22,16 @@ namespace simplydt
 
 /*!
 * @brief
-* Base contract enforcing calendar.
+* Base contract-enforcing calendar.
 */
 template <concepts::contract_abiding_calendar Calendar_Impl>
 struct CalendricalSystem {
-    // Start...
+    // TODO: INCOMPLETE!!!
+
+private:
+    CalendricalSystem() = default;
+    ~CalendricalSystem() = default;
+    friend Calendar_Impl;
 };
 
 }

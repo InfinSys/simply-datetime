@@ -18,16 +18,15 @@
 #include <type_traits>
 
 /*!
-* @namespace simplydt::type_traits
+* @namespace simplydt::type_traits::calendar
 * 
 * @brief
-* Simply Datetime library type traits.
+* Calendar type traits.
 */
-namespace simplydt::type_traits
+namespace simplydt::type_traits::calendar
 {
 
 // TODO: INCOMPLETE!!!
-// (simplydt::type_traits::calendar???)
 
 }
 

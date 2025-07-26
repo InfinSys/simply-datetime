@@ -19,15 +19,16 @@
 #include "simplydt/calendar/type_traits/calendar_traits.hpp"
 
 /*!
-* @namespace simplydt::concepts
+* @namespace simplydt::concepts::calendar
 * 
 * @brief
-* Simply Datetime library concepts.
+* Calendar concepts.
 */
-namespace simplydt::concepts
+namespace simplydt::concepts::calendar
 {
 
 // TODO: INCOMPLETE!!!
+// nested_calendar_types : Check for the expected nested types of a calendar
 
 }
 
