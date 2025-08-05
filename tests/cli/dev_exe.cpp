@@ -36,8 +36,8 @@ int main(int argc, char* argv[])
         Repr_Type date;
     };
 
-    GregorianDate::Date;
-    GregorianDate::YearInt_t;
+    //GregorianDate::Date;
+    //GregorianDate::YearInt_t;
     //
 
     return 0;
