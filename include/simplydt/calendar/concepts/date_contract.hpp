@@ -29,7 +29,7 @@ namespace simplydt::concepts
 template <typename Date_Impl, typename Year_T>
 concept contract_abiding_date = requires {
     // TODO: INCOMPLETE!!!
-    requires std::is_same_v<Date_Impl, Date_Impl>;
+    requires std::is_integral_v<Year_T>;
 };
 
 }
