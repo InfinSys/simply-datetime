@@ -22,7 +22,7 @@ namespace simplydt
 
 /*!
 * @brief
-* Base contract-enforcing calendar date.
+* Base contract-enforcing agnostic calendar date.
 * 
 * @details
 * This is Simply Datetime's generic representation
@@ -36,7 +36,9 @@ namespace simplydt
 template <typename Date_Impl, typename Year_T>
     requires concepts::contract_abiding_date<Date_Impl, Year_T>
 struct CalendarDate {
+    /*! @brief Calendar date implementation. */
     using Date = Date_Impl;
+    /*! @brief Calendar date year type. */
     using YearInt_t = Year_T;
 
     // TODO: INCOMPLETE!!!
