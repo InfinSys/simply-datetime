@@ -30,6 +30,8 @@ template <typename Date_Impl, typename Year_T>
 concept contract_abiding_date = requires {
     // TODO: INCOMPLETE!!!
     requires std::is_integral_v<Year_T>;
+    requires date::has_date_component_methods<Date_Impl, Year_T>;
+    //requires date::has_basic_state_methods<Date_Impl>;
 };
 
 }
