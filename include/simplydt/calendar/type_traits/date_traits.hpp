@@ -16,7 +16,6 @@
 #define SIMPLYDT_LIB_CALENDAR_DATE_TYPE_TRAITS_H_
 
 #include <type_traits>
-#include "simplydt/calendar/date/abstract_date.hpp"
 
 /*!
 * @namespace simplydt::type_traits
