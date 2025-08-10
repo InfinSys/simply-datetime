@@ -31,9 +31,17 @@ concept contract_abiding_date = requires {
     // TODO: INCOMPLETE!!!
     requires std::is_integral_v<Year_T>;
     requires date::has_date_component_methods<Date_Impl, Year_T>;
-    //requires date::has_basic_state_methods<Date_Impl>;
+    requires date::has_basic_state_methods<Date_Impl>;
 };
 
 }
+
+#ifndef SIMPLYDT_ASSERT_DATE_INTERFACE_CONTRACT
+#define SIMPLYDT_ASSERT_DATE_INTERFACE_CONTRACT(Class) \
+    static_assert( \
+        simplydt::concepts::contract_abiding_date<Class, typename Class::YearInt_t>, \
+        #Class " implementation does not fulfill the public API contract." \
+    );
+#endif
 
 #endif // SIMPLYDT_LIB_CALENDAR_DATE_CONTRACT_CONCEPT_H_
