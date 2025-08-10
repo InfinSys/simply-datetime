@@ -35,8 +35,6 @@ namespace simplydt::concepts { }
 namespace simplydt::concepts::date
 {
 
-// TODO: INCOMPLETE!!!
-
     template <typename Date_Impl, typename Year_T>
     concept has_date_component_methods = requires(const Date_Impl& d) {
         { d.year() } -> std::same_as<Year_T>;
