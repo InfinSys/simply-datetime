@@ -15,8 +15,8 @@
 #ifndef SIMPLYDT_LIB_CALENDAR_DATE_CONCEPTS_H_
 #define SIMPLYDT_LIB_CALENDAR_DATE_CONCEPTS_H_
 
-#include <concepts>
 #include "simplydt/calendar/type_traits/date_traits.hpp"
+#include <concepts>
 
 /*!
 * @namespace simplydt::concepts
@@ -35,7 +35,7 @@ namespace simplydt::concepts { }
 namespace simplydt::concepts::date
 {
 
-    // TODO: INCOMPLETE!!!
+// TODO: INCOMPLETE!!!
 
     template <typename Date_Impl, typename Year_T>
     concept has_date_component_methods = requires(const Date_Impl& d) {
