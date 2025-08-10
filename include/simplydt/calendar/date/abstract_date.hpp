@@ -15,7 +15,6 @@
 #ifndef SIMPLYDT_LIB_BASE_CRTP_CALENDAR_DATE_H_
 #define SIMPLYDT_LIB_BASE_CRTP_CALENDAR_DATE_H_
 
-#include "simplydt/calendar/concepts/date_contract.hpp"
 #include "simplydt/common/calendar_defs.hpp"
 #include <optional>
 
