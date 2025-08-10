@@ -16,8 +16,8 @@
 #ifndef SIMPLYDT_LIB_STL_CHRONO_UTILITIES_H_
 #define SIMPLYDT_LIB_STL_CHRONO_UTILITIES_H_
 
-#include "simplydt/common/stl_chrono_defs.hpp"
 #include "simplydt/common/simplydt_defs.hpp"
+#include "simplydt/common/stl_chrono_defs.hpp"
 
 namespace simplydt::stl
 {
