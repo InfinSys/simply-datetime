@@ -15,8 +15,8 @@
 #ifndef SIMPLYDT_LIB_CALENDAR_CONCEPTS_H_
 #define SIMPLYDT_LIB_CALENDAR_CONCEPTS_H_
 
-#include <concepts>
 #include "simplydt/calendar/type_traits/calendar_traits.hpp"
+#include <concepts>
 
 /*!
 * @namespace simplydt::concepts::calendar
