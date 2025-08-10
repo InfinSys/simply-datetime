@@ -28,7 +28,6 @@ namespace simplydt::concepts
 */
 template <typename T>
 concept contract_abiding_calendar = requires {
-
     requires std::is_same_v<T, T>;
     // TODO: INCOMPLETE!!!
 };
