@@ -17,6 +17,8 @@
 
 #include "simplydt/calendar/type_traits/date_traits.hpp"
 #include <concepts>
+#include <ostream>
+#include <string>
 
 /*!
 * @namespace simplydt::concepts
@@ -43,14 +45,35 @@ namespace simplydt::concepts::date
     };
 
     template <typename Date_Impl>
+    concept has_logical_operators = requires(const Date_Impl& d) {
+        { d == d } -> std::same_as<bool>;
+        { d < d } -> std::same_as<bool>;
+        { d > d } -> std::same_as<bool>;
+        { d <= d } -> std::same_as<bool>;
+        { d >= d } -> std::same_as<bool>;
+    };
+
+    template <typename Date_Impl>
     concept has_basic_state_methods = requires(const Date_Impl& d) {
         { d.isDefault() } -> std::same_as<bool>;
+    };
+
+    template <typename Date_Impl>
+    concept is_stream_out_compatible = requires(std::ostream& os, const Date_Impl& d) {
+        { os << d } -> std::convertible_to<std::ostream&>;
     };
 
     template <typename Date_Impl>
     concept has_comparison_methods = requires(const Date_Impl& d) {
         { d.isBefore(d) } -> std::same_as<bool>;
         { d.isAfter(d) } -> std::same_as<bool>;
+    };
+
+    template <typename Date_Impl>
+    concept has_date_literal_methods = requires(const Date_Impl& d) {
+        { d.monthLiteral() } -> std::same_as<const char*>;
+        { d.monthAbbreviation() } -> std::same_as<std::string>;
+        { d.toStr() } -> std::same_as<std::string>;
     };
 
     template <typename Date_Impl>
