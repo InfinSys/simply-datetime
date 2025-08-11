@@ -40,14 +40,14 @@ namespace simplydt::gregorian
 using Year_Type = uint16_t;
 
 /*!
-* @brief
-* Abbreviation length for Gregorian calendar name
-* literals.
-* 
-* @details
-* Details length of abbreviated Gregorian calendar
-* day-of-week and month names.
-*/
+ * @brief
+ * Abbreviation length for Gregorian calendar name
+ * literals.
+ *
+ * @details
+ * Details length of abbreviated Gregorian calendar
+ * day-of-week and month names.
+ */
 constexpr int ABBREV_LENGTH = 3;
 
 /*!
@@ -175,6 +175,6 @@ constexpr uint8_t MIN_MONTH_OF_YEAR = 1;
  */
 constexpr uint8_t MAX_MONTH_OF_YEAR = 12;
 
-}
+} // namespace simplydt::gregorian
 
 #endif // SIMPLYDT_LIB_GREGORIAN_CALENDAR_DEFINITIONS_H_
