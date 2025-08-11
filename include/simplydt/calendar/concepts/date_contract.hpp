@@ -28,16 +28,19 @@ namespace simplydt::concepts
 */
 template <typename Date_Impl, typename Year_T>
 concept contract_abiding_date = requires {
-    // TODO: INCOMPLETE!!!
     requires std::is_integral_v<Year_T>;
     requires date::has_date_component_methods<Date_Impl, Year_T>;
+    requires date::has_logical_operators<Date_Impl>;
     requires date::has_basic_state_methods<Date_Impl>;
+    requires date::is_stream_out_compatible<Date_Impl>;
+    requires date::has_date_literal_methods<Date_Impl>;
 };
 
 }
 
-#ifndef SIMPLYDT_ASSERT_DATE_INTERFACE_CONTRACT
-#define SIMPLYDT_ASSERT_DATE_INTERFACE_CONTRACT(Class) \
+#ifndef SIMPLYDT_ENFORCE_DATE_CONTRACT
+/*! @brief Macro for asserting date implementation interface contract. */
+#define SIMPLYDT_ENFORCE_DATE_CONTRACT(Class) \
     static_assert( \
         simplydt::concepts::contract_abiding_date<Class, typename Class::YearInt_t>, \
         #Class " implementation does not fulfill the public API contract." \
