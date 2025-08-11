@@ -208,38 +208,88 @@ struct GregorianDate : public CalendarDate<GregorianDate, Year_Type> {
         return this->getComponent(component);
     }
 
+    /*!
+     * @brief
+     * Evaluate if date is epoch.
+     *
+     * @return
+     * True if date is epoch date
+     */
     [[nodiscard]] constexpr bool isDefault() const noexcept
     {
         return this->date == DEFAULT_DATE;
     }
 
+    /*!
+     * @brief
+     * Date year component.
+     *
+     * @return
+     * Year of Gregorian calendar date
+     */
     [[nodiscard]] constexpr YearInt_t year() const noexcept
     {
         return extractEncodedYear(this->date);
     }
 
+    /*!
+     * @brief
+     * Date month component.
+     *
+     * @return
+     * Month of Gregorian calendar date
+     */
     [[nodiscard]] constexpr uint8_t month() const noexcept
     {
         return extractEncodedMonth(this->date);
     }
 
+    /*!
+     * @brief
+     * Month name.
+     *
+     * @return
+     * Month literal
+     */
     [[nodiscard]] constexpr const char* monthLiteral() const noexcept
     {
         const uint8_t monthIndex = extractEncodedMonth(this->date) - 1;
         return Months[monthIndex];
     }
 
+    /*!
+     * @brief
+     * Abbreviated month name.
+     *
+     * @return
+     * Abbreviated month literal
+     */
     [[nodiscard]] constexpr std::string monthAbbreviation() const noexcept
     {
         const uint8_t monthIndex = extractEncodedMonth(this->date) - 1;
         return std::string{MonthAbbrevs[monthIndex]};
     }
 
+    /*!
+     * @brief
+     * Date day component.
+     *
+     * @return
+     * Day of Gregorian calendar date
+     */
     [[nodiscard]] constexpr uint8_t day() const noexcept
     {
         return extractEncodedDay(this->date);
     }
 
+    /*!
+     * @brief
+     * Compose string representation of Gregorian
+     * calendar date.
+     *
+     * @return
+     * Gregorian calendar date as string
+     */
     [[nodiscard]] std::string toStr() const noexcept
     {
         const char delimiter = '-';
@@ -252,6 +302,14 @@ struct GregorianDate : public CalendarDate<GregorianDate, Year_Type> {
         return dateStr;
     }
 
+    /*!
+     * @brief
+     * Returns underlying representation of Gregorian
+     * calendar date.
+     *
+     * @return
+     * Gregorian calendar date as integer
+     */
     [[nodiscard]] constexpr Repr_Type underlying() const noexcept
     {
         return this->date;
