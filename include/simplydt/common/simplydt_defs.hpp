@@ -22,14 +22,18 @@ namespace simplydt
 {
 
 #if defined(_WIN32) || defined(_WIN64)
-#define SIMPLYDT_WIN32
+/*! @brief Simply Datetime on Windows platform. */
+#    define SIMPLYDT_WIN32
 #elif defined(__unix__) || defined(__unix) || defined(__APPLE__)
-#define SIMPLYDT_POSIX
-#if defined(__APPLE__)
-#define SIMPLYDT_APPLE
-#elif defined(__unix__) || defined(__unix)
-#define SIMPLYDT_LINUX
-#endif
+/*! @brief Simply Datetime on POSIX compliant platform. */
+#    define SIMPLYDT_POSIX
+#    if defined(__APPLE__)
+/*! @brief Simply Datetime on Apple platform. */
+#        define SIMPLYDT_APPLE
+#    elif defined(__unix__) || defined(__unix)
+/*! @brief Simply Datetime on Linux platform. */
+#        define SIMPLYDT_LINUX
+#    endif
 #endif
 
 /*!

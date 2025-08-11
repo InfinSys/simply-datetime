@@ -22,7 +22,6 @@
 
 extern "C"
 {
-
 /*!
  * @brief
  * Simply Datetime publisher.

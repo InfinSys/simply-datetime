@@ -21,19 +21,19 @@ namespace simplydt
 {
 
 /*!
-* @brief
-* Base contract-enforcing calendar.
-*/
+ * @brief
+ * Base contract-enforcing calendar.
+ */
 template <concepts::contract_abiding_calendar Calendar_Impl>
 struct CalendricalSystem {
     // TODO: INCOMPLETE!!!
 
-private:
-    CalendricalSystem() = default;
+  private:
+    CalendricalSystem()  = default;
     ~CalendricalSystem() = default;
     friend Calendar_Impl;
 };
 
-}
+} // namespace simplydt
 
 #endif // SIMPLYDT_LIB_BASE_CRTP_CALENDAR_H_

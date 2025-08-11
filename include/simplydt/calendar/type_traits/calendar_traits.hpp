@@ -18,11 +18,11 @@
 #include <type_traits>
 
 /*!
-* @namespace simplydt::type_traits::calendar
-* 
-* @brief
-* Calendar type traits.
-*/
+ * @namespace simplydt::type_traits::calendar
+ *
+ * @brief
+ * Calendar type traits.
+ */
 namespace simplydt::type_traits::calendar
 {
 

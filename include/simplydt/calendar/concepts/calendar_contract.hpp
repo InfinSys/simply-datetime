@@ -22,16 +22,16 @@ namespace simplydt::concepts
 {
 
 /*!
-* @brief
-* Concept of a type that meets the criteria to be
-* considered a useable calendar implementation.
-*/
+ * @brief
+ * Concept of a type that meets the criteria to be
+ * considered a useable calendar implementation.
+ */
 template <typename T>
 concept contract_abiding_calendar = requires {
     requires std::is_same_v<T, T>;
     // TODO: INCOMPLETE!!!
 };
 
-}
+} // namespace simplydt::concepts
 
 #endif // SIMPLYDT_LIB_CALENDAR_CONTRACT_CONCEPT_H_

@@ -22,7 +22,6 @@
 
 extern "C"
 {
-
 /*!
  * @brief
  * @RESOLVED_SFTW_NAME@ publisher.

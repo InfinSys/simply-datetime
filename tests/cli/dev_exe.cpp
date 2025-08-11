@@ -13,14 +13,12 @@
 #include "simplydt/calendar/abstract_calendar.hpp"
 #include "simplydt/calendar/gregorian/gregorian_date.hpp"
 
-
-
 int main(int argc, char* argv[])
 {
     ProjectInfoOut();
 
     //\\//
-    simplydt::gregorian::GregorianDate demo{2025, 8, 11};
+    simplydt::gregorian::GregorianDate demo{2'025, 8, 11};
 
     std::cout << demo << '\n';
     //

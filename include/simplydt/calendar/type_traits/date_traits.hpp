@@ -18,19 +18,20 @@
 #include <type_traits>
 
 /*!
-* @namespace simplydt::type_traits
-* 
-* @brief
-* Simply Datetime library type traits.
-*/
-namespace simplydt::type_traits { }
+ * @namespace simplydt::type_traits
+ *
+ * @brief
+ * Simply Datetime library type traits.
+ */
+namespace simplydt::type_traits
+{ }
 
 /*!
-* @namespace simplydt::type_traits::date
-* 
-* @brief
-* Calendar date type traits.
-*/
+ * @namespace simplydt::type_traits::date
+ *
+ * @brief
+ * Calendar date type traits.
+ */
 namespace simplydt::type_traits::date
 {
 

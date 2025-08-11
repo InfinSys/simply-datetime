@@ -19,11 +19,11 @@
 #include <concepts>
 
 /*!
-* @namespace simplydt::concepts::calendar
-* 
-* @brief
-* Calendar concepts.
-*/
+ * @namespace simplydt::concepts::calendar
+ *
+ * @brief
+ * Calendar concepts.
+ */
 namespace simplydt::concepts::calendar
 {
 

@@ -22,7 +22,6 @@
 
 extern "C"
 {
-
 /*!
  * @brief
  * Software version major.
