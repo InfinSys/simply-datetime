@@ -202,7 +202,8 @@ struct GregorianDate : public CalendarDate<GregorianDate, Year_Type> {
     }
 
     /*! @brief Index Gregorian calendar date components. */
-    [[nodiscard]] std::optional<YearInt_t> operator[](const CalendarComponent component) const noexcept
+    [[nodiscard]] std::optional<YearInt_t> operator[](const CalendarComponent component
+    ) const noexcept
     {
         return this->getComponent(component);
     }
