@@ -22,8 +22,9 @@ int main(int argc, char* argv[])
     //\\//
     simplydt::gregorian::GregorianDate demo{2025, 8, 11};
 
-    std::cout << demo << std::endl;
+    std::cout << demo << '\n';
     //
 
+    std::cout << "\n\t[ Complete ]" << std::endl;
     return 0;
 }
