@@ -25,6 +25,6 @@ int main(int argc, char* argv[])
     std::cout << demo << '\n';
     //
 
-    std::cout << "\n\t[ Complete ]" << std::endl;
+    std::cout << "\n\n\t[ Complete ]" << std::endl;
     return 0;
 }
