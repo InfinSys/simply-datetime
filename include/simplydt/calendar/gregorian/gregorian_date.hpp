@@ -71,18 +71,18 @@ struct GregorianDate : public CalendarDate<GregorianDate, Year_Type> {
     }
 
     /*!
-    * @brief
-    * Intercept invalid signal from date encoding and return
-    * default date.
-    * 
-    * @details
-    * This is a compile-time helper for the `GregorianDate`
-    * constructors. Non-zero values pass through this method
-    * while zeros are intercepted and yeild the default date.
-    * 
-    * @return
-    * Valid encoded date, default date otherwise
-    */
+     * @brief
+     * Intercept invalid signal from date encoding and return
+     * default date.
+     *
+     * @details
+     * This is a compile-time helper for the `GregorianDate`
+     * constructors. Non-zero values pass through this method
+     * while zeros are intercepted and yeild the default date.
+     *
+     * @return
+     * Valid encoded date, default date otherwise
+     */
     static constexpr Repr_Type useDefaultIfInvalid(const Repr_Type& encoded_date) noexcept
     {
         return (encoded_date == 0) ? DEFAULT_DATE : encoded_date;
@@ -132,9 +132,11 @@ struct GregorianDate : public CalendarDate<GregorianDate, Year_Type> {
      * Construct Gregorian calendar date using year,
      * month, and day values.
      */
-    constexpr GregorianDate(const YearInt_t year, const uint8_t month, const uint8_t day) noexcept
+    constexpr GregorianDate(
+        const YearInt_t year, const uint8_t month, const uint8_t day
+    ) noexcept
         : CalendarDate<GregorianDate, Year_Type>{},
-        date{useDefaultIfInvalid(encodeGregorianDateToInteger(year, month, day))}
+          date{useDefaultIfInvalid(encodeGregorianDateToInteger(year, month, day))}
     {
         //
     }
@@ -146,7 +148,7 @@ struct GregorianDate : public CalendarDate<GregorianDate, Year_Type> {
      */
     constexpr GregorianDate(const YearInt_t year, const uint8_t month) noexcept
         : CalendarDate<GregorianDate, Year_Type>{},
-        date{useDefaultIfInvalid(encodeGregorianDateToInteger(year, month, 1))}
+          date{useDefaultIfInvalid(encodeGregorianDateToInteger(year, month, 1))}
     {
         //
     }
@@ -155,7 +157,8 @@ struct GregorianDate : public CalendarDate<GregorianDate, Year_Type> {
      * @brief
      * Construct default Gregorian calendar date.
      */
-    constexpr GregorianDate() noexcept : CalendarDate<GregorianDate, Year_Type>{}, date{DEFAULT_DATE}
+    constexpr GregorianDate() noexcept
+        : CalendarDate<GregorianDate, Year_Type>{}, date{DEFAULT_DATE}
     {
         //
     }
