@@ -42,7 +42,8 @@ struct CalendarDate {
     /*! @brief Calendar date year type. */
     using YearInt_t = Year_T;
 
-    [[nodiscard]] std::optional<YearInt_t> getComponent(const CalendarComponent component) const
+    [[nodiscard]] std::optional<YearInt_t> getComponent(const CalendarComponent component
+    ) const
     {
         switch (component) {
         case CalendarComponent::YEAR:
