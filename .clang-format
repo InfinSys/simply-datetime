@@ -56,14 +56,15 @@ AlignTrailingComments:
 AllowAllArgumentsOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: true
 AllowBreakBeforeNoexceptSpecifier: Never
-AllowShortBlocksOnASingleLine: Never
+AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: false
-AllowShortCompoundRequirementOnASingleLine: false
+AllowShortCompoundRequirementOnASingleLine: true
 AllowShortEnumsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: Never
-AllowShortLambdasOnASingleLine: All
+AllowShortLambdasOnASingleLine: Empty
 AllowShortLoopsOnASingleLine: false
+#AllowShortNamespacesOnASingleLine: true
 AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: true
@@ -94,7 +95,7 @@ BraceWrapping:
   IndentBraces:    false
   SplitEmptyFunction: false
   SplitEmptyRecord: false
-  SplitEmptyNamespace: true
+  SplitEmptyNamespace: false
 
 BreakAdjacentStringLiterals: true
 BreakAfterAttributes: Leave
@@ -147,7 +148,7 @@ IndentCaseBlocks: false
 IndentCaseLabels: false
 IndentExternBlock: NoIndent
 IndentGotoLabels: true
-IndentPPDirectives: None
+IndentPPDirectives: AfterHash
 IndentRequiresClause: true
 IndentWidth:     4
 IndentWrappedFunctionNames: false
