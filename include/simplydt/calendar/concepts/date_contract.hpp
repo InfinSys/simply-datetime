@@ -22,10 +22,10 @@ namespace simplydt::concepts
 {
 
 /*!
-* @brief
-* Concept of a type that meets the criteria to be
-* considered a useable calendar date implementation.
-*/
+ * @brief
+ * Concept of a type that meets the criteria to be
+ * considered a useable calendar date implementation.
+ */
 template <typename Date_Impl, typename Year_T>
 concept contract_abiding_date = requires {
     requires std::is_integral_v<Year_T>;
@@ -36,14 +36,14 @@ concept contract_abiding_date = requires {
     requires date::has_date_literal_methods<Date_Impl>;
 };
 
-}
+} // namespace simplydt::concepts
 
 #ifndef SIMPLYDT_ENFORCE_DATE_CONTRACT
 /*! @brief Macro for asserting date implementation interface contract. */
-#define SIMPLYDT_ENFORCE_DATE_CONTRACT(Class) \
-    static_assert( \
-        simplydt::concepts::contract_abiding_date<Class, typename Class::YearInt_t>, \
-        #Class " implementation does not fulfill the public API contract." \
+#define SIMPLYDT_ENFORCE_DATE_CONTRACT(Class)                                                 \
+    static_assert(                                                                            \
+        simplydt::concepts::contract_abiding_date<Class, typename Class::YearInt_t>,          \
+        #Class " implementation does not fulfill the public API contract."                    \
     );
 #endif
 
