@@ -18,6 +18,8 @@
 #include "simplydt/calendar/concepts/date_contract.hpp"
 #include "simplydt/calendar/date/abstract_date.hpp"
 #include "simplydt/calendar/gregorian/gregorian_defs.hpp"
+#include "simplydt/common/string_utils.hpp"
+#include <ostream>
 
 namespace simplydt::gregorian
 {
@@ -165,11 +167,100 @@ struct GregorianDate : public CalendarDate<GregorianDate, Year_Type> {
 
     ~GregorianDate() = default;
 
+    friend inline std::ostream& operator<<(std::ostream& os, const GregorianDate date) noexcept
+    {
+        os << date.toStr();
+        return os;
+    }
+
+    /*! @brief Evaluate equivalence of Gregorian dates. */
+    [[nodiscard]] constexpr bool operator==(const GregorianDate date) const noexcept
+    {
+        return this->date == date.date;
+    }
+
+    /*! @brief Determine if left-hand side is sequentially before right-hand side. */
+    [[nodiscard]] constexpr bool operator<(const GregorianDate date) const noexcept
+    {
+        return this->date < date.date;
+    }
+
+    /*! @brief Determine if left-hand side is sequentially after right-hand side. */
+    [[nodiscard]] constexpr bool operator>(const GregorianDate date) const noexcept
+    {
+        return this->date > date.date;
+    }
+
+    [[nodiscard]] constexpr bool operator<=(const GregorianDate date) const noexcept
+    {
+        return this->date <= date.date;
+    }
+
+    [[nodiscard]] constexpr bool operator>=(const GregorianDate date) const noexcept
+    {
+        return this->date >= date.date;
+    }
+
+    /*! @brief Index Gregorian calendar date components. */
+    [[nodiscard]] std::optional<YearInt_t> operator[](const CalendarComponent component) const noexcept
+    {
+        return this->getComponent(component);
+    }
+
+    [[nodiscard]] constexpr bool isDefault() const noexcept
+    {
+        return this->date == DEFAULT_DATE;
+    }
+
+    [[nodiscard]] constexpr YearInt_t year() const noexcept
+    {
+        return extractEncodedYear(this->date);
+    }
+
+    [[nodiscard]] constexpr uint8_t month() const noexcept
+    {
+        return extractEncodedMonth(this->date);
+    }
+
+    [[nodiscard]] constexpr const char* monthLiteral() const noexcept
+    {
+        const uint8_t monthIndex = extractEncodedMonth(this->date) - 1;
+        return Months[monthIndex];
+    }
+
+    [[nodiscard]] constexpr std::string monthAbbreviation() const noexcept
+    {
+        const uint8_t monthIndex = extractEncodedMonth(this->date) - 1;
+        return std::string{MonthAbbrevs[monthIndex]};
+    }
+
+    [[nodiscard]] constexpr uint8_t day() const noexcept
+    {
+        return extractEncodedDay(this->date);
+    }
+
+    [[nodiscard]] std::string toStr() const noexcept
+    {
+        const char delimiter = '-';
+
+        std::string dateStr;
+        dateStr.reserve(12);
+        dateStr += (std::to_string(this->year()) + delimiter);
+        dateStr += (toDoubleDigitStr(this->month()) + delimiter);
+        dateStr += toDoubleDigitStr(this->day());
+        return dateStr;
+    }
+
+    [[nodiscard]] constexpr Repr_Type underlying() const noexcept
+    {
+        return this->date;
+    }
+
   private:
     Repr_Type date; ///< Calendar date
 };
 
-// SIMPLYDT_ASSERT_DATE_INTERFACE_CONTRACT(GregorianDate);
+SIMPLYDT_ENFORCE_DATE_CONTRACT(GregorianDate);
 
 } // namespace simplydt::gregorian
 
