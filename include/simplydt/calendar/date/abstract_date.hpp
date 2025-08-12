@@ -34,7 +34,7 @@ namespace simplydt
  * confirmation their API is compliant by invoking the
  * date contract enforcement macro just after the body
  * of the implementation. Failing to be compliant can
- * result in compile errors and undefined behavior.
+ * result in substitution errors or undefined behavior.
  */
 template <typename Date_Impl, typename Year_T>
 struct CalendarDate {
