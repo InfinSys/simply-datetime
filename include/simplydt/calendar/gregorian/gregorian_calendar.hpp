@@ -17,6 +17,7 @@
 
 #include "simplydt/calendar/abstract_calendar.hpp"
 #include "simplydt/calendar/gregorian/gregorian_date.hpp"
+#include "simplydt/calendar/concepts/calendar_contract.hpp"
 
 namespace simplydt::gregorian
 {
@@ -28,6 +29,8 @@ namespace simplydt::gregorian
 struct GregorianCalendar : public CalendricalSystem<GregorianCalendar, GregorianDate, Month, DayOfWeek> {
     //...
 };
+
+SIMPLYDT_ENFORCE_CALENDAR_CONTRACT(GregorianCalendar);
 
 }
 
