@@ -16,7 +16,6 @@
 #define SIMPLYDT_LIB_CALENDAR_CONTRACT_CONCEPT_H_
 
 #include "simplydt/calendar/concepts/calendar_concepts.hpp"
-#include "simplydt/calendar/type_traits/calendar_traits.hpp"
 
 namespace simplydt::concepts
 {
@@ -28,9 +27,18 @@ namespace simplydt::concepts
  */
 template <typename T>
 concept contract_abiding_calendar = requires {
-    requires std::is_same_v<T, T>;
     // TODO: INCOMPLETE!!!
+    requires std::is_same_v<T, T>;
 };
+
+#ifndef SIMPLYDT_ENFORCE_CALENDAR_CONTRACT
+/*! @brief Macro for asserting calendar implementation interface contract. */
+#    define SIMPLYDT_ENFORCE_CALENDAR_CONTRACT(Class)                                             \
+        static_assert(                                                                        \
+            simplydt::concepts::contract_abiding_calendar<Class>,                                 \
+            #Class " implementation does not fulfill the public API contract."                \
+        );
+#endif
 
 } // namespace simplydt::concepts
 
