@@ -23,18 +23,19 @@ namespace simplydt
 
 /*!
  * @brief
- * Base contract-enforcing agnostic calendar date.
+ * Base calendar agnostic date.
  *
  * @details
- * This is Simply Datetime's generic representation
- * of a calendar date. It is not associated with any
- * specific calendar and is not a self-constructable
- * type. It's responsibility is to enforce a set of
- * API requirements on the derived calendar date
- * implementations to ensure compatibility with
- * library internals and consistenecy.
+ * This is a generic representation of a calendar date
+ * that is not associated with any specific calendar.
+ * This type is not self-constructable and must be
+ * inherited by a concrete implementation that presents
+ * a valid public API. Implementations should seek
+ * confirmation their API is compliant by invoking the
+ * date contract enforcement macro just after the body
+ * of the implementation. Failing to be compliant can
+ * result in compile errors and undefined behavior.
  */
-// TODO: Above documentaion needs to updated...
 template <typename Date_Impl, typename Year_T>
 struct CalendarDate {
     /*! @brief Calendar date implementation. */
