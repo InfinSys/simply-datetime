@@ -16,7 +16,6 @@
 #define SIMPLYDT_LIB_CALENDAR_DATE_CONTRACT_CONCEPT_H_
 
 #include "simplydt/calendar/concepts/date_concepts.hpp"
-#include "simplydt/calendar/type_traits/date_traits.hpp"
 
 namespace simplydt::concepts
 {
@@ -34,6 +33,12 @@ concept contract_abiding_date = requires {
     requires date::has_basic_state_methods<Date_Impl>;
     requires date::is_stream_out_compatible<Date_Impl>;
     requires date::has_date_literal_methods<Date_Impl>;
+    // TODO: INCOMPLETE!!!
+    // -> Type needs to be copy constructable
+    // -> Type needs to be copy assignable
+    // -> Type needs to be default constructable???
+    // -> Type needs to be moveable? (Investment for container compatibility?)
+    //
 };
 
 } // namespace simplydt::concepts
