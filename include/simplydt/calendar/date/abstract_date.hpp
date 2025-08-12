@@ -12,8 +12,8 @@
  */
 
 
-#ifndef SIMPLYDT_LIB_BASE_CRTP_CALENDAR_DATE_H_
-#define SIMPLYDT_LIB_BASE_CRTP_CALENDAR_DATE_H_
+#ifndef SIMPLYDT_LIB_BASE_CALENDAR_DATE_H_
+#define SIMPLYDT_LIB_BASE_CALENDAR_DATE_H_
 
 #include "simplydt/common/calendar_defs.hpp"
 #include <optional>
@@ -40,7 +40,7 @@ template <typename Date_Impl, typename Year_T>
 struct CalendarDate {
     /*! @brief Calendar date implementation. */
     using Date = Date_Impl;
-    /*! @brief Calendar date year type. */
+    /*! @brief Date year type. */
     using YearInt_t = Year_T;
 
     [[nodiscard]] std::optional<YearInt_t> getComponent(const CalendarComponent component
@@ -76,4 +76,4 @@ struct CalendarDate {
 
 } // namespace simplydt
 
-#endif // SIMPLYDT_LIB_BASE_CRTP_CALENDAR_DATE_H_
+#endif // SIMPLYDT_LIB_BASE_CALENDAR_DATE_H_
