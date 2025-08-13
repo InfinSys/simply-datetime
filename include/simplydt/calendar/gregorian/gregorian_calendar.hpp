@@ -16,8 +16,8 @@
 #define SIMPLYDT_LIB_GREGORIAN_CALENDAR_STRUCT_H_
 
 #include "simplydt/calendar/abstract_calendar.hpp"
-#include "simplydt/calendar/gregorian/gregorian_date.hpp"
 #include "simplydt/calendar/concepts/calendar_contract.hpp"
+#include "simplydt/calendar/gregorian/gregorian_date.hpp"
 
 namespace simplydt::gregorian
 {
@@ -26,7 +26,8 @@ namespace simplydt::gregorian
  * @brief
  * Gregorian calendar system.
  */
-struct GregorianCalendar final : public CalendricalSystem<GregorianCalendar, GregorianDate, Month, DayOfWeek> {
+struct GregorianCalendar final :
+    public CalendricalSystem<GregorianCalendar, GregorianDate, Month, DayOfWeek> {
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
@@ -103,13 +104,13 @@ struct GregorianCalendar final : public CalendricalSystem<GregorianCalendar, Gre
         return false;
     }
 
-private:
-    GregorianCalendar() = delete;
+  private:
+    GregorianCalendar()  = delete;
     ~GregorianCalendar() = delete;
 };
 
 SIMPLYDT_ENFORCE_CALENDAR_CONTRACT(GregorianCalendar);
 
-}
+} // namespace simplydt::gregorian
 
 #endif // SIMPLYDT_LIB_GREGORIAN_CALENDAR_STRUCT_H_
