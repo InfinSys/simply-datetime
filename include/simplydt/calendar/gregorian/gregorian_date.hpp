@@ -65,9 +65,9 @@ struct GregorianDate : public CalendarDate<GregorianDate, Year_Type> {
         const YearInt_t year, const uint8_t month, const uint8_t day
     ) noexcept
     {
-        if ((year < YEAR_MINIMUM) || (year > YEAR_MAXIMUM) ||
-            (month < MIN_MONTH_OF_YEAR) || (month > MAX_MONTH_OF_YEAR) ||
-            (day < MIN_DAY_OF_MONTH) || (day > MAX_DAY_OF_MONTH))
+        if ((year < YEAR_MINIMUM) || (year > YEAR_MAXIMUM) || (month < MIN_MONTH_OF_YEAR) ||
+            (month > MAX_MONTH_OF_YEAR) || (day < MIN_DAY_OF_MONTH) ||
+            (day > MAX_DAY_OF_MONTH))
             return 0; // Invalid date params
 
         return ((year * YEAR_FACTOR) + (month * MONTH_FACTOR) + day);
