@@ -77,6 +77,42 @@ constexpr int ABBREV_LENGTH = 3;
 
 /*!
  * @brief
+ * Minimum day of Gregorian month.
+ */
+constexpr uint8_t MIN_DAY_OF_MONTH = 1;
+
+/*!
+ * @brief
+ * Maximum day of Gregorian month.
+ */
+constexpr uint8_t MAX_DAY_OF_MONTH = 31;
+
+/*!
+ * @brief
+ * Minimum month of Gregorian year.
+ */
+constexpr uint8_t MIN_MONTH_OF_YEAR = 1;
+
+/*!
+ * @brief
+ * Maximum month of Gregorian year.
+ */
+constexpr uint8_t MAX_MONTH_OF_YEAR = 12;
+
+/*!
+ * @brief
+ * Total number of days in one calendar week.
+ */
+constexpr uint8_t DAYS_IN_WEEK = 7;
+
+/*!
+ * @brief
+ * Total number of months in one calendar year.
+ */
+constexpr uint8_t MONTHS_IN_YEAR = 12;
+
+/*!
+ * @brief
  * Enumeration of Gregorian calendar months.
  */
 enum Month : uint8_t {
@@ -112,7 +148,7 @@ enum DayOfWeek : uint8_t {
  * @brief
  * Array of Gregorian calendar month name literals.
  */
-constexpr std::array<const char*, 12> Months = {
+constexpr std::array<const char*, MONTHS_IN_YEAR> Months = {
     "January",   ///< Index 0
     "February",  ///< Index 1
     "March",     ///< Index 2
@@ -132,7 +168,7 @@ constexpr std::array<const char*, 12> Months = {
  * Array of abbreviated Gregorian calendar month
  * names.
  */
-constexpr std::array<std::string_view, 12> MonthAbbrevs = {
+constexpr std::array<std::string_view, MONTHS_IN_YEAR> MonthAbbrevs = {
     std::string_view(Months[JANUARY], ABBREV_LENGTH),   ///< Jan
     std::string_view(Months[FEBRUARY], ABBREV_LENGTH),  ///< Feb
     std::string_view(Months[MARCH], ABBREV_LENGTH),     ///< Mar
@@ -151,7 +187,7 @@ constexpr std::array<std::string_view, 12> MonthAbbrevs = {
  * @brief
  * Array of Gregorian calendar day-of-week literals.
  */
-constexpr std::array<const char*, 7> DaysOfWeek = {
+constexpr std::array<const char*, DAYS_IN_WEEK> DaysOfWeek = {
     "Sunday",    ///< Index 0
     "Monday",    ///< Index 1
     "Tuesday",   ///< Index 2
@@ -166,7 +202,7 @@ constexpr std::array<const char*, 7> DaysOfWeek = {
  * Array of abbreviated Gregorian calendar day-of-week
  * literals.
  */
-constexpr std::array<std::string_view, 7> DayOfWeekAbbrevs = {
+constexpr std::array<std::string_view, DAYS_IN_WEEK> DayOfWeekAbbrevs = {
     std::string_view(DaysOfWeek[SUNDAY], ABBREV_LENGTH),    ///< Sun
     std::string_view(DaysOfWeek[MONDAY], ABBREV_LENGTH),    ///< Mon
     std::string_view(DaysOfWeek[TUESDAY], ABBREV_LENGTH),   ///< Tue
@@ -188,27 +224,12 @@ constexpr uint8_t INVALID_DOW_INDEX = 255;
 
 /*!
  * @brief
- * Minimum day of Gregorian month.
+ * Month key table for Tomohiko Sakamoto's algorithm.
+ *
+ * @details
+ * TODO: INCOMPLETE COMMENT!!!
  */
-constexpr uint8_t MIN_DAY_OF_MONTH = 1;
-
-/*!
- * @brief
- * Maximum day of Gregorian month.
- */
-constexpr uint8_t MAX_DAY_OF_MONTH = 31;
-
-/*!
- * @brief
- * Minimum month of Gregorian year.
- */
-constexpr uint8_t MIN_MONTH_OF_YEAR = 1;
-
-/*!
- * @brief
- * Maximum month of Gregorian year.
- */
-constexpr uint8_t MAX_MONTH_OF_YEAR = 12;
+static constexpr uint8_t monthKey[12] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
 
 } // namespace simplydt::gregorian
 
