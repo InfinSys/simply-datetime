@@ -204,10 +204,12 @@ struct GregorianCalendar final :
 
         // Tomohiko Sakamoto's Algorithm
         const uint8_t monthKey[12] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
-        const YearInt_t modYear = year - (month < 3); // Extra days from leap year
-                                                      // only affect March and later
+        const YearInt_t modYear    = year - (month < 3); // Extra days from leap year
+                                                         // only affect March and later
         const int index =
-            ((modYear + modYear / 4 - modYear / 100 + modYear / 400 + monthKey[month - 1] + day) % 7);
+            ((modYear + modYear / 4 - modYear / 100 + modYear / 400 + monthKey[month - 1] + day
+             ) %
+             7);
 
         if (index > std::numeric_limits<uint8_t>::max() || index > 7)
             return INVALID_DOW_INDEX;
@@ -238,7 +240,7 @@ struct GregorianCalendar final :
             return 0; // Unsupported or invalid
 
         const uint8_t firstOfMonthDowIndex = getDayOfWeekIndex(year, month, 1);
-        const uint8_t monthCells = firstOfMonthDowIndex + monthTotalDays;
+        const uint8_t monthCells           = firstOfMonthDowIndex + monthTotalDays;
         return (monthCells + 6) / 7;
     }
 
