@@ -15,8 +15,8 @@
 #ifndef SIMPLYDT_LIB_CALENDAR_CONCEPTS_H_
 #define SIMPLYDT_LIB_CALENDAR_CONCEPTS_H_
 
-#include "simplydt/calendar/type_traits/calendar_traits.hpp"
 #include "simplydt/calendar/concepts/date_concepts.hpp"
+#include "simplydt/calendar/type_traits/calendar_traits.hpp"
 #include "simplydt/common/simplydt_defs.hpp"
 #include <concepts>
 
@@ -47,12 +47,18 @@ concept has_characteristic_query_methods = requires {
 
 template <typename Calendar_Impl>
 concept has_date_validation_methods = requires {
-    { Calendar_Impl::isValidYear(std::declval<const typename Calendar_Impl::YearInt_t>()) } -> std::same_as<bool>;
+    {
+        Calendar_Impl::isValidYear(std::declval<const typename Calendar_Impl::YearInt_t>())
+    } -> std::same_as<bool>;
+
     { Calendar_Impl::isValidMonth(std::declval<const uint8_t>()) } -> std::same_as<bool>;
     { Calendar_Impl::isValidDay(std::declval<const uint8_t>()) } -> std::same_as<bool>;
-    { Calendar_Impl::isValidDate(std::declval<const typename Calendar_Impl::Date>()) } -> std::same_as<bool>;
+
+    {
+        Calendar_Impl::isValidDate(std::declval<const typename Calendar_Impl::Date>())
+    } -> std::same_as<bool>;
 };
 
-}
+} // namespace simplydt::concepts::calendar
 
 #endif // SIMPLYDT_LIB_CALENDAR_CONCEPTS_H_
