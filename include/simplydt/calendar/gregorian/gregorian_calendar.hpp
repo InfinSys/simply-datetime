@@ -83,10 +83,30 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr uint8_t getDaysInMonth(const uint8_t month) noexcept
+    [[nodiscard]] static constexpr uint8_t getDaysInMonth(const YearInt_t year, const uint8_t month) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return 0;
+        if (!isValidYear(year) || !isValidMonth(month))
+            return 0; // Unsupported or invalid
+
+        switch (month) {
+        case FEBRUARY:
+            switch (isLeapYear(year)) {
+            case true:
+                return 29;
+            default:
+                return 28;
+            }
+
+        case APRIL:
+        case JUNE:
+        case SEPTEMBER:
+        case NOVEMBER:
+            return 30;
+
+        // January, March, May, July, August, October, December
+        default:
+            return 31;
+        }
     }
 
     /*!
@@ -95,8 +115,15 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static constexpr uint16_t getDaysInYear(const YearInt_t year) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return 0;
+        if (!isValidYear(year))
+            return 0; // Unsupported year
+
+        uint16_t totalDays = 0;
+
+        for (uint8_t month = 1; month <= 12; month++)
+            totalDays += getDaysInMonth(year, month);
+
+        return totalDays;
     }
 
     /*!
@@ -112,30 +139,38 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr uint8_t getDayOfWeekIndex(const Date date) noexcept
-    {
-        // TODO: INCOMPLETE!!!
-        return 0;
-    }
-
-    /*!
-     * @brief
-     * TODO: INCOMPLETE COMMENT!!!
-     */
-    [[nodiscard]] static constexpr uint8_t getWeeksInMonth(const uint8_t month) noexcept
-    {
-        // TODO: INCOMPLETE!!!
-        return 0;
-    }
-
-    /*!
-     * @brief
-     * TODO: INCOMPLETE COMMENT!!!
-     */
     [[nodiscard]] static constexpr bool isValidDate(const Date date) noexcept
     {
+        const uint8_t monthTotalDays = getDaysInMonth(date.year(), date.month());
+        return date.day() <= monthTotalDays;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint8_t getDayOfWeekIndex(const Date date) noexcept
+    {
+        if (!isValidDate(date))
+            return INVALID_DATE_DOW; // TODO: bruh...
+        
+        // Tomohiko Sakamoto's Algorithm
+        const uint8_t monthKey[] = { 0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4 };
+        const YearInt_t year = date.year() - (date.month() < 3); // Extra days from leap year
+                                                                 // only affect March and later
+        const int index = (year + year / 4 - year / 100 + year / 400 + monthKey[date.month() - 1] + date.day()) % 7;
+
+        return 0; // TODO: INCOMPLETE!!!
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint8_t getWeeksInMonth(const YearInt_t year, const uint8_t month) noexcept
+    {
         // TODO: INCOMPLETE!!!
-        return false;
+        return 0;
     }
 
   private:
