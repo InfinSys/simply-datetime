@@ -59,6 +59,21 @@ concept has_date_validation_methods = requires {
     } -> std::same_as<bool>;
 };
 
+template <typename Calendar_Impl>
+concept has_calendar_structure_methods = requires {
+    {
+        Calendar_Impl::getDayOfWeekIndex(std::declval<const typename Calendar_Impl::Date>())
+    } -> std::same_as<uint8_t>;
+
+    { Calendar_Impl::getDaysInMonth(std::declval<uint8_t>()) } -> std::same_as<uint8_t>;
+
+    {
+        Calendar_Impl::getDaysInYear(std::declval<typename Calendar_Impl::YearInt_t>())
+    } -> std::same_as<uint16_t>;
+
+    { Calendar_Impl::getWeeksInMonth(std::declval<uint8_t>()) } -> std::same_as<uint8_t>;
+};
+
 } // namespace simplydt::concepts::calendar
 
 #endif // SIMPLYDT_LIB_CALENDAR_CONCEPTS_H_
