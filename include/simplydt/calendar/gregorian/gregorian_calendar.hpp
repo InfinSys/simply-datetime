@@ -26,8 +26,86 @@ namespace simplydt::gregorian
  * @brief
  * Gregorian calendar system.
  */
-struct GregorianCalendar : public CalendricalSystem<GregorianCalendar, GregorianDate, Month, DayOfWeek> {
-    //...
+struct GregorianCalendar final : public CalendricalSystem<GregorianCalendar, GregorianDate, Month, DayOfWeek> {
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr CalendarSystem calendar() noexcept
+    {
+        return CalendarSystem::GREGORIAN;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr bool isSolarCalendar() noexcept
+    {
+        return true;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr bool isLunarCalendar() noexcept
+    {
+        return false;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr bool isLunisolarCalendar() noexcept
+    {
+        return false;
+    }
+
+    /*!
+     * @brief
+     * Evaluate support of year value.
+     */
+    [[nodiscard]] static constexpr bool isValidYear(const YearInt_t year) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return false;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr bool isValidMonth(const uint8_t month) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return false;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr bool isValidDay(const uint8_t day) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return false;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr bool isValidDate(const Date date) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return false;
+    }
+
+private:
+    GregorianCalendar() = delete;
+    ~GregorianCalendar() = delete;
 };
 
 SIMPLYDT_ENFORCE_CALENDAR_CONTRACT(GregorianCalendar);
