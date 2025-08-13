@@ -83,9 +83,49 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
+    [[nodiscard]] static constexpr uint8_t getDaysInMonth(const uint8_t month) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return 0;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint16_t getDaysInYear(const YearInt_t year) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return 0;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
     [[nodiscard]] static constexpr bool isValidDay(const uint8_t day) noexcept
     {
         return day >= MIN_DAY_OF_MONTH && day <= MAX_DAY_OF_MONTH;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint8_t getDayOfWeekIndex(const Date date) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return 0;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint8_t getWeeksInMonth(const uint8_t month) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return 0;
     }
 
     /*!
