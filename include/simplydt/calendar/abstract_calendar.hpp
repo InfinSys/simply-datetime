@@ -28,6 +28,8 @@ template <typename Calendar_Impl, typename Date_T, typename Month_Enum, typename
 struct CalendricalSystem {
     /*! @brief Calendar system implementation. */
     using Calendar = Calendar_Impl;
+    /*! @brief Calendar implementation base class. */
+    using Base = CalendricalSystem<Calendar_Impl, Date_T, Month_Enum, DOW_Enum>;
     /*! @brief Calendar date. */
     using Date = Date_T;
     /*! @brief Year integer type. */
@@ -37,7 +39,50 @@ struct CalendricalSystem {
     /*! @brief Enumeration of calendar days of week. */
     using DayOfWeek = DOW_Enum;
 
-    //...
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint8_t getDaysInMonth(const Date& date) noexcept
+    {
+        return Calendar::getDaysInMonth(date.year(), date.month());
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint16_t getDaysInYear(const Date& date) noexcept
+    {
+        return Calendar::getDaysInYear(date.year());
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr bool isValidDate(const Date& date) noexcept
+    {
+        return Calendar::isValidDate(date.year(), date.month(), date.day());
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint8_t getDayOfWeekIndex(const Date& date) noexcept
+    {
+        return Calendar::getDayOfWeekIndex(date.year(), date.month(), date.day());
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint8_t getWeeksInMonth(const Date& date) noexcept
+    {
+        return Calendar::getWeeksInMonth(date.year(), date.month());
+    }
 
   private:
     CalendricalSystem()  = delete;
