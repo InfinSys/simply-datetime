@@ -17,7 +17,7 @@
 
 #include "simplydt/calendar/concepts/date_concepts.hpp"
 #include "simplydt/calendar/type_traits/calendar_traits.hpp"
-#include "simplydt/common/simplydt_defs.hpp"
+#include "simplydt/common/calendar_defs.hpp"
 #include <concepts>
 
 /*!
@@ -39,7 +39,7 @@ concept has_contextual_nested_types = requires {
 
 template <typename Calendar_Impl>
 concept has_characteristic_query_members = requires {
-    { Calendar_Impl::calendar }; // TODO: Constrain static member type here...
+    { Calendar_Impl::calendar } -> std::same_as<const CalendarSystem&>;
     { Calendar_Impl::isSolarCalendar } -> std::same_as<const bool&>;
     { Calendar_Impl::isLunarCalendar } -> std::same_as<const bool&>;
     { Calendar_Impl::isLunisolarCalendar } -> std::same_as<const bool&>;
