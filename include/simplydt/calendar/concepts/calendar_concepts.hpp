@@ -38,11 +38,11 @@ concept has_contextual_nested_types = requires {
 };
 
 template <typename Calendar_Impl>
-concept has_characteristic_query_methods = requires {
-    { Calendar_Impl::calendar() }; // TODO: Constrain return type here...
-    { Calendar_Impl::isSolarCalendar() } -> std::same_as<bool>;
-    { Calendar_Impl::isLunarCalendar() } -> std::same_as<bool>;
-    { Calendar_Impl::isLunisolarCalendar() } -> std::same_as<bool>;
+concept has_characteristic_query_members = requires {
+    { Calendar_Impl::calendar }; // TODO: Constrain static member type here...
+    { Calendar_Impl::isSolarCalendar } -> std::same_as<const bool&>;
+    { Calendar_Impl::isLunarCalendar } -> std::same_as<const bool&>;
+    { Calendar_Impl::isLunisolarCalendar } -> std::same_as<const bool&>;
 };
 
 template <typename Calendar_Impl>
