@@ -16,6 +16,7 @@
 #define SIMPLYDT_LIB_CALENDAR_CONTRACT_CONCEPT_H_
 
 #include "simplydt/calendar/concepts/calendar_concepts.hpp"
+#include "simplydt/calendar/concepts/date_contract.hpp"
 
 namespace simplydt::concepts
 {
@@ -28,9 +29,11 @@ namespace simplydt::concepts
 template <typename Calendar_Impl>
 concept contract_abiding_calendar = requires {
     requires calendar::has_contextual_nested_types<Calendar_Impl>;
+    requires contract_abiding_date<typename Calendar_Impl::Date>;
     requires calendar::has_characteristic_query_members<Calendar_Impl>;
+    requires calendar::has_calendar_structure_methods<Calendar_Impl>;
     requires calendar::has_date_validation_methods<Calendar_Impl>;
-    //...
+    // requires calendar::has_date_conversion_methods<Calendar_Impl>;
 };
 
 #ifndef SIMPLYDT_ENFORCE_CALENDAR_CONTRACT
