@@ -229,7 +229,7 @@ constexpr uint8_t INVALID_DOW_INDEX = 255;
  * @details
  * TODO: INCOMPLETE COMMENT!!!
  */
-static constexpr uint8_t monthKey[12] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
+static constexpr uint8_t MONTH_KEY[12] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
 
 } // namespace simplydt::gregorian
 
