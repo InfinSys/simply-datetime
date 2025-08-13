@@ -32,37 +32,25 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr CalendarSystem calendar() noexcept
-    {
-        return CalendarSystem::GREGORIAN;
-    }
+    static constexpr CalendarSystem calendar = CalendarSystem::GREGORIAN;
 
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr bool isSolarCalendar() noexcept
-    {
-        return true;
-    }
+    static constexpr bool isSolarCalendar = true;
 
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr bool isLunarCalendar() noexcept
-    {
-        return false;
-    }
+    static constexpr bool isLunarCalendar = false;
 
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr bool isLunisolarCalendar() noexcept
-    {
-        return false;
-    }
+    static constexpr bool isLunisolarCalendar = false;
 
     /*!
      * @brief
@@ -70,8 +58,16 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static constexpr bool isValidYear(const YearInt_t year) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return false;
+        return year >= YEAR_MINIMUM && year <= YEAR_MAXIMUM;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr bool isLeapYear(const YearInt_t year) noexcept
+    {
+        return (year % 4) == 0 && (year % 100 != 0 || year % 400 == 0);
     }
 
     /*!
@@ -80,8 +76,7 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static constexpr bool isValidMonth(const uint8_t month) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return false;
+        return month >= MIN_MONTH_OF_YEAR && month <= MAX_MONTH_OF_YEAR;
     }
 
     /*!
@@ -90,8 +85,7 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static constexpr bool isValidDay(const uint8_t day) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return false;
+        return day >= MIN_DAY_OF_MONTH && day <= MAX_DAY_OF_MONTH;
     }
 
     /*!
