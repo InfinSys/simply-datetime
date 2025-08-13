@@ -179,7 +179,7 @@ constexpr std::array<std::string_view, 7> DayOfWeekAbbrevs = {
 /*!
  * @brief
  * Invalid date day-of-week index.
- * 
+ *
  * @details
  * Used to signal invalid dates that seek a day-of-week
  * index.
