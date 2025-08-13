@@ -35,9 +35,9 @@ concept contract_abiding_calendar = requires {
 
 #ifndef SIMPLYDT_ENFORCE_CALENDAR_CONTRACT
 /*! @brief Macro for asserting calendar implementation interface contract. */
-#    define SIMPLYDT_ENFORCE_CALENDAR_CONTRACT(Class)                                             \
+#    define SIMPLYDT_ENFORCE_CALENDAR_CONTRACT(Class)                                         \
         static_assert(                                                                        \
-            simplydt::concepts::contract_abiding_calendar<Class>,                                 \
+            simplydt::concepts::contract_abiding_calendar<Class>,                             \
             #Class " implementation does not fulfill the public API contract."                \
         );
 #endif
