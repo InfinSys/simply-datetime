@@ -55,14 +55,22 @@ concept has_date_validation_methods = requires {
     { Calendar_Impl::isValidDay(std::declval<const uint8_t>()) } -> std::same_as<bool>;
 
     {
-        Calendar_Impl::isValidDate(std::declval<const typename Calendar_Impl::Date>())
+        Calendar_Impl::isValidDate(
+            std::declval<const typename Calendar_Impl::YearInt_t>(),
+            std::declval<const uint8_t>(),
+            std::declval<const uint8_t>()
+        )
     } -> std::same_as<bool>;
 };
 
 template <typename Calendar_Impl>
 concept has_calendar_structure_methods = requires {
     {
-        Calendar_Impl::getDayOfWeekIndex(std::declval<const typename Calendar_Impl::Date>())
+        Calendar_Impl::getDayOfWeekIndex(
+            std::declval<const typename Calendar_Impl::YearInt_t>(),
+            std::declval<const uint8_t>(),
+            std::declval<const uint8_t>()
+        )
     } -> std::same_as<uint8_t>;
 
     {
