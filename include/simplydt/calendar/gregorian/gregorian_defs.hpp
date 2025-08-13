@@ -178,6 +178,16 @@ constexpr std::array<std::string_view, 7> DayOfWeekAbbrevs = {
 
 /*!
  * @brief
+ * Invalid date day-of-week index.
+ * 
+ * @details
+ * Used to signal invalid dates that seek a day-of-week
+ * index.
+ */
+constexpr uint8_t INVALID_DATE_DOW = 255;
+
+/*!
+ * @brief
  * Minimum day of Gregorian month.
  */
 constexpr uint8_t MIN_DAY_OF_MONTH = 1;
