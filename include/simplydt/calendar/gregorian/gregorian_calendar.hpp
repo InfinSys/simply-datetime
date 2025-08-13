@@ -18,6 +18,7 @@
 #include "simplydt/calendar/abstract_calendar.hpp"
 #include "simplydt/calendar/concepts/calendar_contract.hpp"
 #include "simplydt/calendar/gregorian/gregorian_date.hpp"
+#include <limits>
 
 namespace simplydt::gregorian
 {
@@ -74,6 +75,15 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
+    [[nodiscard]] static constexpr bool isLeapYear(const Date& date) noexcept
+    {
+        return isLeapYear(date.year());
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
     [[nodiscard]] static constexpr bool isValidMonth(const uint8_t month) noexcept
     {
         return month >= MIN_MONTH_OF_YEAR && month <= MAX_MONTH_OF_YEAR;
@@ -91,7 +101,8 @@ struct GregorianCalendar final :
             return 0; // Unsupported or invalid
 
         switch (month) {
-        case FEBRUARY:
+        // February
+        case 2:
             switch (isLeapYear(year)) {
             case true:
                 return 29;
@@ -99,16 +110,26 @@ struct GregorianCalendar final :
                 return 28;
             }
 
-        case APRIL:
-        case JUNE:
-        case SEPTEMBER:
-        case NOVEMBER:
+        // April, June, September, November
+        case 4:
+        case 6:
+        case 9:
+        case 11:
             return 30;
 
         // January, March, May, July, August, October, December
         default:
             return 31;
         }
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint8_t getDaysInMonth(const Date date) noexcept
+    {
+        return Base::getDaysInMonth(date);
     }
 
     /*!
@@ -132,6 +153,15 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
+    [[nodiscard]] static constexpr uint16_t getDaysInYear(const Date date) noexcept
+    {
+        return Base::getDaysInYear(date);
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
     [[nodiscard]] static constexpr bool isValidDay(const uint8_t day) noexcept
     {
         return day >= MIN_DAY_OF_MONTH && day <= MAX_DAY_OF_MONTH;
@@ -145,8 +175,20 @@ struct GregorianCalendar final :
         const YearInt_t year, const uint8_t month, const uint8_t day
     ) noexcept
     {
+        if (!isValidYear(year))
+            return false;
+
         const uint8_t monthTotalDays = getDaysInMonth(year, month);
         return day <= monthTotalDays;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr bool isValidDate(const Date date) noexcept
+    {
+        return Base::isValidDate(date);
     }
 
     /*!
@@ -162,15 +204,24 @@ struct GregorianCalendar final :
 
         // Tomohiko Sakamoto's Algorithm
         const uint8_t monthKey[12] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
-        const YearInt_t calcYear = year - (month < 3); // Extra days from leap year
-                                                       // only affect March and later
+        const YearInt_t modYear = year - (month < 3); // Extra days from leap year
+                                                      // only affect March and later
         const int index =
-            ((year + year / 4 - year / 100 + year / 400 + monthKey[month - 1] + day) % 7);
+            ((modYear + modYear / 4 - modYear / 100 + modYear / 400 + monthKey[month - 1] + day) % 7);
 
         if (index > std::numeric_limits<uint8_t>::max() || index > 7)
             return INVALID_DOW_INDEX;
 
         return static_cast<uint8_t>(index);
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint8_t getDayOfWeekIndex(const Date date) noexcept
+    {
+        return Base::getDayOfWeekIndex(date);
     }
 
     /*!
@@ -189,6 +240,15 @@ struct GregorianCalendar final :
         const uint8_t firstOfMonthDowIndex = getDayOfWeekIndex(year, month, 1);
         const uint8_t monthCells = firstOfMonthDowIndex + monthTotalDays;
         return (monthCells + 6) / 7;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr uint8_t getWeeksInMonth(const Date date) noexcept
+    {
+        return Base::getWeeksInMonth(date);
     }
 
   private:
