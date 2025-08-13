@@ -16,6 +16,8 @@
 #define SIMPLYDT_LIB_CALENDAR_CONCEPTS_H_
 
 #include "simplydt/calendar/type_traits/calendar_traits.hpp"
+#include "simplydt/calendar/concepts/date_concepts.hpp"
+#include "simplydt/common/simplydt_defs.hpp"
 #include <concepts>
 
 /*!
@@ -27,8 +29,29 @@
 namespace simplydt::concepts::calendar
 {
 
-// TODO: INCOMPLETE!!!
-// nested_calendar_types : Check for the expected nested types of a calendar
+template <typename Calendar_Impl>
+concept has_contextual_nested_types = requires {
+    typename Calendar_Impl::YearInt_t;
+    typename Calendar_Impl::Date;
+    typename Calendar_Impl::Month;
+    typename Calendar_Impl::DayOfWeek;
+};
+
+template <typename Calendar_Impl>
+concept has_characteristic_query_methods = requires {
+    { Calendar_Impl::calendar() }; // TODO: Constrain return type here...
+    { Calendar_Impl::isSolarCalendar() } -> std::same_as<bool>;
+    { Calendar_Impl::isLunarCalendar() } -> std::same_as<bool>;
+    { Calendar_Impl::isLunisolarCalendar() } -> std::same_as<bool>;
+};
+
+template <typename Calendar_Impl>
+concept has_date_validation_methods = requires {
+    { Calendar_Impl::isValidYear(std::declval<const typename Calendar_Impl::YearInt_t>()) } -> std::same_as<bool>;
+    { Calendar_Impl::isValidMonth(std::declval<const uint8_t>()) } -> std::same_as<bool>;
+    { Calendar_Impl::isValidDay(std::declval<const uint8_t>()) } -> std::same_as<bool>;
+    { Calendar_Impl::isValidDate(std::declval<const typename Calendar_Impl::Date>()) } -> std::same_as<bool>;
+};
 
 }
 
