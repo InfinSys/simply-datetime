@@ -28,7 +28,7 @@ namespace simplydt::concepts
 template <typename Calendar_Impl>
 concept contract_abiding_calendar = requires {
     requires calendar::has_contextual_nested_types<Calendar_Impl>;
-    requires calendar::has_characteristic_query_methods<Calendar_Impl>;
+    requires calendar::has_characteristic_query_members<Calendar_Impl>;
     requires calendar::has_date_validation_methods<Calendar_Impl>;
     //...
 };
