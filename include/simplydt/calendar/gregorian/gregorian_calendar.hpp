@@ -18,7 +18,6 @@
 #include "simplydt/calendar/abstract_calendar.hpp"
 #include "simplydt/calendar/concepts/calendar_contract.hpp"
 #include "simplydt/calendar/gregorian/gregorian_date.hpp"
-#include <limits>
 
 namespace simplydt::gregorian
 {
@@ -143,7 +142,7 @@ struct GregorianCalendar final :
 
         uint16_t totalDays = 0;
 
-        for (uint8_t month = 1; month <= 12; month++)
+        for (uint8_t month = MIN_MONTH_OF_YEAR; month <= MAX_MONTH_OF_YEAR; month++)
             totalDays += getDaysInMonth(year, month);
 
         return totalDays;
@@ -203,15 +202,15 @@ struct GregorianCalendar final :
             return INVALID_DOW_INDEX;
 
         // Tomohiko Sakamoto's Algorithm
-        const uint8_t monthKey[12] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
-        const YearInt_t modYear    = year - (month < 3); // Extra days from leap year
-                                                         // only affect March and later
+        const YearInt_t modYear = year - (month < 3); // Extra days from leap year
+                                                      // only affect March and later
+        const uint8_t monthIndex = month - 1;
         const int index =
-            ((modYear + modYear / 4 - modYear / 100 + modYear / 400 + monthKey[month - 1] + day
-             ) %
-             7);
+            ((modYear + modYear / 4 - modYear / 100 + modYear / 400 + monthKey[monthIndex] +
+              day) %
+             DAYS_IN_WEEK);
 
-        if (index > std::numeric_limits<uint8_t>::max() || index > 7)
+        if (index >= DAYS_IN_WEEK)
             return INVALID_DOW_INDEX;
 
         return static_cast<uint8_t>(index);
@@ -241,7 +240,7 @@ struct GregorianCalendar final :
 
         const uint8_t firstOfMonthDowIndex = getDayOfWeekIndex(year, month, 1);
         const uint8_t monthCells           = firstOfMonthDowIndex + monthTotalDays;
-        return (monthCells + 6) / 7;
+        return (monthCells + 6) / DAYS_IN_WEEK;
     }
 
     /*!
