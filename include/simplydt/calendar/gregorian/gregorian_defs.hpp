@@ -184,7 +184,7 @@ constexpr std::array<std::string_view, 7> DayOfWeekAbbrevs = {
  * Used to signal invalid dates that seek a day-of-week
  * index.
  */
-constexpr uint8_t INVALID_DATE_DOW = 255;
+constexpr uint8_t INVALID_DOW_INDEX = 255;
 
 /*!
  * @brief
