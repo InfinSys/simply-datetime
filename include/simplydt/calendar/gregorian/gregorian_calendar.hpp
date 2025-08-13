@@ -206,7 +206,7 @@ struct GregorianCalendar final :
                                                       // only affect March and later
         const uint8_t monthIndex = month - 1;
         const int index =
-            ((modYear + modYear / 4 - modYear / 100 + modYear / 400 + monthKey[monthIndex] +
+            ((modYear + modYear / 4 - modYear / 100 + modYear / 400 + MONTH_KEY[monthIndex] +
               day) %
              DAYS_IN_WEEK);
 
