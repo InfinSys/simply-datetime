@@ -41,6 +41,31 @@ using Year_Type = uint16_t;
 
 /*!
  * @brief
+ * Minimum supported year value.
+ *
+ * @details
+ * This is the minimum supported year for the
+ * Gregorian calendar in Simply Datetime.
+ * This limit was choosen because it aligns with
+ * Microsoft's FILETIME structure which measures
+ * 100-nanosecond intervals since January 1, 1601.
+ * This allows compatibility with Windows NT
+ * systems and historical time point capabilities.
+ */
+constexpr Year_Type YEAR_MINIMUM = 1'601;
+
+/*!
+ * @brief
+ * Maximum supported year value.
+ *
+ * @details
+ * This is the maximum supported year value for the
+ * Gregorian calendar in Simply Datetime.
+ */
+constexpr Year_Type YEAR_MAXIMUM = 2'038; // TODO: Find real limitation...
+
+/*!
+ * @brief
  * Abbreviation length for Gregorian calendar name
  * literals.
  *
