@@ -83,7 +83,9 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr uint8_t getDaysInMonth(const YearInt_t year, const uint8_t month) noexcept
+    [[nodiscard]] static constexpr uint8_t getDaysInMonth(
+        const YearInt_t year, const uint8_t month
+    ) noexcept
     {
         if (!isValidYear(year) || !isValidMonth(month))
             return 0; // Unsupported or invalid
@@ -139,38 +141,54 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr bool isValidDate(const Date date) noexcept
+    [[nodiscard]] static constexpr bool isValidDate(
+        const YearInt_t year, const uint8_t month, const uint8_t day
+    ) noexcept
     {
-        const uint8_t monthTotalDays = getDaysInMonth(date.year(), date.month());
-        return date.day() <= monthTotalDays;
+        const uint8_t monthTotalDays = getDaysInMonth(year, month);
+        return day <= monthTotalDays;
     }
 
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr uint8_t getDayOfWeekIndex(const Date date) noexcept
+    [[nodiscard]] static constexpr uint8_t getDayOfWeekIndex(
+        const YearInt_t year, const uint8_t month, const uint8_t day
+    ) noexcept
     {
-        if (!isValidDate(date))
-            return INVALID_DATE_DOW; // TODO: bruh...
-        
+        if (!isValidDate(year, month, day))
+            return INVALID_DOW_INDEX;
+
         // Tomohiko Sakamoto's Algorithm
-        const uint8_t monthKey[] = { 0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4 };
-        const YearInt_t year = date.year() - (date.month() < 3); // Extra days from leap year
-                                                                 // only affect March and later
-        const int index = (year + year / 4 - year / 100 + year / 400 + monthKey[date.month() - 1] + date.day()) % 7;
+        const uint8_t monthKey[12] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
+        const YearInt_t calcYear = year - (month < 3); // Extra days from leap year
+                                                       // only affect March and later
+        const int index =
+            ((year + year / 4 - year / 100 + year / 400 + monthKey[month - 1] + day) % 7);
 
-        return 0; // TODO: INCOMPLETE!!!
+        if (index > std::numeric_limits<uint8_t>::max() || index > 7)
+            return INVALID_DOW_INDEX;
+
+        return static_cast<uint8_t>(index);
     }
 
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr uint8_t getWeeksInMonth(const YearInt_t year, const uint8_t month) noexcept
+    [[nodiscard]] static constexpr uint8_t getWeeksInMonth(
+        const YearInt_t year, const uint8_t month
+    ) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return 0;
+        const uint8_t monthTotalDays = getDaysInMonth(year, month);
+
+        if (monthTotalDays == 0)
+            return 0; // Unsupported or invalid
+
+        const uint8_t firstOfMonthDowIndex = getDayOfWeekIndex(year, month, 1);
+        const uint8_t monthCells = firstOfMonthDowIndex + monthTotalDays;
+        return (monthCells + 6) / 7;
     }
 
   private:
