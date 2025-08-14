@@ -43,45 +43,33 @@ struct CalendricalSystem {
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr uint8_t getDaysInMonth(const Date& date) noexcept
+    [[nodiscard]] static constexpr const char* getMonthLiteral(const uint8_t month) noexcept
     {
-        return Calendar::getDaysInMonth(date.year(), date.month());
+        if (!Calendar::isValidMonth(month))
+            return INVALID_LITERAL;
+        // TODO: INCOMPLETE!!!
+        // Use template passed constexpr array somehow...
+        return "temp";
     }
 
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr uint16_t getDaysInYear(const Date& date) noexcept
+    [[nodiscard]] static constexpr const char* getMonthLiteral(const Month month) noexcept
     {
-        return Calendar::getDaysInYear(date.year());
+        // TODO: INCOMPLETE!!!
+        // Use template passed constexpr array somehow...
+        return "temp";
     }
 
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr bool isValidDate(const Date& date) noexcept
+    [[nodiscard]] static constexpr const char* getMonthLiteral(const Date date) noexcept
     {
-        return Calendar::isValidDate(date.year(), date.month(), date.day());
-    }
-
-    /*!
-     * @brief
-     * TODO: INCOMPLETE COMMENT!!!
-     */
-    [[nodiscard]] static constexpr uint8_t getDayOfWeekIndex(const Date& date) noexcept
-    {
-        return Calendar::getDayOfWeekIndex(date.year(), date.month(), date.day());
-    }
-
-    /*!
-     * @brief
-     * TODO: INCOMPLETE COMMENT!!!
-     */
-    [[nodiscard]] static constexpr uint8_t getWeeksInMonth(const Date& date) noexcept
-    {
-        return Calendar::getWeeksInMonth(date.year(), date.month());
+        return date.monthLiteral();
     }
 
   private:
