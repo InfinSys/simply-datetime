@@ -55,7 +55,7 @@ enum DatetimeComponent : uint8_t {
  * @brief
  * Invalid literal.
  */
-inline const char* INVALID_LITERAL = "invalid";
+constexpr const char* INVALID_LITERAL = "invalid";
 
 } // namespace simplydt
 
