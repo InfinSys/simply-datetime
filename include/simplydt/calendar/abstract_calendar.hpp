@@ -47,7 +47,7 @@ struct CalendricalSystem {
     {
         if (!Calendar::isValidMonth(month))
             return INVALID_LITERAL;
-        
+
         const uint8_t monthIndex = month - 1;
         return Calendar::MONTH_NAMES[monthIndex];
     }
