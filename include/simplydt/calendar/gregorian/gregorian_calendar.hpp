@@ -257,6 +257,15 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
+    [[nodiscard]] static constexpr bool isValidDOWIndex(const uint8_t dow) noexcept
+    {
+        return dow > 0 && dow < DAYS_IN_WEEK;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
     [[nodiscard]] static constexpr uint8_t getWeeksInMonth(
         const YearInt_t year, const uint8_t month
     ) noexcept
