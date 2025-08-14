@@ -63,8 +63,22 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    static constexpr inline const std::array<const char*, DAYS_IN_WEEK>& DOW_NAMES =
+    static constexpr inline const std::array<std::string_view, MONTHS_IN_YEAR>& MONTH_ABBREVS =
+        MonthAbbrevs;
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    static constexpr inline const std::array<const char*, DAYS_IN_WEEK>& DAY_OF_WEEK_NAMES =
         DaysOfWeek;
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    static constexpr inline const std::array<std::string_view, DAYS_IN_WEEK>&
+        DAY_OF_WEEK_ABBREVS = DayOfWeekAbbrevs;
 
     /*!
      * @brief
