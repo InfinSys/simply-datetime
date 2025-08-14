@@ -54,6 +54,12 @@ struct GregorianCalendar final :
 
     /*!
      * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    static constexpr inline const std::array<const char*, MONTHS_IN_YEAR>& MONTH_NAMES = Months;
+
+    /*!
+     * @brief
      * Evaluate support of year value.
      */
     [[nodiscard]] static constexpr bool isValidYear(const YearInt_t year) noexcept
@@ -128,7 +134,7 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static constexpr uint8_t getDaysInMonth(const Date date) noexcept
     {
-        return Base::getDaysInMonth(date);
+        return getDaysInMonth(date.year(), date.month());
     }
 
     /*!
@@ -154,7 +160,7 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static constexpr uint16_t getDaysInYear(const Date date) noexcept
     {
-        return Base::getDaysInYear(date);
+        return getDaysInYear(date.year());
     }
 
     /*!
@@ -187,7 +193,7 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static constexpr bool isValidDate(const Date date) noexcept
     {
-        return Base::isValidDate(date);
+        return isValidDate(date.year(), date.month(), date.day());
     }
 
     /*!
@@ -206,8 +212,8 @@ struct GregorianCalendar final :
                                                       // only affect March and later
         const uint8_t monthIndex = month - 1;
         const int index =
-            ((modYear + modYear / 4 - modYear / 100 + modYear / 400 + MONTH_KEY[monthIndex] +
-              day) %
+            ((modYear + modYear / 4 - modYear / 100 + modYear / 400 +
+              sakamoto::MONTH_KEY[monthIndex] + day) %
              DAYS_IN_WEEK);
 
         if (index >= DAYS_IN_WEEK)
@@ -222,7 +228,7 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static constexpr uint8_t getDayOfWeekIndex(const Date date) noexcept
     {
-        return Base::getDayOfWeekIndex(date);
+        return getDayOfWeekIndex(date.year(), date.month(), date.day());
     }
 
     /*!
@@ -249,7 +255,39 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static constexpr uint8_t getWeeksInMonth(const Date date) noexcept
     {
-        return Base::getWeeksInMonth(date);
+        return getWeeksInMonth(date.year(), date.month());
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr stl::UnixTimestamp toUnixTimestamp(
+        const YearInt_t year, const uint8_t month, const uint8_t day
+    ) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return 0;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr Date fromUnixTimestamp(const stl::UnixTimestamp& timestamp) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return Date{};
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static Date fromTimePoint(const stl::SystemTimePoint& time_point) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return Date{};
     }
 
   private:
