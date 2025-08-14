@@ -18,6 +18,7 @@
 #include "simplydt/calendar/concepts/date_concepts.hpp"
 #include "simplydt/calendar/type_traits/calendar_traits.hpp"
 #include "simplydt/common/calendar_defs.hpp"
+#include "simplydt/common/stl_chrono_defs.hpp"
 #include <concepts>
 
 /*!
@@ -43,6 +44,21 @@ concept has_characteristic_query_members = requires {
     { Calendar_Impl::isSolarCalendar } -> std::same_as<const bool&>;
     { Calendar_Impl::isLunarCalendar } -> std::same_as<const bool&>;
     { Calendar_Impl::isLunisolarCalendar } -> std::same_as<const bool&>;
+};
+
+template <typename Calendar_Impl>
+concept has_calendar_name_arrays = requires {
+    {
+        Calendar_Impl::MONTH_NAMES
+    } -> std::same_as<const std::array<
+        const char*,
+        std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::MONTH_NAMES)>>>&>;
+
+    {
+        Calendar_Impl::DOW_NAMES
+    } -> std::same_as<const std::array<
+        const char*,
+        std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::DOW_NAMES)>>>&>;
 };
 
 template <typename Calendar_Impl>
@@ -88,6 +104,25 @@ concept has_calendar_structure_methods = requires {
             std::declval<typename Calendar_Impl::YearInt_t>(), std::declval<uint8_t>()
         )
     } -> std::same_as<uint8_t>;
+};
+
+template <typename Calendar_Impl>
+concept has_date_conversion_methods = requires {
+    {
+        Calendar_Impl::toUnixTimestamp(
+            std::declval<const typename Calendar_Impl::YearInt_t>(),
+            std::declval<const uint8_t>(),
+            std::declval<const uint8_t>()
+        )
+    } -> std::same_as<stl::UnixTimestamp>;
+
+    {
+        Calendar_Impl::fromUnixTimestamp(std::declval<stl::UnixTimestamp>())
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
+    {
+        Calendar_Impl::fromTimePoint(std::declval<stl::SystemTimePoint>())
+    } -> std::same_as<typename Calendar_Impl::Date>;
 };
 
 } // namespace simplydt::concepts::calendar
