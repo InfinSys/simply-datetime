@@ -148,7 +148,7 @@ enum DayOfWeek : uint8_t {
  * @brief
  * Array of Gregorian calendar month name literals.
  */
-constexpr std::array<const char*, MONTHS_IN_YEAR> Months = {
+inline constexpr std::array<const char*, MONTHS_IN_YEAR> Months = {
     "January",   ///< Index 0
     "February",  ///< Index 1
     "March",     ///< Index 2
@@ -168,7 +168,7 @@ constexpr std::array<const char*, MONTHS_IN_YEAR> Months = {
  * Array of abbreviated Gregorian calendar month
  * names.
  */
-constexpr std::array<std::string_view, MONTHS_IN_YEAR> MonthAbbrevs = {
+inline constexpr std::array<std::string_view, MONTHS_IN_YEAR> MonthAbbrevs = {
     std::string_view(Months[JANUARY], ABBREV_LENGTH),   ///< Jan
     std::string_view(Months[FEBRUARY], ABBREV_LENGTH),  ///< Feb
     std::string_view(Months[MARCH], ABBREV_LENGTH),     ///< Mar
@@ -187,7 +187,7 @@ constexpr std::array<std::string_view, MONTHS_IN_YEAR> MonthAbbrevs = {
  * @brief
  * Array of Gregorian calendar day-of-week literals.
  */
-constexpr std::array<const char*, DAYS_IN_WEEK> DaysOfWeek = {
+inline constexpr std::array<const char*, DAYS_IN_WEEK> DaysOfWeek = {
     "Sunday",    ///< Index 0
     "Monday",    ///< Index 1
     "Tuesday",   ///< Index 2
@@ -202,7 +202,7 @@ constexpr std::array<const char*, DAYS_IN_WEEK> DaysOfWeek = {
  * Array of abbreviated Gregorian calendar day-of-week
  * literals.
  */
-constexpr std::array<std::string_view, DAYS_IN_WEEK> DayOfWeekAbbrevs = {
+inline constexpr std::array<std::string_view, DAYS_IN_WEEK> DayOfWeekAbbrevs = {
     std::string_view(DaysOfWeek[SUNDAY], ABBREV_LENGTH),    ///< Sun
     std::string_view(DaysOfWeek[MONDAY], ABBREV_LENGTH),    ///< Mon
     std::string_view(DaysOfWeek[TUESDAY], ABBREV_LENGTH),   ///< Tue
@@ -222,6 +222,19 @@ constexpr std::array<std::string_view, DAYS_IN_WEEK> DayOfWeekAbbrevs = {
  */
 constexpr uint8_t INVALID_DOW_INDEX = 255;
 
+} // namespace simplydt::gregorian
+
+/*!
+ * @brief
+ * Tomohiko Sakamoto's Algorithm.
+ * 
+ * @details
+ * Algorithm for computing day-of-week indecies of
+ * Gregorian calendar dates by Tomohiko Sakamoto.
+ */
+namespace simplydt::sakamoto
+{
+
 /*!
  * @brief
  * Month key table for Tomohiko Sakamoto's algorithm.
@@ -231,6 +244,6 @@ constexpr uint8_t INVALID_DOW_INDEX = 255;
  */
 static constexpr uint8_t MONTH_KEY[12] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
 
-} // namespace simplydt::gregorian
+} // namespace simplydt::sakamoto
 
 #endif // SIMPLYDT_LIB_GREGORIAN_CALENDAR_DEFINITIONS_H_
