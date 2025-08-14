@@ -23,8 +23,8 @@ int main(int argc, char* argv[])
     constexpr GregorianDate demo{2'025, 8, 13};
     std::cout << "\nDemo date: " << demo << '\n';
 
-    constexpr bool isValid    = GregorianCalendar::isValidDate(demo);
-    constexpr uint8_t noWeeks = GregorianCalendar::getWeeksInMonth(demo);
+    constexpr bool isValid      = GregorianCalendar::isValidDate(demo);
+    constexpr uint8_t noWeeks   = GregorianCalendar::getWeeksInMonth(demo);
     constexpr const char* month = GregorianCalendar::getMonthLiteral(demo);
     //
 
