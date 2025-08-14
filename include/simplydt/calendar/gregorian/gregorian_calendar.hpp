@@ -56,7 +56,15 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    static constexpr inline const std::array<const char*, MONTHS_IN_YEAR>& MONTH_NAMES = Months;
+    static constexpr inline const std::array<const char*, MONTHS_IN_YEAR>& MONTH_NAMES =
+        Months;
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    static constexpr inline const std::array<const char*, DAYS_IN_WEEK>& DOW_NAMES =
+        DaysOfWeek;
 
     /*!
      * @brief
@@ -274,7 +282,8 @@ struct GregorianCalendar final :
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr Date fromUnixTimestamp(const stl::UnixTimestamp& timestamp) noexcept
+    [[nodiscard]] static constexpr Date fromUnixTimestamp(const stl::UnixTimestamp& timestamp
+    ) noexcept
     {
         // TODO: INCOMPLETE!!!
         return Date{};
