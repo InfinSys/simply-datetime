@@ -43,7 +43,7 @@ struct CalendricalSystem {
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr const char* getMonthLiteral(const uint8_t month) noexcept
+    [[nodiscard]] static constexpr const char* getMonthName(const uint8_t month) noexcept
     {
         if (!Calendar::isValidMonth(month))
             return INVALID_LITERAL;
@@ -56,7 +56,7 @@ struct CalendricalSystem {
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr const char* getMonthLiteral(const Month month) noexcept
+    [[nodiscard]] static constexpr const char* getMonthName(const Month month) noexcept
     {
         const uint8_t monthIndex = static_cast<uint8_t>(month);
 
@@ -70,9 +70,130 @@ struct CalendricalSystem {
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr const char* getMonthLiteral(const Date date) noexcept
+    [[nodiscard]] static constexpr const char* getMonthName(const Date date) noexcept
     {
         return date.monthLiteral();
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr std::string getMonthAbbrev(const uint8_t month) noexcept
+    {
+        if (!Calendar::isValidMonth(month))
+            return INVALID_LITERAL;
+
+        const uint8_t monthIndex = month - 1;
+        const std::string abbreviation{ Calendar::MONTH_ABBREVS[monthIndex] };
+        return abbreviation;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr std::string getMonthAbbrev(const Month month) noexcept
+    {
+        const uint8_t monthIndex = static_cast<uint8_t>(month);
+
+        if (!Calendar::isValidMonth(monthIndex + 1))
+            return INVALID_LITERAL;
+
+        const std::string abbreviation{ Calendar::MONTH_ABBREVS[monthIndex] };
+        return abbreviation;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr std::string getMonthAbbrev(const Date date) noexcept
+    {
+        return date.monthAbbreviation();
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr Month getMonthEnumRepr(const uint8_t month) noexcept
+    {
+        if (!Calendar::isValidMonth(month))
+            return static_cast<Month>(0); // TODO: Crap...
+
+        const uint8_t monthIndex = month - 1;
+        return static_cast<Month>(monthIndex);
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr Month getMonthEnumRepr(const Date date) noexcept
+    {
+        return static_cast<Month>(date.month() - 1);
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr const char* getDayOfWeekName(const Date date) noexcept
+    {
+        if (!Calendar::isValidDate(date))
+            return INVALID_LITERAL;
+
+        const uint8_t dowIndex = Calendar::getDayOfWeekIndex(date);
+        return Calendar::DAY_OF_WEEK_NAMES[dowIndex];
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr const char* getDayOfWeekName(const DayOfWeek dow) noexcept
+    {
+        const uint8_t dowIndex = static_cast<uint8_t>(dow);
+
+        if (!Calendar::isValidDOWIndex(dowIndex))
+            return INVALID_LITERAL;
+
+        return Calendar::DAY_OF_WEEK_NAMES[dowIndex];
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr std::string getDayOfWeekAbbrev(const Date date) noexcept
+    {
+        if (!isValidDate(date))
+            return INVALID_LITERAL;
+
+        const uint8_t dowIndex = Calendar::getDayOfWeekIndex(date);
+        const std::string abbreviation{ Calendar::DAY_OF_WEEK_ABBREVS[dowIndex] };
+        return abbreviation;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr std::string getDayOfWeekAbbrev(const DayOfWeek dow) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return "temp";
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr DayOfWeek getDayOfWeekEnumRepr(const Date date) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return static_cast<DayOfWeek>(0);
     }
 
   private:
