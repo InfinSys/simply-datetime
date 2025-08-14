@@ -79,13 +79,13 @@ struct CalendricalSystem {
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr std::string getMonthAbbrev(const uint8_t month) noexcept
+    [[nodiscard]] static std::string getMonthAbbrev(const uint8_t month) noexcept
     {
         if (!Calendar::isValidMonth(month))
             return INVALID_LITERAL;
 
         const uint8_t monthIndex = month - 1;
-        const std::string abbreviation{ Calendar::MONTH_ABBREVS[monthIndex] };
+        const std::string abbreviation{Calendar::MONTH_ABBREVS[monthIndex]};
         return abbreviation;
     }
 
@@ -93,14 +93,14 @@ struct CalendricalSystem {
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr std::string getMonthAbbrev(const Month month) noexcept
+    [[nodiscard]] static std::string getMonthAbbrev(const Month month) noexcept
     {
         const uint8_t monthIndex = static_cast<uint8_t>(month);
 
         if (!Calendar::isValidMonth(monthIndex + 1))
             return INVALID_LITERAL;
 
-        const std::string abbreviation{ Calendar::MONTH_ABBREVS[monthIndex] };
+        const std::string abbreviation{Calendar::MONTH_ABBREVS[monthIndex]};
         return abbreviation;
     }
 
@@ -108,7 +108,7 @@ struct CalendricalSystem {
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr std::string getMonthAbbrev(const Date date) noexcept
+    [[nodiscard]] static std::string getMonthAbbrev(const Date date) noexcept
     {
         return date.monthAbbreviation();
     }
@@ -166,13 +166,13 @@ struct CalendricalSystem {
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr std::string getDayOfWeekAbbrev(const Date date) noexcept
+    [[nodiscard]] static std::string getDayOfWeekAbbrev(const Date date) noexcept
     {
-        if (!isValidDate(date))
+        if (!Calendar::isValidDate(date))
             return INVALID_LITERAL;
 
         const uint8_t dowIndex = Calendar::getDayOfWeekIndex(date);
-        const std::string abbreviation{ Calendar::DAY_OF_WEEK_ABBREVS[dowIndex] };
+        const std::string abbreviation{Calendar::DAY_OF_WEEK_ABBREVS[dowIndex]};
         return abbreviation;
     }
 
@@ -180,10 +180,15 @@ struct CalendricalSystem {
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
      */
-    [[nodiscard]] static constexpr std::string getDayOfWeekAbbrev(const DayOfWeek dow) noexcept
+    [[nodiscard]] static std::string getDayOfWeekAbbrev(const DayOfWeek dow) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return "temp";
+        const uint8_t dowIndex = static_cast<uint8_t>(dow);
+
+        if (!Calendar::isValidDOWIndex(dowIndex))
+            return INVALID_LITERAL;
+
+        const std::string abbreviation{Calendar::DAY_OF_WEEK_ABBREVS[dowIndex]};
+        return abbreviation;
     }
 
     /*!
@@ -192,8 +197,11 @@ struct CalendricalSystem {
      */
     [[nodiscard]] static constexpr DayOfWeek getDayOfWeekEnumRepr(const Date date) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return static_cast<DayOfWeek>(0);
+        if (!Calendar::isValidDate(date))
+            return static_cast<DayOfWeek>(0); // TODO: Oh no.. another one...
+
+        const uint8_t dowIndex = Calendar::getDayOfWeekIndex(date);
+        return static_cast<DayOfWeek>(dowIndex);
     }
 
   private:
