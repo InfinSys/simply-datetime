@@ -227,7 +227,7 @@ constexpr uint8_t INVALID_DOW_INDEX = 255;
 /*!
  * @brief
  * Tomohiko Sakamoto's Algorithm.
- * 
+ *
  * @details
  * Algorithm for computing day-of-week indecies of
  * Gregorian calendar dates by Tomohiko Sakamoto.
