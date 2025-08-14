@@ -81,6 +81,7 @@ concept has_date_validation_methods = requires {
 
     { Calendar_Impl::isValidMonth(std::declval<const uint8_t>()) } -> std::same_as<bool>;
     { Calendar_Impl::isValidDay(std::declval<const uint8_t>()) } -> std::same_as<bool>;
+    { Calendar_Impl::isValidDOWIndex(std::declval<const uint8_t>()) } -> std::same_as<bool>;
 
     {
         Calendar_Impl::isValidDate(
@@ -88,6 +89,10 @@ concept has_date_validation_methods = requires {
             std::declval<const uint8_t>(),
             std::declval<const uint8_t>()
         )
+    } -> std::same_as<bool>;
+
+    {
+        Calendar_Impl::isValidDate(std::declval<const typename Calendar_Impl::Date>())
     } -> std::same_as<bool>;
 };
 
