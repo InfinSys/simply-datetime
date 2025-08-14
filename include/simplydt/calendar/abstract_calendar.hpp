@@ -47,9 +47,9 @@ struct CalendricalSystem {
     {
         if (!Calendar::isValidMonth(month))
             return INVALID_LITERAL;
-        // TODO: INCOMPLETE!!!
-        // Use template passed constexpr array somehow...
-        return "temp";
+        
+        const uint8_t monthIndex = month - 1;
+        return Calendar::MONTH_NAMES[monthIndex];
     }
 
     /*!
@@ -58,9 +58,12 @@ struct CalendricalSystem {
      */
     [[nodiscard]] static constexpr const char* getMonthLiteral(const Month month) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        // Use template passed constexpr array somehow...
-        return "temp";
+        const uint8_t monthIndex = static_cast<uint8_t>(month);
+
+        if (!Calendar::isValidMonth(monthIndex + 1))
+            return INVALID_LITERAL;
+
+        return Calendar::MONTH_NAMES[monthIndex];
     }
 
     /*!
