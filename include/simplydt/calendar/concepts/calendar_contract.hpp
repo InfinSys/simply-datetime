@@ -33,7 +33,7 @@ concept contract_abiding_calendar = requires {
     requires calendar::has_characteristic_query_members<Calendar_Impl>;
     requires calendar::has_calendar_structure_methods<Calendar_Impl>;
     requires calendar::has_date_validation_methods<Calendar_Impl>;
-    // requires calendar::has_date_conversion_methods<Calendar_Impl>;
+    requires calendar::has_date_conversion_methods<Calendar_Impl>;
 };
 
 #ifndef SIMPLYDT_ENFORCE_CALENDAR_CONTRACT
