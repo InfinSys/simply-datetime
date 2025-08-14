@@ -17,9 +17,15 @@ int main(int argc, char* argv[])
     ProjectInfoOut();
 
     //\\//
-    simplydt::gregorian::GregorianDate demo{2'025, 8, 11};
+    using GregorianDate     = simplydt::gregorian::GregorianDate;
+    using GregorianCalendar = simplydt::gregorian::GregorianCalendar;
 
-    std::cout << demo << '\n';
+    constexpr GregorianDate demo{2'025, 8, 13};
+    std::cout << "\nDemo date: " << demo << '\n';
+
+    constexpr bool isValid    = GregorianCalendar::isValidDate(demo);
+    constexpr uint8_t noWeeks = GregorianCalendar::getWeeksInMonth(demo);
+    constexpr const char* month = GregorianCalendar::getMonthLiteral(demo);
     //
 
     std::cout << "\n\n\t[ Complete ]" << std::endl;
