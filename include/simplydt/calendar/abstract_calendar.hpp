@@ -23,6 +23,20 @@ namespace simplydt
 /*!
  * @brief
  * Base calendar agnostic system.
+ *
+ * @details
+ * This class serves as a foundational interface for calendar
+ * systems, providing a generic and extensible structure for
+ * calendar operations. It is designed to be agnostic of any
+ * specific calendar implementation, allowing derived calendars
+ * to define their own month and day-of-week enumerations, date
+ * representations, and naming conventions. This type is not
+ * self-constructable and must be inherited by a concrete
+ * implementation that presents a valid public API. Implementations
+ * should seek confirmation their API is compliant by invoking the
+ * calendar contract enforcement macro just after the body of the
+ * implementation. Failing to be compliant can result in substitution
+ * errors or undefined behavior.
  */
 template <typename Calendar_Impl, typename Date_T, typename Month_Enum, typename DOW_Enum>
 struct CalendricalSystem {
