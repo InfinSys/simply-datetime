@@ -9,13 +9,13 @@
 * -> [] using Days = int32_t
 * -> [] using Hours = int32_t
 * -> [] ...
-* 
+*
 * -> [] (Need a base class to compose int32_t)
 * -> [] (Present common functionality amongst units)
 * -> [] (Units interact with date/time types)
 * -> [] (Units can automatically convert from one another)
-* 
-* 
+*
+*
 * -> [] :: Month Vars ::
 * -> [] constexpr uint8_t January = 1
 * -> [] constexpr uint8_t February = 2
