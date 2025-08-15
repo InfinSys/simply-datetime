@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
     using Month             = simplydt::gregorian::Month;
     using UnixTimestamp     = simplydt::stl::UnixTimestamp;
 
-    constexpr GregorianDate demo{2'025, 8, 14};
+    constexpr GregorianDate demo{2'025, 8, 15};
     std::cout << "\nDemo date: " << demo << '\n';
 
     constexpr bool isValid                         = GregorianCalendar::isValidDate(demo);
@@ -49,6 +49,8 @@ int main(int argc, char* argv[])
         GregorianCalendar::getDayOfWeekEnumRepr(demo);
     constexpr UnixTimestamp serialDays = GregorianCalendar::toDaysSinceEpoch(demo);
     constexpr GregorianDate fromSerial = GregorianCalendar::fromDaysSinceEpoch(0);
+    constexpr UnixTimestamp tzz =
+        GregorianCalendar::toUnixTimestamp(GregorianDate{2'004, 9, 17});
     // int32_t toDaysSinceEpoch()
     // Date fromDaysSinceEpoch()
     //
