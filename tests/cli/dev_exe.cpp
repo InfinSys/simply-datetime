@@ -22,6 +22,11 @@
 * -> [] constexpr uint8_t March = 3
 * -> [] ...
 *
+* -> [] :: Output Styles ::
+* -> [] StandardStyle ----> 2004-09-17:00:00:00.000
+* -> [] UnixStyle --------> 2004-09-17T00:00:00.000
+* -> [] ...
+*
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
 // Includes...
@@ -56,8 +61,6 @@ int main(int argc, char* argv[])
     const GregorianDate bzr =
         GregorianCalendar::fromTimePoint(std::chrono::system_clock::now(), false);
     std::cout << bzr << '\n';
-    // int32_t toDaysSinceEpoch()
-    // Date fromDaysSinceEpoch()
     //
 
     std::cout << "\n\n\t[ Complete ]" << std::endl;
