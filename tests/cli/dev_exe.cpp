@@ -5,7 +5,22 @@
 *
 * ~ CLI Debug Executable Notes / TO-DO List ~
 *
-* -> [] N/a
+* -> [] :: Simply Datetime Units ::
+* -> [] using Days = int32_t
+* -> [] using Hours = int32_t
+* -> [] ...
+* 
+* -> [] (Need a base class to compose int32_t)
+* -> [] (Present common functionality amongst units)
+* -> [] (Units interact with date/time types)
+* -> [] (Units can automatically convert from one another)
+* 
+* 
+* -> [] :: Month Vars ::
+* -> [] constexpr uint8_t January = 1
+* -> [] constexpr uint8_t February = 2
+* -> [] constexpr uint8_t March = 3
+* -> [] ...
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
@@ -20,6 +35,7 @@ int main(int argc, char* argv[])
     using GregorianDate     = simplydt::gregorian::GregorianDate;
     using GregorianCalendar = simplydt::gregorian::GregorianCalendar;
     using Month             = simplydt::gregorian::Month;
+    using UnixTimestamp     = simplydt::stl::UnixTimestamp;
 
     constexpr GregorianDate demo{2'025, 8, 14};
     std::cout << "\nDemo date: " << demo << '\n';
@@ -31,6 +47,10 @@ int main(int argc, char* argv[])
     constexpr const char* dowName                  = GregorianCalendar::getDayOfWeekName(demo);
     constexpr simplydt::gregorian::DayOfWeek dowRepr =
         GregorianCalendar::getDayOfWeekEnumRepr(demo);
+    constexpr UnixTimestamp serialDays = GregorianCalendar::toDaysSinceEpoch(demo);
+    constexpr GregorianDate fromSerial = GregorianCalendar::fromDaysSinceEpoch(0);
+    // int32_t toDaysSinceEpoch()
+    // Date fromDaysSinceEpoch()
     //
 
     std::cout << "\n\n\t[ Complete ]" << std::endl;
