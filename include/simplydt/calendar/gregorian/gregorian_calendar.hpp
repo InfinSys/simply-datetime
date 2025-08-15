@@ -229,7 +229,8 @@ struct GregorianCalendar final :
         if (!isValidDate(year, month, day))
             return INVALID_DOW_INDEX;
 
-        // Tomohiko Sakamoto's Algorithm
+        // CREDITS: Tomohiko Sakamoto
+        // Day-of-week index algorithm
         const YearInt_t modYear = year - (month < 3); // Extra days from leap year
                                                       // only affect March and later
         const uint8_t monthIndex = month - 1;
