@@ -51,26 +51,24 @@ concept has_calendar_name_arrays = requires {
     {
         Calendar_Impl::MONTH_NAMES
     } -> std::same_as<const std::array<
-          const char*,
-          std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::MONTH_NAMES)>>>&>;
+        const char*,
+        std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::MONTH_NAMES)>>>&>;
 
     {
         Calendar_Impl::MONTH_ABBREVS
     } -> std::same_as<const std::array<
-          std::string_view,
-          std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::MONTH_NAMES)>>>&>;
+        std::string_view,
+        std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::MONTH_NAMES)>>>&>;
 
     {
         Calendar_Impl::DAY_OF_WEEK_NAMES
-    }
-    -> std::same_as<const std::array<
+    } -> std::same_as<const std::array<
         const char*,
         std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::DAY_OF_WEEK_NAMES)>>>&>;
 
     {
         Calendar_Impl::DAY_OF_WEEK_ABBREVS
-    }
-    -> std::same_as<const std::array<
+    } -> std::same_as<const std::array<
         std::string_view,
         std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::DAY_OF_WEEK_NAMES)>>>&>;
 };
