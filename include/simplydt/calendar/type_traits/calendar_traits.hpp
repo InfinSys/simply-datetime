@@ -26,7 +26,7 @@
 namespace simplydt::type_traits::calendar
 {
 
-// TODO: INCOMPLETE!!!
+//...
 
 }
 
