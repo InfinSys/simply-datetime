@@ -35,7 +35,7 @@ namespace simplydt::type_traits
 namespace simplydt::type_traits::date
 {
 
-// TODO: INCOMPLETE!!!
+//...
 
 }
 
