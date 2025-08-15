@@ -147,12 +147,12 @@ struct GregorianCalendar final :
     /*!
      * @brief
      * Returns total number of days in a given calendar year.
-     * 
+     *
      * @details
      * Determines whether the specified year is a leap year and
      * returns `DAYS_IN_LEAP_YEAR` or `DAYS_IN_YEAR` accordingly.
      * If the year is unsupported the function returns 0.
-     * 
+     *
      * @return
      * Total days in year
      */
@@ -167,11 +167,11 @@ struct GregorianCalendar final :
     /*!
      * @brief
      * Returns total number of days in the year of a given date.
-     * 
+     *
      * @details
      * Extracts the year from the provided `Date` to determine
      * the total number of days in the year.
-     * 
+     *
      * @return
      * Total days in year
      */
@@ -201,14 +201,14 @@ struct GregorianCalendar final :
      * @brief
      * Returns total number of days in a given month of a
      * specified year.
-     * 
+     *
      * @details
      * This function handles the varying lengths of months in
      * the Gregorian calendar, including the special case of
      * February during a leap year. The function first validates
      * the year and month; if either is invalid, it returns 0 to
      * indicate an unsupported or invalid date component.
-     * 
+     *
      * @return
      * Total days in month
      */
@@ -244,11 +244,11 @@ struct GregorianCalendar final :
      * @brief
      * Returns total number of days in the month of a specified
      * date.
-     * 
+     *
      * @details
      * Extracts the year and month from the provided `Date` to
      * determine the total number of days in the dates month.
-     * 
+     *
      * @return
      * Total days in month
      */
@@ -278,14 +278,14 @@ struct GregorianCalendar final :
      * @brief
      * Checks if a given year, month, and day combination form
      * a valid calendar date.
-     * 
+     *
      * @details
      * This function returns true when the provided date parameters
      * describe a real date on the Gregorian calendar. This is
      * achieved by comparing the dates day to the total number
      * of days in the month. If the provided year is not supported,
      * the function returns false.
-     * 
+     *
      * @return
      * True if date exists on calendar
      */
@@ -303,11 +303,11 @@ struct GregorianCalendar final :
     /*!
      * @brief
      * Checks if a given date is a valid calendar date.
-     * 
+     *
      * @details
      * Extracts components from the provided `Date` to determine
      * validity of the date.
-     * 
+     *
      * @return
      * True if date exists on calendar
      */
@@ -319,12 +319,12 @@ struct GregorianCalendar final :
     /*!
      * @brief
      * Checks if a day-of-week index is within valid range.
-     * 
+     *
      * @details
      * Accepts a zero-based day-of-week index
      * (0 = Sunday ... 6 = Saturday). Returns true only if the
      * index is less than `DAYS_IN_WEEK`.
-     * 
+     *
      * @return
      * True if valid day-of-week index
      */
@@ -336,14 +336,14 @@ struct GregorianCalendar final :
     /*!
      * @brief
      * Calculates day-of-week index for a given calendar date.
-     * 
+     *
      * @details
      * Implements Tomohiko Sakamoto's algorithm to determine
      * the day of the week for the specified year, month, and
      * day combination. Returns a zero-based day-of-week index
      * (0 = Sunday ... 6 = Saturday), or `INVALID_DOW_INDEX`
      * if the provided date does not exist on the calendar.
-     * 
+     *
      * @return
      * Day-of-week index
      */
@@ -373,11 +373,11 @@ struct GregorianCalendar final :
     /*!
      * @brief
      * Calculates day-of-week index for a given calendar date.
-     * 
+     *
      * @details
      * Extracts the year, month, and day from the given `Date`
      * instance to compute the zero-based day-of-week index.
-     * 
+     *
      * @return
      * Day-of-week index
      */
@@ -390,7 +390,7 @@ struct GregorianCalendar final :
      * @brief
      * Determines number of weeks a specified month spans
      * over the calendar.
-     * 
+     *
      * @details
      * Calculates how many full or partial weeks are needed to
      * contain all days of the specified month in a standard
@@ -398,7 +398,7 @@ struct GregorianCalendar final :
      * the month starts on and the total number of days in the
      * month. Returns 0 if the month is invalid or if the
      * provided year is unsupported.
-     * 
+     *
      * @return
      * Number of weeks month spans
      */
@@ -420,12 +420,12 @@ struct GregorianCalendar final :
      * @brief
      * Determines number of weeks a calendar dates month
      * spans over the calendar.
-     * 
+     *
      * @details
      * Extracts the year and month from the provided `Date`
      * instance to calculate the number of weeks a month
      * spans over the calendar.
-     * 
+     *
      * @return
      * Number of weeks month spans
      */
@@ -438,13 +438,13 @@ struct GregorianCalendar final :
      * @brief
      * Converts a calendar date to serial number of days since
      * Unix epoch.
-     * 
+     *
      * @details
      * Uses Howard Hinnant’s civil date algorithm to convert
      * a year, month, day combination into a signed day count
      * relative to the Unix epoch (1970-01-01 = day 0). The
      * result can be negative for dates before the epoch.
-     * 
+     *
      * @return
      * Days since January 1, 1970
      */
@@ -466,13 +466,13 @@ struct GregorianCalendar final :
      * @brief
      * Converts a calendar date to serial number of days since
      * Unix epoch.
-     * 
+     *
      * @details
      * Extracts the date components from the provided `Date`
      * instance to calculate a signed day count relative to
      * the Unix epoch (1970-01-01 = day 0). The result can be
      * negative for dates before the epoch.
-     * 
+     *
      * @return
      * Days since January 1, 1970
      */
@@ -485,14 +485,14 @@ struct GregorianCalendar final :
      * @brief
      * Converts a serial count of days since Unix epoch to
      * a calendar date.
-     * 
+     *
      * @details
      * Uses Howard Hinnant’s civil date algorithm to convert
      * a signed day count relative to the Unix epoch
      * (1970-01-01 = day 0) into a year, month, day combination.
      * Returns a `GregorianDate` representing the calculated
      * civil date.
-     * 
+     *
      * @return
      * Gregorian calendar date
      */
@@ -516,7 +516,7 @@ struct GregorianCalendar final :
      * @brief
      * Converts a calendar date to a Unix timestamp (seconds
      * since epoch).
-     * 
+     *
      * @details
      * Uses `toDaysSinceEpoch()` to calculate the number of
      * days since the Unix epoch (1970-01-01) and multiplies
@@ -524,7 +524,7 @@ struct GregorianCalendar final :
      * equivalent timestamp in seconds. The returned value
      * is stored in `stl::UnixTimestamp` and may be negative
      * for dates before the epoch.
-     * 
+     *
      * @return
      * Unix timestamp
      */
@@ -539,13 +539,13 @@ struct GregorianCalendar final :
      * @brief
      * Converts a calendar date to a Unix timestamp (seconds
      * since epoch).
-     * 
+     *
      * @details
      * Extracts the date components from the provided `Date`
      * instance to calculate the corresponding Unix timestamp.
      * The returned value is stored in `stl::UnixTimestamp`
      * and may be negative for dates before the epoch.
-     * 
+     *
      * @return
      * Unix timestamp
      */
@@ -558,14 +558,14 @@ struct GregorianCalendar final :
      * @brief
      * Converts a Unix timestamp (seconds since epoch) to a
      * calendar date.
-     * 
+     *
      * @details
      * Divides the given `stl::UnixTimestamp` by the number
      * of seconds in a day to convert seconds to whole days
      * since the Unix epoch (1970-01-01), then calls
      * `fromDaysSinceEpoch()` to obtain the corresponding
      * calendar date.
-     * 
+     *
      * @return
      * Gregorian calendar date
      */
@@ -579,7 +579,7 @@ struct GregorianCalendar final :
      * @brief
      * Converts a system clock time point to a local calendar
      * date.
-     * 
+     *
      * @details
      * Interprets the given `stl::SystemTimePoint` as local
      * time by converting it to a Unix timestamp and then
@@ -589,7 +589,7 @@ struct GregorianCalendar final :
      * construct and return a `GregorianDate`. If the local
      * date conversion fails a default constructed Gregorian
      * date is returned.
-     * 
+     *
      * @return
      * Gregorian calendar date
      */
@@ -616,14 +616,14 @@ struct GregorianCalendar final :
      * @brief
      * Converts a system clock time point to a local calendar
      * date.
-     * 
+     *
      * @details
      * If `local` is true (time-zone), interprets the given
      * `stl::SystemTimePoint` as local time. If `local` is false
      * (no time-zone), interprets the time point as UTC. If the
      * local date conversion fails a default constructed Gregorian
      * date is returned.
-     * 
+     *
      * @return
      * Gregorian calendar date
      */
