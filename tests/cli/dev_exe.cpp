@@ -53,6 +53,8 @@ int main(int argc, char* argv[])
         GregorianCalendar::toUnixTimestamp(GregorianDate{2'004, 9, 17});
     constexpr GregorianDate zzt =
         GregorianCalendar::fromUnixTimestamp(1'095'379'200); // 2004-09-17T00:00:00.00
+    const GregorianDate bzr = GregorianCalendar::fromTimePoint(std::chrono::system_clock::now(), false);
+    std::cout << bzr << '\n';
     // int32_t toDaysSinceEpoch()
     // Date fromDaysSinceEpoch()
     //
