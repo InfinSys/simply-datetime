@@ -5,27 +5,27 @@
 *
 * ~ CLI Debug Executable Notes / TO-DO List ~
 *
-* -> [] :: Simply Datetime Units ::
-* -> [] using Days = int32_t
-* -> [] using Hours = int32_t
-* -> [] ...
-*
-* -> [] (Need a base class to compose int32_t)
+* -> [] :: Simply Datetime Time Units ::
+* -> [] template struct TimeUnit { ... }; <---(Composes int32_t)
 * -> [] (Present common functionality amongst units)
 * -> [] (Units interact with date/time types)
 * -> [] (Units can automatically convert from one another)
 *
-*
-* -> [] :: Month Vars ::
-* -> [] constexpr uint8_t January = 1
-* -> [] constexpr uint8_t February = 2
-* -> [] constexpr uint8_t March = 3
+* -> [] struct Days : public TimeUnit<TOP_LEVEL_UNIT> { ... };
+* -> [] struct Hours : public TimeUnit<1, 24> { ... };
+* -> [] struct Minutes : public TimeUnit<1, 1'440> { ... };
 * -> [] ...
 *
-* -> [] :: Output Styles ::
+*
+* -> [] :: Datetime Output Styles ::
 * -> [] StandardStyle ----> 2004-09-17:00:00:00.000
 * -> [] UnixStyle --------> 2004-09-17T00:00:00.000
+* -> [] CivilStyle -------> 2004-09-17 00:00:00
 * -> [] ...
+*
+*
+* -> [] static constexpr uint8_t getWeeksInMonth() <--- Returns whole weeks in month
+* -> [] static constexpr uint8_t getWeeksSpanned() <--- Returns weeks spanned by month
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
@@ -50,6 +50,8 @@ int main(int argc, char* argv[])
     constexpr const char* month                    = GregorianCalendar::getMonthName(demo);
     constexpr simplydt::gregorian::Month monthRepr = GregorianCalendar::getMonthEnumRepr(demo);
     constexpr const char* dowName                  = GregorianCalendar::getDayOfWeekName(demo);
+    constexpr bool isLeap                          = GregorianCalendar::isLeapYear(demo);
+    constexpr uint16_t daysInYr                    = GregorianCalendar::getDaysInYear(demo);
     constexpr simplydt::gregorian::DayOfWeek dowRepr =
         GregorianCalendar::getDayOfWeekEnumRepr(demo);
     constexpr UnixTimestamp serialDays = GregorianCalendar::toDaysSinceEpoch(demo);
