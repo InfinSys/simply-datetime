@@ -381,8 +381,12 @@ struct GregorianCalendar final :
             return Date{}; // Failed to interpret local date
 
         return Date{
-            static_cast<YearInt_t>(dateBuffer.tm_year + 1'900), // tm_year measures years since 1900
-            static_cast<uint8_t>(dateBuffer.tm_mon + 1), // tm_mon measures months since January
+            static_cast<YearInt_t>(
+                dateBuffer.tm_year + 1'900
+            ), // tm_year measures years since 1900
+            static_cast<uint8_t>(
+                dateBuffer.tm_mon + 1
+            ), // tm_mon measures months since January
             static_cast<uint8_t>(dateBuffer.tm_mday)
         };
     }
