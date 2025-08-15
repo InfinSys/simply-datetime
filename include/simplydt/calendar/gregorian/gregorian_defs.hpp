@@ -66,6 +66,13 @@ constexpr Year_Type YEAR_MAXIMUM = 2'038; // TODO: Find real limitation...
 
 /*!
  * @brief
+ * Total number of calendar years in one Gregorian
+ * era.
+ */
+constexpr Year_Type YEARS_IN_ERA = 400;
+
+/*!
+ * @brief
  * Abbreviation length for Gregorian calendar name
  * literals.
  *
@@ -104,6 +111,12 @@ constexpr uint8_t MAX_MONTH_OF_YEAR = 12;
  * Total number of days in one calendar week.
  */
 constexpr uint8_t DAYS_IN_WEEK = 7;
+
+/*!
+ * @brief
+ * TODO: INCOMPLETE COMMENT!!!
+ */
+constexpr uint16_t DAYS_IN_YEAR_INT = 365;
 
 /*!
  * @brief
