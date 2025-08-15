@@ -95,7 +95,7 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static constexpr bool isLeapYear(const YearInt_t year) noexcept
     {
-        return (year % 4) == 0 && (year % 100 != 0 || year % 400 == 0);
+        return (year % 4) == 0 && (year % 100 != 0 || year % YEARS_IN_ERA == 0);
     }
 
     /*!
@@ -234,7 +234,7 @@ struct GregorianCalendar final :
                                                       // only affect March and later
         const uint8_t monthIndex = month - 1;
         const int index =
-            ((modYear + modYear / 4 - modYear / 100 + modYear / 400 +
+            ((modYear + modYear / 4 - modYear / 100 + modYear / YEARS_IN_ERA +
               sakamoto::MONTH_KEY[monthIndex] + day) %
              DAYS_IN_WEEK);
 
@@ -287,6 +287,53 @@ struct GregorianCalendar final :
     [[nodiscard]] static constexpr uint8_t getWeeksInMonth(const Date date) noexcept
     {
         return getWeeksInMonth(date.year(), date.month());
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr int32_t toDaysSinceEpoch(
+        YearInt_t year, uint8_t month, uint8_t day
+    ) noexcept
+    {
+        // Convert {year, month, day} triple into a serial count of days.
+        // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
+        year -= month <= 2;
+        const int era = year / YEARS_IN_ERA;
+        const unsigned yoe = static_cast<unsigned>(year - era * YEARS_IN_ERA);
+        const unsigned doy = (153*(month + (month > 2 ? -3 : 9)) + 2)/5 + day-1;
+        const unsigned doe = yoe * DAYS_IN_YEAR + yoe/4 - yoe/100 + doy;
+        return static_cast<int32_t>(era * 146097 + static_cast<long>(doe) - 719468);
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr int32_t toDaysSinceEpoch(const Date date) noexcept
+    {
+        return toDaysSinceEpoch(date.year(), date.month(), date.day());
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr Date fromDaysSinceEpoch(int32_t serial_days) noexcept
+    {
+        // Convert a serial count of days into a {year, month, day} triple.
+        // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
+        serial_days += 719468;
+        const int era = (serial_days >= 0 ? serial_days : serial_days - 146096) / 146097;
+        const unsigned doe = static_cast<unsigned>(serial_days - era * 146097);
+        const unsigned yoe = (doe - doe/1460 + doe/36524 - doe/146096) / DAYS_IN_YEAR;
+        const YearInt_t y = static_cast<YearInt_t>(yoe) + era * YEARS_IN_ERA;
+        const unsigned doy = doe - (DAYS_IN_YEAR*yoe + yoe/4 - yoe/100);
+        const unsigned mp = (5*doy + 2)/153;
+        const uint8_t d = static_cast<uint8_t>(doy - (153*mp+2)/5 + 1);
+        const uint8_t m = static_cast<uint8_t>(mp + (mp < 10 ? 3 : -9));
+        return Date{ static_cast<YearInt_t>(y + (m <= 2)), m, d };
     }
 
     /*!
