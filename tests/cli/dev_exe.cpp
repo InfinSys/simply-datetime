@@ -51,6 +51,8 @@ int main(int argc, char* argv[])
     constexpr GregorianDate fromSerial = GregorianCalendar::fromDaysSinceEpoch(0);
     constexpr UnixTimestamp tzz =
         GregorianCalendar::toUnixTimestamp(GregorianDate{2'004, 9, 17});
+    constexpr GregorianDate zzt =
+        GregorianCalendar::fromUnixTimestamp(1'095'379'200); // 2004-09-17T00:00:00.00
     // int32_t toDaysSinceEpoch()
     // Date fromDaysSinceEpoch()
     //
