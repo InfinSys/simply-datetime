@@ -18,6 +18,7 @@
 #include "simplydt/calendar/abstract_calendar.hpp"
 #include "simplydt/calendar/concepts/calendar_contract.hpp"
 #include "simplydt/calendar/gregorian/gregorian_date.hpp"
+#include "simplydt/common/stl_chrono_utils.hpp"
 
 namespace simplydt::gregorian
 {
@@ -373,8 +374,32 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static Date fromTimePoint(const stl::SystemTimePoint& time_point) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return Date{};
+        const stl::UnixTimestamp secsSinceEpoch = stl::SystemClock::to_time_t(time_point);
+        stl::CalendarDateTime dateBuffer{};
+
+        if (!stl::deriveLocalDateTimeFromTimestamp(&secsSinceEpoch, &dateBuffer))
+            return Date{}; // Failed to interpret local date
+
+        return Date{
+            static_cast<YearInt_t>(dateBuffer.tm_year + 1'900), // tm_year measures years since 1900
+            static_cast<uint8_t>(dateBuffer.tm_mon + 1), // tm_mon measures months since January
+            static_cast<uint8_t>(dateBuffer.tm_mday)
+        };
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static Date fromTimePoint(
+        const stl::SystemTimePoint& time_point, const bool local
+    ) noexcept
+    {
+        if (local)
+            return fromTimePoint(time_point);
+
+        const stl::UnixTimestamp secsSinceEpoch = stl::SystemClock::to_time_t(time_point);
+        return fromUnixTimestamp(secsSinceEpoch);
     }
 
   private:
