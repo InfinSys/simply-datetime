@@ -309,7 +309,20 @@ namespace simplydt::sakamoto
  * month length variations and leap year alignment,
  * avoiding branches when calculating the day-of-week.
  */
-inline constexpr uint8_t MONTH_KEY[gregorian::MONTHS_IN_YEAR] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
+inline constexpr uint8_t MONTH_KEY[gregorian::MONTHS_IN_YEAR] = {
+    0, ///< January offset
+    3, ///< February offset
+    2, ///< March offset
+    5, ///< April offset
+    0, ///< May offset
+    3, ///< June offset
+    5, ///< July offset
+    1, ///< August offset
+    4, ///< September offset
+    6, ///< October offset
+    2, ///< November offset
+    4  ///< December offset
+};
 
 } // namespace simplydt::sakamoto
 
