@@ -114,19 +114,21 @@ constexpr uint8_t DAYS_IN_WEEK = 7;
 
 /*!
  * @brief
- * TODO: INCOMPLETE COMMENT!!!
+ * Total number of days in one common calendar
+ * year.
  */
 constexpr uint16_t DAYS_IN_YEAR = 365;
 
 /*!
  * @brief
- * TODO: INCOMPLETE COMMENT!!!
+ * Total number of days in one calendar leap
+ * year.
  */
 constexpr uint16_t DAYS_IN_LEAP_YEAR = 366;
 
 /*!
  * @brief
- * TODO: INCOMPLETE COMMENT!!!
+ * Average amount of days per calendar year.
  */
 constexpr inline float AVG_DAYS_IN_YEAR = 365.25;
 
@@ -262,10 +264,14 @@ namespace simplydt::sakamoto
 
 /*!
  * @brief
- * Month key table for Tomohiko Sakamoto's algorithm.
+ * Month offset lookup table for Tomohiko Sakamoto's
+ * algorithm.
  *
  * @details
- * TODO: INCOMPLETE COMMENT!!!
+ * Each value is a precomputed offset added in the
+ * algorithm's summation. The offsets compactly encode
+ * month length variations and leap year alignment,
+ * avoiding branches when calculating the day-of-week.
  */
 static constexpr uint8_t MONTH_KEY[12] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
 
