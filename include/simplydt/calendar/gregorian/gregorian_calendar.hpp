@@ -297,8 +297,8 @@ struct GregorianCalendar final :
         YearInt_t year, uint8_t month, uint8_t day
     ) noexcept
     {
-        // Convert {year, month, day} triple into a serial count of days.
         // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
+        // Convert {year, month, day} triple into a serial count of days.
         year -= month <= 2;
         const int era      = year / YEARS_IN_ERA;
         const unsigned yoe = static_cast<unsigned>(year - era * YEARS_IN_ERA);
@@ -322,8 +322,8 @@ struct GregorianCalendar final :
      */
     [[nodiscard]] static constexpr Date fromDaysSinceEpoch(int32_t serial_days) noexcept
     {
-        // Convert a serial count of days into a {year, month, day} triple.
         // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
+        // Convert a serial count of days into a {year, month, day} triple.
         serial_days += 719'468;
         const int era = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
         const unsigned doe = static_cast<unsigned>(serial_days - era * 146'097);
@@ -363,8 +363,7 @@ struct GregorianCalendar final :
     [[nodiscard]] static constexpr Date fromUnixTimestamp(const stl::UnixTimestamp& timestamp
     ) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return Date{};
+        return fromDaysSinceEpoch(static_cast<int32_t>(timestamp / 86'400));
     }
 
     /*!
