@@ -116,7 +116,19 @@ constexpr uint8_t DAYS_IN_WEEK = 7;
  * @brief
  * TODO: INCOMPLETE COMMENT!!!
  */
-constexpr uint16_t DAYS_IN_YEAR_INT = 365;
+constexpr uint16_t DAYS_IN_YEAR = 365;
+
+/*!
+ * @brief
+ * TODO: INCOMPLETE COMMENT!!!
+ */
+constexpr uint16_t DAYS_IN_LEAP_YEAR = 366;
+
+/*!
+ * @brief
+ * TODO: INCOMPLETE COMMENT!!!
+ */
+constexpr inline float AVG_DAYS_IN_YEAR = 365.25;
 
 /*!
  * @brief
