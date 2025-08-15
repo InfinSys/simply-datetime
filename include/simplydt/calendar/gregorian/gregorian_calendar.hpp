@@ -344,8 +344,16 @@ struct GregorianCalendar final :
         const YearInt_t year, const uint8_t month, const uint8_t day
     ) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return 0;
+        return static_cast<stl::UnixTimestamp>(toDaysSinceEpoch(year, month, day) * 86'400);
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] static constexpr stl::UnixTimestamp toUnixTimestamp(const Date date) noexcept
+    {
+        return toUnixTimestamp(date.year(), date.month(), date.day());
     }
 
     /*!
