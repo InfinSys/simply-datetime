@@ -71,6 +71,42 @@ constexpr Year_Type YEAR_MAXIMUM = 2'038; // TODO: Find real limitation...
  */
 constexpr Year_Type YEARS_IN_ERA = 400;
 
+/*! @brief The month of January (1). */
+constexpr uint8_t January = 1;
+
+/*! @brief The month of February (2). */
+constexpr uint8_t February = 2;
+
+/*! @brief The month of March (3). */
+constexpr uint8_t March = 3;
+
+/*! @brief The month of April (4). */
+constexpr uint8_t April = 4;
+
+/*! @brief The month of May (5). */
+constexpr uint8_t May = 5;
+
+/*! @brief The month of June (6). */
+constexpr uint8_t June = 6;
+
+/*! @brief The month of July (7). */
+constexpr uint8_t July = 7;
+
+/*! @brief The month of August (8). */
+constexpr uint8_t August = 8;
+
+/*! @brief The month of September (9). */
+constexpr uint8_t September = 9;
+
+/*! @brief The month of October (10). */
+constexpr uint8_t October = 10;
+
+/*! @brief The month of November (11). */
+constexpr uint8_t November = 11;
+
+/*! @brief The month of December (12). */
+constexpr uint8_t December = 12;
+
 /*!
  * @brief
  * Abbreviation length for Gregorian calendar name
@@ -98,13 +134,13 @@ constexpr uint8_t MAX_DAY_OF_MONTH = 31;
  * @brief
  * Minimum month of Gregorian year.
  */
-constexpr uint8_t MIN_MONTH_OF_YEAR = 1;
+constexpr uint8_t MIN_MONTH_OF_YEAR = January;
 
 /*!
  * @brief
  * Maximum month of Gregorian year.
  */
-constexpr uint8_t MAX_MONTH_OF_YEAR = 12;
+constexpr uint8_t MAX_MONTH_OF_YEAR = December;
 
 /*!
  * @brief
@@ -273,7 +309,7 @@ namespace simplydt::sakamoto
  * month length variations and leap year alignment,
  * avoiding branches when calculating the day-of-week.
  */
-static constexpr uint8_t MONTH_KEY[12] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
+inline constexpr uint8_t MONTH_KEY[gregorian::MONTHS_IN_YEAR] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
 
 } // namespace simplydt::sakamoto
 
