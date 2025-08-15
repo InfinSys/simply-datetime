@@ -24,8 +24,9 @@
 * -> [] ...
 *
 *
-* -> [] static constexpr uint8_t getWeeksInMonth() <--- Returns whole weeks in month
-* -> [] static constexpr uint8_t getWeeksSpanned() <--- Returns weeks spanned by month
+* -> [] :: GregorianCalendar Static Methods ::
+* -> [] static constexpr uint8_t getWeeksInMonth() <------ Returns whole weeks in month
+* -> [] static constexpr uint8_t getWeeksMonthSpans() <--- Returns weeks spanned by month
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
