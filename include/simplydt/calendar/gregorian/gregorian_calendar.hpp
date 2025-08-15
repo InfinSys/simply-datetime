@@ -300,11 +300,11 @@ struct GregorianCalendar final :
         // Convert {year, month, day} triple into a serial count of days.
         // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
         year -= month <= 2;
-        const int era = year / YEARS_IN_ERA;
+        const int era      = year / YEARS_IN_ERA;
         const unsigned yoe = static_cast<unsigned>(year - era * YEARS_IN_ERA);
-        const unsigned doy = (153*(month + (month > 2 ? -3 : 9)) + 2)/5 + day-1;
-        const unsigned doe = yoe * DAYS_IN_YEAR + yoe/4 - yoe/100 + doy;
-        return static_cast<int32_t>(era * 146097 + static_cast<long>(doe) - 719468);
+        const unsigned doy = (153 * (month + (month > 2 ? -3 : 9)) + 2) / 5 + day - 1;
+        const unsigned doe = yoe * DAYS_IN_YEAR + yoe / 4 - yoe / 100 + doy;
+        return static_cast<int32_t>(era * 146'097 + static_cast<long>(doe) - 719'468);
     }
 
     /*!
@@ -324,16 +324,16 @@ struct GregorianCalendar final :
     {
         // Convert a serial count of days into a {year, month, day} triple.
         // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
-        serial_days += 719468;
-        const int era = (serial_days >= 0 ? serial_days : serial_days - 146096) / 146097;
-        const unsigned doe = static_cast<unsigned>(serial_days - era * 146097);
-        const unsigned yoe = (doe - doe/1460 + doe/36524 - doe/146096) / DAYS_IN_YEAR;
-        const YearInt_t y = static_cast<YearInt_t>(yoe) + era * YEARS_IN_ERA;
-        const unsigned doy = doe - (DAYS_IN_YEAR*yoe + yoe/4 - yoe/100);
-        const unsigned mp = (5*doy + 2)/153;
-        const uint8_t d = static_cast<uint8_t>(doy - (153*mp+2)/5 + 1);
-        const uint8_t m = static_cast<uint8_t>(mp + (mp < 10 ? 3 : -9));
-        return Date{ static_cast<YearInt_t>(y + (m <= 2)), m, d };
+        serial_days += 719'468;
+        const int era = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
+        const unsigned doe = static_cast<unsigned>(serial_days - era * 146'097);
+        const unsigned yoe = (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
+        const YearInt_t y  = static_cast<YearInt_t>(yoe) + era * YEARS_IN_ERA;
+        const unsigned doy = doe - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100);
+        const unsigned mp  = (5 * doy + 2) / 153;
+        const uint8_t d    = static_cast<uint8_t>(doy - (153 * mp + 2) / 5 + 1);
+        const uint8_t m    = static_cast<uint8_t>(mp + (mp < 10 ? 3 : -9));
+        return Date{static_cast<YearInt_t>(y + (m <= 2)), m, d};
     }
 
     /*!
