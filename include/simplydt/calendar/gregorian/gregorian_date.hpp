@@ -41,7 +41,7 @@ namespace simplydt::gregorian
  * the real-world calendar. The calendar can verify
  * the validity of the date held by this type.
  */
-struct GregorianDate : public CalendarDate<GregorianDate, Year_Type> {
+struct GregorianDate final : public CalendarDate<GregorianDate, Year_Type> {
     /*! @brief Underlying date representation type. */
     using Repr_Type = uint32_t;
 
