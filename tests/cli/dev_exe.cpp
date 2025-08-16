@@ -6,12 +6,12 @@
 * ~ CLI Debug Executable Notes / TO-DO List ~
 *
 * -> [] :: Simply Datetime Time Units ::
-* -> [] template struct TimeUnit { ... }; <---(Composes int32_t)
+* -> [] template struct TimeUnit { ... };  <---(Composes int32_t)
 * -> [] (Present common functionality amongst units)
 * -> [] (Units interact with date/time types)
 * -> [] (Units can automatically convert from one another)
 *
-* -> [] struct Days : public TimeUnit<TOP_LEVEL_UNIT> { ... };
+* -> [] struct Days : public TimeUnit<TOP_LEVEL_RESOLUTION> { ... };
 * -> [] struct Hours : public TimeUnit<1, 24> { ... };
 * -> [] struct Minutes : public TimeUnit<1, 1'440> { ... };
 * -> [] ...
@@ -25,8 +25,19 @@
 *
 *
 * -> [] :: GregorianCalendar Static Methods ::
-* -> [] static constexpr uint8_t getWeeksInMonth() <------ Returns whole weeks in month
-* -> [] static constexpr uint8_t getWeeksMonthSpans() <--- Returns weeks spanned by month
+* -> [] static constexpr uint8_t getWeeksInMonth()  <------(Returns whole weeks in month)
+* -> [] static constexpr uint8_t getWeeksMonthSpans()  <---(Returns weeks spanned by month)
+*
+*
+* -> [] :: Common Time Definitions ::
+* -> [] using Time_t = float;
+* -> [] inline constexpr Time_t NOON = 0.5;
+* -> [] inline constexpr Time_t MIDNIGHT = 0.0;
+* -> [] ...
+*
+*
+* -> [] :: Library Compile-Time Utilities ::
+* -> [] template struct ArgParams<...>;  <---(Holds argument parameter types)
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
