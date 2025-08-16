@@ -63,6 +63,9 @@
         <mxCell id="ZFn_RlzpXiSQa8_ubGI3-0" value="(Needs to be updated to include the kind of time system being used)..." style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="AAKn3JwIwb8s-OrhhNjA-1">
           <mxGeometry x="-3240" y="-1720" width="400" height="30" as="geometry" />
         </mxCell>
+        <mxCell id="ZFn_RlzpXiSQa8_ubGI3-2" value="&amp;gt; struct TimeSystem&amp;lt;Time_Impl, Repr_T&amp;gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;-&amp;gt; stores an instance of Repr_T&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;-&amp;gt; (this must be a floating point type)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;div&gt;&amp;gt; struct UTCTime : TimeSystem&amp;lt;UTCTime, float&amp;gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&amp;gt; struct XUTCTime : TimeSystem&amp;lt;XUTCTime, double&amp;gt;&lt;/div&gt;&lt;div&gt;&amp;gt; struct TAITime : TimeSystem&amp;lt;TAITime, float&amp;gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="AAKn3JwIwb8s-OrhhNjA-1">
+          <mxGeometry x="-3800" y="-1152" width="320" height="110" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
