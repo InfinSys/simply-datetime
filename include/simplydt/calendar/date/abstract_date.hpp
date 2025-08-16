@@ -43,6 +43,10 @@ struct CalendarDate {
     /*! @brief Date year type. */
     using YearInt_t = Year_T;
 
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
     [[nodiscard]] std::optional<YearInt_t> getComponent(const CalendarComponent component
     ) const
     {
