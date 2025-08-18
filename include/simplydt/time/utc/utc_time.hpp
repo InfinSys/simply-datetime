@@ -120,6 +120,8 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
     Time_t timeInDay; ///< Time of day
 };
 
+SIMPLYDT_ENFORCE_TIME_CONTRACT(UTCTime);
+
 } // namespace simplydt::utc
 
 #endif // SIMPLYDT_LIB_COORDINATED_UNIVERSAL_TIME_STRUCT_H_
