@@ -28,16 +28,16 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
 
     /*!
      * @brief
-     * Intercepts invalid time-in-day values and returns
+     * Intercepts invalid serial seconds values and returns
      * midnight (00:00:00 AM).
      *
      * @return
-     * Provided time-in-day value, midnight otherwise
+     * Midnight if invalid, provided time-in-day value otherwise
      */
     [[nodiscard]] static constexpr Time_t useDefaultIfInvalid(const Time_t& time_in_day
     ) noexcept
     {
-        return time_in_day >= FULL_DAY ? MIDNIGHT : time_in_day;
+        return time_in_day >= SECONDS_IN_DAY ? MIDNIGHT : time_in_day;
     }
 
     /*!
@@ -47,7 +47,7 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
      */
     constexpr UTCTime(const uint8_t hour, const uint8_t minute, const uint8_t second) noexcept
         : TimeSystem<UTCTime, Time_t>{},
-        timeInDay{useDefaultIfInvalid(TimeCalc::timeToSerialSecs(hour, minute, second))}
+        timeInDay{Base::toSerialSeconds(hour, minute, second)}
     {
         //
     }
@@ -59,7 +59,7 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
      */
     constexpr UTCTime(const uint8_t hour, const uint8_t minute) noexcept
         : TimeSystem<UTCTime, Time_t>{},
-        timeInDay{useDefaultIfInvalid(TimeCalc::timeToSerialSecs(hour, minute, 0))}
+        timeInDay{Base::toSerialSeconds(hour, minute, 0)}
     {
         //
     }
@@ -71,7 +71,7 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
      */
     explicit constexpr UTCTime(const uint8_t hour) noexcept
         : TimeSystem<UTCTime, Time_t>{},
-        timeInDay{useDefaultIfInvalid(TimeCalc::timeToSerialSecs(hour, 0, 0))}
+        timeInDay{Base::toSerialSeconds(hour, 0, 0)}
     {
         //
     }
@@ -95,17 +95,17 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
 
     [[nodiscard]] constexpr uint8_t hour() const noexcept
     {
-        return TimeCalc::hourFromSerialSecs(this->timeInDay);
+        return Base::hourFromSerialSecs(this->timeInDay);
     }
 
     [[nodiscard]] constexpr uint8_t minute() const noexcept
     {
-        return TimeCalc::minuteFromSerialSecs(this->timeInDay);
+        return Base::minuteFromSerialSecs(this->timeInDay);
     }
 
     [[nodiscard]] constexpr uint8_t second() const noexcept
     {
-        return TimeCalc::secondFromSerialSecs(this->timeInDay);
+        return Base::secondFromSerialSecs(this->timeInDay);
     }
 
   private:
