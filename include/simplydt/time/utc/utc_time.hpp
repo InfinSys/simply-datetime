@@ -18,6 +18,7 @@
 #include "simplydt/time/abstract_time.hpp"
 #include "simplydt/time/concepts/time_api_contract.hpp"
 #include "simplydt/time/utc/utc_defs.hpp"
+#include "simplydt/time/units/time_units.hpp"
 
 namespace simplydt::utc
 {
@@ -72,6 +73,13 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
     explicit constexpr UTCTime(const uint8_t hour) noexcept
         : TimeSystem<UTCTime, Time_t>{},
         timeInDay{Base::toSerialSeconds(hour, 0, 0)}
+    {
+        //
+    }
+
+    constexpr UTCTime(const Seconds secs_in_day) noexcept
+        : TimeSystem<UTCTime, Time_t>{},
+        timeInDay{useDefaultIfInvalid(secs_in_day.count())}
     {
         //
     }
