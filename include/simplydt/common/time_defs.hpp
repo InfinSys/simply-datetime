@@ -49,13 +49,13 @@ constexpr uint8_t MINUTES_IN_HOUR = 60;
 /*! @brief Total number of hours in one day. */
 constexpr uint8_t HOURS_IN_DAY = 24;
 
-/*! @brief Midnight (00:00:00 AM). */
+/*! @brief Midnight in serial seconds (00:00:00 AM). */
 constexpr Time_t MIDNIGHT = 0;
 
-/*! @brief Noon (12:00:00 PM). */
+/*! @brief Noon in serial seconds (12:00:00 PM). */
 constexpr Time_t NOON = SECONDS_IN_DAY / 2;
 
-/*! @brief End of day (23:59:59 PM) */
+/*! @brief End of day in serial seconds (23:59:59 PM) */
 constexpr Time_t TIME_MAX = SECONDS_IN_DAY - 1;
 
 } // namespace simplydt
