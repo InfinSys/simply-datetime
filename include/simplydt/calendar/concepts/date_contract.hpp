@@ -46,7 +46,7 @@ concept contract_abiding_date = requires {
         static_assert(                                                                        \
             simplydt::concepts::contract_abiding_date<Class>,                                 \
             #Class " implementation does not fulfill the public API contract."                \
-        );
+        )
 #endif
 
 #endif // SIMPLYDT_LIB_CALENDAR_DATE_CONTRACT_CONCEPT_H_

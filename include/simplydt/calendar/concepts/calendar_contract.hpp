@@ -43,7 +43,7 @@ concept contract_abiding_calendar = requires {
         static_assert(                                                                        \
             simplydt::concepts::contract_abiding_calendar<Class>,                             \
             #Class " implementation does not fulfill the public API contract."                \
-        );
+        )
 #endif
 
 } // namespace simplydt::concepts
