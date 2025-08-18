@@ -8,7 +8,7 @@
  * @file abstract_time.hpp
  *
  * @brief
- * Base CRTP time declaration.
+ * Base time system declaration.
  */
 
 
@@ -27,20 +27,6 @@ struct TimeSystem {
     using Time = Time_Impl;
     /*! @brief Underlying time representation type. */
     using Repr_Type = Integer_T;
-
-    /*!
-     * @brief
-     * Intercepts invalid time-in-day values and returns
-     * midnight (00:00:00 AM).
-     *
-     * @return
-     * Provided time-in-day value, midnight otherwise
-     */
-    [[nodiscard]] static constexpr Repr_Type useDefaultIfInvalid(const Repr_Type& time_in_day
-    ) noexcept
-    {
-        return time_in_day >= Time::FULL_DAY ? MIDNIGHT : time_in_day;
-    }
 
   private:
     TimeSystem()  = default;
