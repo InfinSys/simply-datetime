@@ -8,7 +8,7 @@
  * @file abstract_time.hpp
  *
  * @brief
- * Base time system declaration.
+ * Abstract time system declaration.
  */
 
 
