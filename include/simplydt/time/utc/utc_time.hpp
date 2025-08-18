@@ -43,12 +43,30 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
 
     /*!
      * @brief
+     * Intercepts invalid time parameters and returns midnight
+     * (00:00:00 AM).
+     *
+     * @return
+     * Midnight if invalid, provided time-in-day value otherwise
+     */
+    [[nodiscard]] static constexpr Time_t useDefaultIfInvalid(
+        const uint8_t& hour, const uint8_t& minute, const uint8_t& second
+    ) noexcept
+    {
+        if ((hour >= HOURS_IN_DAY) || (minute >= MINUTES_IN_HOUR) || (second >= SECONDS_IN_MINUTE))
+            return MIDNIGHT; // Invalid time parameters
+        
+        return Base::toSerialSeconds(hour, minute, second);
+    }
+
+    /*!
+     * @brief
      * Construct UTC time using hour, minute, and second
      * values.
      */
     constexpr UTCTime(const uint8_t hour, const uint8_t minute, const uint8_t second) noexcept
         : TimeSystem<UTCTime, Time_t>{},
-        timeInDay{Base::toSerialSeconds(hour, minute, second)}
+        timeInDay{useDefaultIfInvalid(hour, minute, second)}
     {
         //
     }
@@ -60,7 +78,7 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
      */
     constexpr UTCTime(const uint8_t hour, const uint8_t minute) noexcept
         : TimeSystem<UTCTime, Time_t>{},
-        timeInDay{Base::toSerialSeconds(hour, minute, 0)}
+        timeInDay{useDefaultIfInvalid(hour, minute, 0)}
     {
         //
     }
@@ -72,11 +90,16 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
      */
     explicit constexpr UTCTime(const uint8_t hour) noexcept
         : TimeSystem<UTCTime, Time_t>{},
-        timeInDay{Base::toSerialSeconds(hour, 0, 0)}
+        timeInDay{useDefaultIfInvalid(hour, 0, 0)}
     {
         //
     }
 
+    /*!
+     * @brief
+     * Construct UTC time from seconds since start of
+     * day.
+     */
     constexpr UTCTime(const Seconds secs_in_day) noexcept
         : TimeSystem<UTCTime, Time_t>{},
         timeInDay{useDefaultIfInvalid(secs_in_day.count())}
