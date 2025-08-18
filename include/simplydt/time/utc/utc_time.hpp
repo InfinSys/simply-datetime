@@ -28,6 +28,20 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
 
     /*!
      * @brief
+     * Intercepts invalid time-in-day values and returns
+     * midnight (00:00:00 AM).
+     *
+     * @return
+     * Provided time-in-day value, midnight otherwise
+     */
+    [[nodiscard]] static constexpr Time_t useDefaultIfInvalid(const Time_t& time_in_day
+    ) noexcept
+    {
+        return time_in_day >= FULL_DAY ? MIDNIGHT : time_in_day;
+    }
+
+    /*!
+     * @brief
      * Construct UTC time using hour, minute, and second
      * values.
      */
