@@ -21,12 +21,12 @@
 namespace simplydt
 {
 
-template <typename Time_Impl, typename Integer_T>
+template <typename Time_Impl, typename Repr_T>
 struct TimeSystem {
     /*! @brief Time system implementation. */
     using Time = Time_Impl;
     /*! @brief Underlying time representation type. */
-    using Repr_Type = Integer_T;
+    using Repr_Type = Repr_T;
 
   private:
     TimeSystem()  = default;
