@@ -30,10 +30,8 @@
 *
 *
 * -> [] :: Common Time Definitions ::
-* -> [] using Time_t = float;
-* -> [] inline constexpr Time_t NOON = 0.5;
-* -> [] inline constexpr Time_t MIDNIGHT = 0.0;
-* -> [] ...
+* -> [] using ExTime_t = uint64_t;
+* -> [] constexpr ExTime_t EX_TIME_MAX = NANOSECS_IN_DAY - 1;
 *
 *
 * -> [] :: Library Compile-Time Utilities ::
@@ -43,6 +41,8 @@
 
 // Includes...
 #include "simplydt/calendar/gregorian/gregorian_calendar.hpp"
+#include "simplydt/time/utc/utc_time.hpp"
+#include "simplydt/common/time_defs.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -53,6 +53,7 @@ int main(int argc, char* argv[])
     using GregorianCalendar = simplydt::gregorian::GregorianCalendar;
     using Month             = simplydt::gregorian::Month;
     using UnixTimestamp     = simplydt::stl::UnixTimestamp;
+    using UTCTime           = simplydt::utc::UTCTime;
 
     constexpr GregorianDate demo{2'025, 8, 15};
     std::cout << "\nDemo date: " << demo << '\n';
@@ -75,6 +76,12 @@ int main(int argc, char* argv[])
     const GregorianDate bzr =
         GregorianCalendar::fromTimePoint(std::chrono::system_clock::now(), false);
     std::cout << bzr << '\n';
+
+    constexpr UTCTime dvq = UTCTime{14, 37, 48};
+    // constexpr bool eqlTst = dvq == dvq;
+    constexpr uint8_t hr  = dvq.hour();
+    constexpr uint8_t min = dvq.minute();
+    constexpr uint8_t sec = dvq.second();
     //
 
     std::cout << "\n\n\t[ Complete ]" << std::endl;
