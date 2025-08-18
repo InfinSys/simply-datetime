@@ -8,7 +8,7 @@
  * @file abstract_date.hpp
  *
  * @brief
- * Base CRTP calendar date declaration.
+ * Abstract calendar date declaration.
  */
 
 
