@@ -78,11 +78,13 @@ int main(int argc, char* argv[])
     std::cout << bzr << '\n';
 
     constexpr UTCTime dvq = UTCTime{14, 37, 48};
-    constexpr UTCTime gbx = UTCTime{simplydt::Seconds{68}};
+    constexpr UTCTime gbx = UTCTime{simplydt::Hours{23} + simplydt::Minutes{15}};
     // constexpr bool eqlTst = dvq == dvq;
     constexpr uint8_t hr  = dvq.hour();
     constexpr uint8_t min = dvq.minute();
     constexpr uint8_t sec = dvq.second();
+    
+    constexpr simplydt::Seconds evv = simplydt::Minutes{1} + simplydt::Seconds{14};
     //
 
     std::cout << "\n\n\t[ Complete ]" << std::endl;
