@@ -20,6 +20,10 @@
 namespace simplydt
 {
 
+/*!
+ * @brief
+ * TODO: INCOMPLETE COMMENT!!!
+ */
 template <typename Time_Impl, typename Repr_T>
 struct TimeSystem {
     /*! @brief Time system implementation. */
