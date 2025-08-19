@@ -165,7 +165,7 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
 
     friend inline std::ostream& operator<<(std::ostream& os, const UTCTime time) noexcept
     {
-        // TODO: INCOMPLETE!!!
+        os << time.toStr();
         return os;
     }
 
@@ -293,6 +293,26 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
     [[nodiscard]] constexpr uint8_t second() const noexcept
     {
         return Base::secondFromSerialSecs(this->timeInDay);
+    }
+
+    /*!
+     * @brief
+     * Compose string representation of UTC time.
+     *
+     * @return
+     * UTC time as string
+     */
+    [[nodiscard]] const std::string toStr() const noexcept
+    {
+        const char delimiter = ':';
+
+        std::string timeStr;
+        timeStr.reserve(12);
+        timeStr += (toDoubleDigitStr(this->hour()) + delimiter);
+        timeStr += (toDoubleDigitStr(this->minute()) + delimiter);
+        timeStr += (toDoubleDigitStr(this->second()) + ' ');
+        timeStr += this->hourPhaseStr();
+        return timeStr;
     }
 
   private:
