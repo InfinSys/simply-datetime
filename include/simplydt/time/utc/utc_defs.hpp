@@ -24,7 +24,7 @@
  * @namespace simplydt::utc
  *
  * @brief
- * Coordinated Universal Time (UTC) system.
+ * Coordinated Universal Time (UTC) standard.
  */
 namespace simplydt::utc
 {
