@@ -22,16 +22,16 @@ namespace simplydt
 {
 
 /*! @brief Seconds time unit. */
-using Seconds = std::chrono::duration<Time_t, std::ratio<1>>;
+using Seconds = std::chrono::duration<int32_t, std::ratio<1>>;
 
 /*! @brief Minutes time unit. */
-using Minutes = std::chrono::duration<Time_t, std::ratio<SECONDS_IN_MINUTE>>;
+using Minutes = std::chrono::duration<int32_t, std::ratio<SECONDS_IN_MINUTE>>;
 
 /*! @brief Hours time unit. */
-using Hours = std::chrono::duration<Time_t, std::ratio<SECONDS_IN_HOUR>>;
+using Hours = std::chrono::duration<int32_t, std::ratio<SECONDS_IN_HOUR>>;
 
 /*! @brief Days time unit. */
-using Days = std::chrono::duration<Time_t, std::ratio<SECONDS_IN_DAY>>;
+using Days = std::chrono::duration<int32_t, std::ratio<SECONDS_IN_DAY>>;
 
 } // namespace simplydt
 
