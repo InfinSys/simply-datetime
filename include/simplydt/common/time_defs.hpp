@@ -16,10 +16,20 @@
 #define SIMPLYDT_LIB_GENERAL_TIME_DEFINITIONS_H_
 
 #include "simplydt/common/simplydt_defs.hpp"
+#include <array>
 #include <cstdint>
 
 namespace simplydt
 {
+
+/*!
+ * @brief
+ * Enumeration of available time standards.
+ */
+enum TimeStandard : uint8_t {
+    UTC, ///< Universal Coordinated Time
+    TAI, ///< International Atomic Time
+};
 
 /*!
  * @brief
@@ -57,6 +67,34 @@ constexpr Time_t NOON = SECONDS_IN_DAY / 2;
 
 /*! @brief End of day in serial seconds (23:59:59 PM) */
 constexpr Time_t TIME_MAX = SECONDS_IN_DAY - 1;
+
+/*!
+ * @brief
+ * Enumeration of individual time components.
+ */
+enum class TimeComponent : uint8_t {
+    NANOSECOND  = DatetimeComponent::NANOSECOND,  ///< Time nanosecond component
+    MILLISECOND = DatetimeComponent::MILLISECOND, ///< Time millisecond component
+    SECOND      = DatetimeComponent::SECOND,      ///< Time second component
+    MINUTE      = DatetimeComponent::MINUTE,      ///< Time minute component
+    HOUR        = DatetimeComponent::HOUR         ///< Time hour component
+};
+
+/*!
+ * @brief
+ * Binary 12-hour clock meridiem indicators.
+ */
+enum MeridiemPhase : uint8_t {
+    AM, ///< Anti meridiem (before midday)
+    PM  ///< Post meridiem (after midday)
+};
+
+/*!
+ * @brief
+ * Binary meridiem indicator literals for 12-hour
+ * clocks.
+ */
+inline constexpr std::array<const char*, 2> MeridiemPhases = {"AM", "PM"};
 
 } // namespace simplydt
 
