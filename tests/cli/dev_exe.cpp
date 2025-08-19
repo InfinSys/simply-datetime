@@ -5,18 +5,6 @@
 *
 * ~ CLI Debug Executable Notes / TO-DO List ~
 *
-* -> [] :: Simply Datetime Time Units ::
-* -> [] template struct TimeUnit { ... };  <---(Composes int32_t)
-* -> [] (Present common functionality amongst units)
-* -> [] (Units interact with date/time types)
-* -> [] (Units can automatically convert from one another)
-*
-* -> [] struct Days : public TimeUnit<TOP_LEVEL_RESOLUTION> { ... };
-* -> [] struct Hours : public TimeUnit<1, 24> { ... };
-* -> [] struct Minutes : public TimeUnit<1, 1'440> { ... };
-* -> [] ...
-*
-*
 * -> [] :: Datetime Output Styles ::
 * -> [] StandardStyle ----> 2004-09-17:00:00:00.000
 * -> [] UnixStyle --------> 2004-09-17T00:00:00.000
@@ -80,10 +68,12 @@ int main(int argc, char* argv[])
     constexpr UTCTime dvq = UTCTime{14, 37, 48};
     constexpr UTCTime gbx = UTCTime{simplydt::Hours{23} + simplydt::Minutes{15}};
     // constexpr bool eqlTst = dvq == dvq;
-    constexpr uint8_t hr  = dvq.hour();
-    constexpr uint8_t min = dvq.minute();
-    constexpr uint8_t sec = dvq.second();
-    
+    constexpr uint8_t hr                  = dvq.hour12();
+    constexpr uint8_t min                 = dvq.minute();
+    constexpr uint8_t sec                 = dvq.second();
+    constexpr simplydt::MeridiemPhase mdx = dvq.hourPhaseEnumRepr();
+    constexpr const char* mmq             = dvq.hourPhaseStr();
+
     constexpr simplydt::Seconds evv = simplydt::Minutes{1} + simplydt::Seconds{14};
     //
 
