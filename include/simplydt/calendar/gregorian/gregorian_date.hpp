@@ -252,7 +252,7 @@ struct GregorianDate final : public CalendarDate<GregorianDate, Year_Type> {
      * @return
      * Month literal
      */
-    [[nodiscard]] constexpr const char* monthLiteral() const noexcept
+    [[nodiscard]] constexpr const char* monthStr() const noexcept
     {
         const uint8_t monthIndex = extractEncodedMonth(this->date) - 1;
         return Months[monthIndex];

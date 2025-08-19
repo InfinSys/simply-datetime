@@ -72,7 +72,7 @@ concept has_comparison_methods = requires(const Date_Impl& d) {
 
 template <typename Date_Impl>
 concept has_date_literal_methods = requires(const Date_Impl& d) {
-    { d.monthLiteral() } -> std::same_as<const char*>;
+    { d.monthStr() } -> std::same_as<const char*>;
     { d.monthAbbreviation() } -> std::same_as<std::string>;
     { d.toStr() } -> std::same_as<std::string>;
 };
