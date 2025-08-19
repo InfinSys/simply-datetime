@@ -23,6 +23,10 @@
 namespace simplydt::utc
 {
 
+/*!
+ * @brief
+ * TODO: INCOMPLETE COMMENT!!!
+ */
 struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
     /*!
      * @brief
@@ -30,6 +34,12 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
      * implementation.
      */
     static constexpr TimeStandard standard = TimeStandard::UTC;
+
+    /*!
+     * @brief
+     * Indicates the resolution this time system is based on.
+     */
+    static constexpr TimeComponent resolution = TimeComponent::SECOND;
 
     /*!
      * @brief
@@ -54,9 +64,6 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
      * is a continuous time scale based solely on atomic clocks.
      */
     static constexpr bool isPureAtomicTimeSystem = false;
-
-    /*! @brief One complete day. */
-    static constexpr Time_t FULL_DAY = SECONDS_IN_DAY;
 
     /*!
      * @brief
@@ -201,8 +208,7 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
     [[nodiscard]] std::optional<uint8_t> operator[](const TimeComponent component
     ) const noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return std::nullopt;
+        return this->getComponent(component);
     }
 
     /*!
@@ -313,6 +319,25 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
         timeStr += (toDoubleDigitStr(this->second()) + ' ');
         timeStr += this->hourPhaseStr();
         return timeStr;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     */
+    [[nodiscard]] std::optional<uint8_t> getComponent(const TimeComponent component
+    ) const noexcept
+    {
+        switch (component) {
+        case TimeComponent::HOUR:
+            return this->hour();
+        case TimeComponent::MINUTE:
+            return this->minute();
+        case TimeComponent::SECOND:
+            return this->second();
+        default: // Invalid component request
+            return std::nullopt;
+        };
     }
 
   private:
