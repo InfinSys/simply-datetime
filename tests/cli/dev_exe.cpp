@@ -73,6 +73,7 @@ int main(int argc, char* argv[])
     constexpr uint8_t sec                 = dvq.second();
     constexpr simplydt::MeridiemPhase mdx = dvq.hourPhaseEnumRepr();
     constexpr const char* mmq             = dvq.hourPhaseStr();
+    std::cout << "UTC Time: " << dvq << '\n';
 
     constexpr simplydt::Seconds evv = simplydt::Minutes{1} + simplydt::Seconds{14};
     //
