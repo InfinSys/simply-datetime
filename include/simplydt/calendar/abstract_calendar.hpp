@@ -116,7 +116,7 @@ struct CalendricalSystem {
      */
     [[nodiscard]] static constexpr const char* getMonthName(const Date date) noexcept
     {
-        return date.monthLiteral();
+        return getMonthName(date.month());
     }
 
     /*!
@@ -186,7 +186,7 @@ struct CalendricalSystem {
      */
     [[nodiscard]] static std::string getMonthAbbrev(const Date date) noexcept
     {
-        return date.monthAbbreviation();
+        return getMonthAbbrev(date.month());
     }
 
     /*!
