@@ -5,6 +5,8 @@
 *
 * ~ CLI Debug Executable Notes / TO-DO List ~
 *
+* -> [] Remove CRTP from time setup?
+*
 * -> [] :: Datetime Output Styles ::
 * -> [] StandardStyle ----> 2004-09-17:00:00:00.000
 * -> [] UnixStyle --------> 2004-09-17T00:00:00.000
@@ -74,8 +76,7 @@ int main(int argc, char* argv[])
     constexpr simplydt::MeridiemPhase mdx = dvq.hourPhaseEnumRepr();
     constexpr const char* mmq             = dvq.hourPhaseStr();
     std::cout << "UTC Time: " << dvq << '\n';
-
-    constexpr simplydt::Seconds evv = simplydt::Minutes{1} + simplydt::Seconds{14};
+    constexpr simplydt::Seconds evv = dvq.toSerialSeconds();
     //
 
     std::cout << "\n\n\t[ Complete ]" << std::endl;
