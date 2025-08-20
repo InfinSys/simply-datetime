@@ -45,7 +45,10 @@ struct CalendarDate {
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Get specified calendar date component.
+     * 
+     * @return
+     * Requested calendar date component
      */
     [[nodiscard]] std::optional<YearInt_t> getComponent(const CalendarComponent component
     ) const
