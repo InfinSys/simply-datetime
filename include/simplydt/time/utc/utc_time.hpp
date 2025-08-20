@@ -323,7 +323,10 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Get specified UTC time component.
+     * 
+     * @return
+     * Requested time component
      */
     [[nodiscard]] std::optional<uint8_t> getComponent(const TimeComponent component
     ) const noexcept
@@ -338,6 +341,19 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
         default: // Invalid component request
             return std::nullopt;
         };
+    }
+
+    /*!
+     * @brief
+     * Converts UTC time to serial count of seconds since
+     * midnight.
+     * 
+     * @return
+     * Serial count of seconds since start of day
+     */
+    [[nodiscard]] constexpr Seconds toSerialSeconds() const noexcept
+    {
+        return Seconds{this->timeInDay};
     }
 
   private:
