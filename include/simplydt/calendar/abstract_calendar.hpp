@@ -8,45 +8,60 @@
  * @file abstract_calendar.hpp
  *
  * @brief
- * Base CRTP calendar declaration.
+ * Base calendar system interface declaration.
  */
 
 
-#ifndef SIMPLYDT_LIB_BASE_CALENDAR_H_
-#define SIMPLYDT_LIB_BASE_CALENDAR_H_
+#ifndef SIMPLYDT_LIB_BASE_CALENDAR_INTERFACE_H_
+#define SIMPLYDT_LIB_BASE_CALENDAR_INTERFACE_H_
 
-#include "simplydt/calendar/concepts/calendar_contract.hpp"
+#include "simplydt/common/simplydt_defs.hpp"
+#include <cstdint>
+#include <limits>
+#include <string_view>
 
 namespace simplydt
 {
 
 /*!
  * @brief
- * Base calendar agnostic system.
+ * Base calendar interface.
  *
  * @details
- * This class serves as a foundational interface for calendar
- * systems, providing a generic and extensible structure for
- * calendar operations. It is designed to be agnostic of any
- * specific calendar implementation, allowing derived calendars
- * to define their own month and day-of-week enumerations, date
- * representations, and naming conventions. This type is not
- * self-constructable and must be inherited by a concrete
- * implementation that presents a valid public API. Implementations
- * should seek confirmation their API is compliant by invoking the
- * calendar contract enforcement macro just after the body of the
- * implementation. Failing to be compliant can result in substitution
- * errors or undefined behavior.
+ * This serves as the foundational interface for calendar
+ * systems in Simply Datetime. It is designed to be agnostic
+ * of any specific calendar implementation, allowing derived
+ * calendars to define their own characteristics. Note that
+ * the assumption is made that the calendar model in question
+ * utilizes year, month, and day values to describe a date in
+ * time. An implementation of this type focuses on conducting
+ * calendar operations on dates of type `Date_Impl` while
+ * obeying defined systemic calendar rules. Similar to other
+ * class hierarchies in Simply Datetime, this family uses the
+ * CRTP design pattern which allows this base to reference the
+ * derivative. Consequently, the convenience methods defined
+ * in this base structure depend on the concrete calendars
+ * public API for them to be well-formed. A derivative is
+ * expected to present the appropriate static attributes and
+ * methods, which can be verified by invoking the contract
+ * enforcement macro (`SIMPLYDT_ENFORCE_CALENDAR_CONTRACT`)
+ * just after the body of the implementation. Failing to have
+ * a compliant API can result in substitution errors or
+ * undefined behavior. Similarly, the provided date
+ * implementation must also satisfy its API requirements to
+ * avoid substitution errors or undefined behavior. This type
+ * is meant to present a stateless API and should not be
+ * constructable. It must be inherited by a concrete
+ * implementation that presents the expected (public) static
+ * API.
  */
-template <typename Calendar_Impl, typename Date_T, typename Month_Enum, typename DOW_Enum>
+template <typename Calendar_Impl, typename Date_Impl, typename Month_Enum, typename DOW_Enum>
 struct CalendricalSystem {
-    /*! @brief Calendar system implementation. */
-    using Calendar = Calendar_Impl;
-    /*! @brief Calendar implementation base class. */
-    using Base = CalendricalSystem<Calendar_Impl, Date_T, Month_Enum, DOW_Enum>;
+    /*! @brief Calendar system base class. */
+    using Base = CalendricalSystem<Calendar_Impl, Date_Impl, Month_Enum, DOW_Enum>;
     /*! @brief Calendar date. */
-    using Date = Date_T;
-    /*! @brief Year integer type. */
+    using Date = Date_Impl;
+    /*! @brief Calendar year integer type. */
     using YearInt_t = typename Date::YearInt_t;
     /*! @brief Enumeration of calendar months. */
     using Month = Month_Enum;
@@ -55,51 +70,55 @@ struct CalendricalSystem {
 
     /*!
      * @brief
-     * Returns name of a calendar month by its numeric value.
+     * Returns name of calendar month by its numeric value.
      *
      * @details
-     * Expects a 1-based month number (1 = January ... 12 = December).
-     * If the month value is invalid for the current calendar
-     * implementation, the function returns a predefined invalid
-     * string literal. Month names are provided by the derived
-     * calendar's `MONTH_NAMES` array.
+     * Expects a 1-based month number (1 = January ... 12 =
+     * December). If the month value is invalid for the
+     * current calendar implementation, the function returns
+     * a predefined invalid string literal. Month names are
+     * sourced from the derived calendar's `MONTH_NAMES` array.
      *
      * @return
-     * Month name
+     * Calendar month name
      */
     [[nodiscard]] static constexpr const char* getMonthName(const uint8_t month) noexcept
     {
-        if (!Calendar::isValidMonth(month))
+        if (month == 0 || !Calendar_Impl::isValidMonth(month))
             return INVALID_LITERAL;
 
         const uint8_t monthIndex = month - 1;
-        return Calendar::MONTH_NAMES[monthIndex];
+        return Calendar_Impl::MONTH_NAMES[monthIndex];
     }
 
     /*!
      * @brief
-     * Returns name of a calendar month from its enumeration
+     * Returns name of calendar month from its enumeration
      * representation.
      *
      * @details
-     * Accepts a month enumeration constant defined by the derived
-     * calendar implementation. The enumeration is expected to use
-     * zero-based indexing (0 = January ... 11 = December). If the
-     * month value is invalid for the current calendar, the function
-     * returns a predefined invalid string literal. Month names are
-     * sourced from the derived calendar's `MONTH_NAMES` array.
+     * Accepts a month enumeration constant defined by the
+     * derived calendar implementation. The enumeration is
+     * expected to use zero-based indexing (0 = January ...
+     * 11 = December). If the month value is invalid for the
+     * current calendar, the function returns a predefined
+     * invalid string literal. Month names are sourced from
+     * the derived calendar's `MONTH_NAMES` array.
      *
      * @return
-     * Month name
+     * Calendar month name
      */
-    [[nodiscard]] static constexpr const char* getMonthName(const Month month) noexcept
+    [[nodiscard]] static constexpr const char* getMonthName(const Month month_repr) noexcept
     {
-        const uint8_t monthIndex = static_cast<uint8_t>(month);
-
-        if (!Calendar::isValidMonth(monthIndex + 1))
+        if (month_repr < 0 || month_repr > std::numeric_limits<uint8_t>::max())
             return INVALID_LITERAL;
 
-        return Calendar::MONTH_NAMES[monthIndex];
+        const uint8_t monthIndex = static_cast<uint8_t>(month_repr);
+
+        if (!Calendar_Impl::isValidMonth(monthIndex + 1))
+            return INVALID_LITERAL;
+
+        return Calendar_Impl::MONTH_NAMES[monthIndex];
     }
 
     /*!
@@ -112,7 +131,7 @@ struct CalendricalSystem {
      * calendar's `MONTH_NAMES` array.
      *
      * @return
-     * Month name
+     * Calendar month name
      */
     [[nodiscard]] static constexpr const char* getMonthName(const Date date) noexcept
     {
@@ -128,20 +147,20 @@ struct CalendricalSystem {
      * Expects a 1-based month number (1 = January ... 12 = December).
      * If the month value is invalid for the current calendar
      * implementation, the function returns a predefined invalid
-     * string literal. Month abbreviations are provided by the
+     * string literal. Month abbreviations are sourced from the
      * derived calendar's `MONTH_ABBREVS` array.
      *
      * @return
-     * Abbreviated month name
+     * Abbreviated calendar month name
      */
-    [[nodiscard]] static std::string getMonthAbbrev(const uint8_t month) noexcept
+    [[nodiscard]] static constexpr std::string_view getMonthAbbrev(const uint8_t month
+    ) noexcept
     {
-        if (!Calendar::isValidMonth(month))
-            return INVALID_LITERAL;
+        if (month == 0 || !Calendar_Impl::isValidMonth(month))
+            return std::string_view{INVALID_LITERAL};
 
         const uint8_t monthIndex = month - 1;
-        const std::string abbreviation{Calendar::MONTH_ABBREVS[monthIndex]};
-        return abbreviation;
+        return Calendar_Impl::MONTH_ABBREVS[monthIndex];
     }
 
     /*!
@@ -154,22 +173,24 @@ struct CalendricalSystem {
      * calendar implementation. The enumeration is expected to use
      * zero-based indexing (0 = January ... 11 = December). If the
      * month value is invalid for the current calendar, the function
-     * returns a predefined invalid string literal. Month
-     * abbreviations are sourced from the derived calendar's
-     * `MONTH_ABBREVS` array.
+     * returns a predefined invalid string literal. Month abbreviations
+     * are sourced from the derived calendar's `MONTH_ABBREVS` array.
      *
      * @return
-     * Abbreviated month name
+     * Abbreviated calendar month name
      */
-    [[nodiscard]] static std::string getMonthAbbrev(const Month month) noexcept
+    [[nodiscard]] static constexpr std::string_view getMonthAbbrev(const Month month_repr
+    ) noexcept
     {
-        const uint8_t monthIndex = static_cast<uint8_t>(month);
+        if (month_repr < 0 || month_repr > std::numeric_limits<uint8_t>::max())
+            return std::string_view{INVALID_LITERAL};
 
-        if (!Calendar::isValidMonth(monthIndex + 1))
-            return INVALID_LITERAL;
+        const uint8_t monthIndex = static_cast<uint8_t>(month_repr);
 
-        const std::string abbreviation{Calendar::MONTH_ABBREVS[monthIndex]};
-        return abbreviation;
+        if (!Calendar_Impl::isValidMonth(monthIndex + 1))
+            return std::string_view{INVALID_LITERAL};
+
+        return Calendar_Impl::MONTH_ABBREVS[monthIndex];
     }
 
     /*!
@@ -182,9 +203,9 @@ struct CalendricalSystem {
      * the derived calendar's `MONTH_ABBREVS` array.
      *
      * @return
-     * Abbreviated month name
+     * Abbreviated calendar month name
      */
-    [[nodiscard]] static std::string getMonthAbbrev(const Date date) noexcept
+    [[nodiscard]] static constexpr std::string_view getMonthAbbrev(const Date date) noexcept
     {
         return getMonthAbbrev(date.month());
     }
@@ -195,19 +216,19 @@ struct CalendricalSystem {
      * enumeration representation.
      *
      * @details
-     * Expects a 1-based month number (1 = January ... 12 = December).
-     * If the value is invalid for the current calendar implementation,
-     * the function returns a fallback enumeration value (0). The
-     * returned value uses zero-based indexing of the derived
-     * calendar's `Month` enumeration.
+     * Expects a 1-based month number (1 = January ... 12 =
+     * December). If the value is invalid for the current
+     * calendar implementation, the function returns a fallback
+     * enumeration value (0). The returned value uses zero-based
+     * indexing of the derived calendar's `Month` enumeration.
      *
      * @return
-     * Calendar month enum value
+     * Calendar month enum representation
      */
     [[nodiscard]] static constexpr Month getMonthEnumRepr(const uint8_t month) noexcept
     {
-        if (!Calendar::isValidMonth(month))
-            return static_cast<Month>(0); // TODO: Crap...
+        if (!Calendar_Impl::isValidMonth(month))
+            return static_cast<Month>(0); // TODO: Fallback value not acceptable here...
 
         const uint8_t monthIndex = month - 1;
         return static_cast<Month>(monthIndex);
@@ -220,117 +241,129 @@ struct CalendricalSystem {
      *
      * @details
      * Extracts month from calendar defined date implementation and
-     * converts it to the zero-based `Month` enumeration defined by
-     * the derived calendar implementation.
+     * converts it to the corresponding zero-based `Month`
+     * enumeration defined by the derived calendar implementation.
      *
      * @return
-     * Calendar month enum value
+     * Calendar month enum representation
      */
     [[nodiscard]] static constexpr Month getMonthEnumRepr(const Date date) noexcept
     {
-        return static_cast<Month>(date.month() - 1);
+        return getMonthEnumRepr(date.month());
     }
 
     /*!
      * @brief
-     * Returns day-of-week name of calendar date.
-     *
-     * @details
-     * Validates the given `Date` instance and determines its
-     * day-of-week index using the derived calendar's
-     * `getDayOfWeekIndex()` method. Returns the corresponding name
-     * from the `DAY_OF_WEEK_NAMES` array, or a predefined invalid
-     * string literal if the date is not valid.
-     *
-     * @return
-     * Day-of-week name
-     */
-    [[nodiscard]] static constexpr const char* getDayOfWeekName(const Date date) noexcept
-    {
-        if (!Calendar::isValidDate(date))
-            return INVALID_LITERAL;
-
-        const uint8_t dowIndex = Calendar::getDayOfWeekIndex(date);
-        return Calendar::DAY_OF_WEEK_NAMES[dowIndex];
-    }
-
-    /*!
-     * @brief
-     * Returns name of a calendar day-of-week from its enumeration
+     * Returns name of calendar day-of-week from its enumeration
      * representation.
      *
      * @details
-     * Accepts a day-of-week enumeration constant defined by the
-     * derived calendar implementation. The enumeration is expected
-     * to use zero-based indexing (0 = Sunday ... 6 = Saturday). If
-     * the day-of-week value is invalid for the current calendar, the
-     * function returns a predefined invalid string literal.
-     * day-of-week names are sourced from the derived calendar's
-     * `DAY_OF_WEEK_NAMES` array.
+     * Accepts a day-of-week enumeration constant defined by
+     * the derived calendar implementation. The enumeration
+     * is expected to use zero-based indexing (0 = Sunday ...
+     * 6 = Saturday). If the day-of-week value is invalid for
+     * the current calendar, the function returns a predefined
+     * invalid string literal. Calendar day-of-week names are
+     * sourced from the derived calendar's `DAY_OF_WEEK_NAMES`
+     * array.
      *
      * @return
-     * Day-of-week name
+     * Calendar day-of-week name
      */
-    [[nodiscard]] static constexpr const char* getDayOfWeekName(const DayOfWeek dow) noexcept
+    [[nodiscard]] static constexpr const char* getDayOfWeekName(const DayOfWeek dow_repr
+    ) noexcept
     {
-        const uint8_t dowIndex = static_cast<uint8_t>(dow);
-
-        if (!Calendar::isValidDOWIndex(dowIndex))
+        if (dow_repr < 0 || dow_repr > std::numeric_limits<uint8_t>::max())
             return INVALID_LITERAL;
 
-        return Calendar::DAY_OF_WEEK_NAMES[dowIndex];
+        const uint8_t dowIndex = static_cast<uint8_t>(dow_repr);
+
+        if (!Calendar_Impl::isValidDOWIndex(dowIndex))
+            return INVALID_LITERAL;
+
+        return Calendar_Impl::DAY_OF_WEEK_NAMES[dowIndex];
     }
 
     /*!
      * @brief
-     * Returns abbreviated day-of-week name of calendar date.
+     * Returns calendar date day-of-week name.
      *
      * @details
-     * Validates the given `Date` instance and determines its
-     * day-of-week index using the derived calendar's
+     * Determines day-of-week index of the provided calendar
+     * date by calling the derived calendar implementation
      * `getDayOfWeekIndex()` method. Returns the corresponding
-     * abbreviated name from the `DAY_OF_WEEK_ABBREVS` array, or a
-     * predefined invalid string literal if the date is not valid.
+     * name from the calendar defined `DAY_OF_WEEK_NAMES`
+     * array, or a predefined invalid string literal if the
+     * date is not valid.
      *
      * @return
-     * Abbreviated day-of-week name
+     * Calendar day-of-week name
      */
-    [[nodiscard]] static std::string getDayOfWeekAbbrev(const Date date) noexcept
+    [[nodiscard]] static constexpr const char* getDayOfWeekName(const Date date) noexcept
     {
-        if (!Calendar::isValidDate(date))
+        if (!Calendar_Impl::isValidDate(date))
             return INVALID_LITERAL;
 
-        const uint8_t dowIndex = Calendar::getDayOfWeekIndex(date);
-        const std::string abbreviation{Calendar::DAY_OF_WEEK_ABBREVS[dowIndex]};
-        return abbreviation;
+        const uint8_t dowIndex = Calendar_Impl::getDayOfWeekIndex(date);
+        return Calendar_Impl::DAY_OF_WEEK_NAMES[dowIndex];
     }
 
     /*!
      * @brief
-     * Returns abbreviated name of a calendar day-of-week from its
+     * Returns abbreviated name of calendar day-of-week from its
      * enumeration representation.
      *
      * @details
-     * Accepts a day-of-week enumeration constant defined by the derived
-     * calendar implementation. The enumeration is expected to use
-     * zero-based indexing (0 = Sunday ... 6 = Saturday). If the
-     * day-of-week value is invalid for the current calendar, the
-     * function returns a predefined invalid string literal. Day-of-week
-     * abbreviations are sourced from the derived calendar's
-     * `DAY_OF_WEEK_ABBREVS` array.
+     * Accepts a day-of-week enumeration constant defined by
+     * the derived calendar implementation. The enumeration is
+     * expected to use zero-based indexing (0 = Sunday ... 6 =
+     * Saturday). If the day-of-week value is invalid for the
+     * current calendar, the function returns a predefined
+     * invalid string literal. Day-of-week abbreviations are
+     * sourced from the derived calendar's `DAY_OF_WEEK_ABBREVS`
+     * array.
      *
      * @return
-     * Abbreviated day-of-week name
+     * Abbreviated calendar day-of-week name
      */
-    [[nodiscard]] static std::string getDayOfWeekAbbrev(const DayOfWeek dow) noexcept
+    [[nodiscard]] static constexpr std::string_view getDayOfWeekAbbrev(const DayOfWeek dow_repr
+    ) noexcept
     {
-        const uint8_t dowIndex = static_cast<uint8_t>(dow);
+        if (dow_repr < 0 || dow_repr > std::numeric_limits<uint8_t>::max())
+            return std::string_view{INVALID_LITERAL};
 
-        if (!Calendar::isValidDOWIndex(dowIndex))
-            return INVALID_LITERAL;
+        const uint8_t dowIndex = static_cast<uint8_t>(dow_repr);
 
-        const std::string abbreviation{Calendar::DAY_OF_WEEK_ABBREVS[dowIndex]};
-        return abbreviation;
+        if (!Calendar_Impl::isValidDOWIndex(dowIndex))
+            return std::string_view{INVALID_LITERAL};
+
+        return Calendar_Impl::DAY_OF_WEEK_ABBREVS[dowIndex];
+    }
+
+    /*!
+     * @brief
+     * Returns abbreviated name of calendar day-of-week from its
+     * enumeration representation.
+     *
+     * @details
+     * Determines day-of-week index of the provided calendar
+     * date by calling the derived calendar implementation
+     * `getDayOfWeekIndex()` method. Returns the corresponding
+     * name from the calendar defined `DAY_OF_WEEK_ABBREVS`
+     * array, or a predefined invalid string literal if the
+     * date is not valid.
+     *
+     * @return
+     * Abbreviated calendar day-of-week name
+     */
+    [[nodiscard]] static constexpr std::string_view getDayOfWeekAbbrev(const Date date
+    ) noexcept
+    {
+        if (!Calendar_Impl::isValidDate(date))
+            return std::string_view{INVALID_LITERAL};
+
+        const uint8_t dowIndex = Calendar_Impl::getDayOfWeekIndex(date);
+        return Calendar_Impl::DAY_OF_WEEK_ABBREVS[dowIndex];
     }
 
     /*!
@@ -342,20 +375,22 @@ struct CalendricalSystem {
      * Validates the given `Date` instance and determines its
      * day-of-week index using the derived calendar's
      * `getDayOfWeekIndex()` method. Returns the corresponding
-     * day-of-week enumeration representation using the `DayOfWeek`
-     * enumeration defined by the derived calendar.
+     * day-of-week enumeration representation using the
+     * `DayOfWeek` enumeration defined by the derived calendar.
      *
      * @return
-     * Calendar day-of-week enum value
+     * Calendar day-of-week enum representation
      */
     [[nodiscard]] static constexpr DayOfWeek getDayOfWeekEnumRepr(const Date date) noexcept
     {
-        if (!Calendar::isValidDate(date))
-            return static_cast<DayOfWeek>(0); // TODO: Oh no.. another one...
+        if (!Calendar_Impl::isValidDate(date))
+            return static_cast<DayOfWeek>(0); // TODO: Fallback value not acceptable here...
 
-        const uint8_t dowIndex = Calendar::getDayOfWeekIndex(date);
+        const uint8_t dowIndex = Calendar_Impl::getDayOfWeekIndex(date);
         return static_cast<DayOfWeek>(dowIndex);
     }
+
+    // Continue...
 
   private:
     CalendricalSystem()  = delete;
@@ -365,4 +400,4 @@ struct CalendricalSystem {
 
 } // namespace simplydt
 
-#endif // SIMPLYDT_LIB_BASE_CALENDAR_H_
+#endif // SIMPLYDT_LIB_BASE_CALENDAR_INTERFACE_H_
