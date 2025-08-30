@@ -45,7 +45,9 @@ int main(int argc, char* argv[])
     using UnixTimestamp     = simplydt::stl::UnixTimestamp;
     using UTCTime           = simplydt::utc::UTCTime;
 
-    constexpr GregorianDate demo{2'025, 8, 15};
+    const GregorianDate blizz = GregorianCalendar::getDate(simplydt::stl::SystemClock::now());
+    constexpr GregorianDate demo =
+        GregorianCalendar::getDate(2'025, simplydt::gregorian::AUGUST, 29);
     std::cout << "\nDemo date: " << demo << '\n';
 
     constexpr bool isValid                         = GregorianCalendar::isValidDate(demo);
@@ -53,8 +55,9 @@ int main(int argc, char* argv[])
     constexpr const char* month                    = GregorianCalendar::getMonthName(demo);
     constexpr simplydt::gregorian::Month monthRepr = GregorianCalendar::getMonthEnumRepr(demo);
     constexpr const char* dowName                  = GregorianCalendar::getDayOfWeekName(demo);
-    constexpr bool isLeap                          = GregorianCalendar::isLeapYear(demo);
-    constexpr uint16_t daysInYr                    = GregorianCalendar::getDaysInYear(demo);
+    constexpr std::string_view dowShort = GregorianCalendar::getDayOfWeekAbbrev(demo);
+    constexpr bool isLeap               = GregorianCalendar::isLeapYear(demo);
+    constexpr uint16_t daysInYr         = GregorianCalendar::getDaysInYear(demo);
     constexpr simplydt::gregorian::DayOfWeek dowRepr =
         GregorianCalendar::getDayOfWeekEnumRepr(demo);
     constexpr UnixTimestamp serialDays = GregorianCalendar::toDaysSinceEpoch(demo);
