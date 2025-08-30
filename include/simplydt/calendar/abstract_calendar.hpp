@@ -16,6 +16,9 @@
 #define SIMPLYDT_LIB_BASE_CALENDAR_INTERFACE_H_
 
 #include "simplydt/common/simplydt_defs.hpp"
+#include "simplydt/common/stl_chrono_defs.hpp"
+#include "simplydt/common/stl_chrono_utils.hpp"
+#include "simplydt/time/units/time_units.hpp"
 #include <cstdint>
 #include <limits>
 #include <string_view>
@@ -390,7 +393,247 @@ struct CalendricalSystem {
         return static_cast<DayOfWeek>(dowIndex);
     }
 
-    // Continue...
+    /*!
+     * @brief
+     * Create calendar date using a year, month, and day value.
+     *
+     * @brief
+     * Constructs a calendar defined date implementation using
+     * the provided date values. Checks validity of date values
+     * beforehand using the derived calendars `isValidDate()`
+     * method. The method returns a default constructed calendar
+     * date if the provided date values were invalid for the
+     * current calendar.
+     *
+     * @return
+     * Calendar date
+     */
+    [[nodiscard]] static constexpr Date getDate(
+        const YearInt_t year, const uint8_t month, const uint8_t day
+    ) noexcept
+    {
+        if (!Calendar_Impl::isValidDate(year, month, day))
+            return Date{};
+
+        return Date{year, month, day};
+    }
+
+    /*!
+     * @brief
+     * Create calendar date using a year, month, and day value.
+     *
+     * @brief
+     * Constructs a calendar defined date implementation using
+     * the provided date values. Checks validity of date values
+     * beforehand using the derived calendars `isValidDate()`
+     * method. The method returns a default constructed calendar
+     * date if the provided date values were invalid for the
+     * current calendar. The month enumeration value is converted
+     * to a 1-based numerical month value for calculations.
+     *
+     * @return
+     * Calendar date
+     */
+    [[nodiscard]] static constexpr Date getDate(
+        const YearInt_t year, const Month month, const uint8_t day
+    ) noexcept
+    {
+        if (month < 0 || month >= std::numeric_limits<uint8_t>::max())
+            return Date{};
+
+        const uint8_t numericMonth = static_cast<uint8_t>(month) + 1;
+        return Date{year, numericMonth, day};
+    }
+
+    /*!
+     * @brief
+     * Create calendar date using local system clock.
+     *
+     * @details
+     * Interprets the given `stl::SystemTimePoint` as local time
+     * by converting it to a Unix timestamp and then populating
+     * a `std::tm` structure using the C++ standard library backed
+     * `stl::deriveLocalDateTimeFromTimestamp()` method. The
+     * resulting year, month, and day fields are used to construct
+     * and return the calendar defined date implementation. If the
+     * local date conversion fails a default constructed calendar
+     * date is returned.
+     *
+     * @return
+     * Calendar date
+     */
+    [[nodiscard]] static Date getDate(const stl::SystemTimePoint time_point) noexcept
+    {
+        const stl::UnixTimestamp secsSinceEpoch = stl::SystemClock::to_time_t(time_point);
+        stl::CalendarDateTime dateBuffer{};
+
+        if (!stl::deriveLocalDateTimeFromTimestamp(&secsSinceEpoch, &dateBuffer))
+            return Date{}; // Failed to interpret local date
+
+        return Date{
+            static_cast<YearInt_t>(
+                dateBuffer.tm_year + 1'900
+            ), // tm_year measures years since 1900
+            static_cast<uint8_t>(
+                dateBuffer.tm_mon + 1
+            ), // tm_mon measures months since January
+            static_cast<uint8_t>(dateBuffer.tm_mday)
+        };
+    }
+
+    /*!
+     * @brief
+     * Create calendar date using system clock.
+     *
+     * @details
+     * If `local` is true the given `stl::SystemTimePoint` is
+     * interpreted as local time (OS time-zone applied). If
+     * `local` is false the time point is interpreted without
+     * the assistance of the host OS (no time-zone). The OS has
+     * access to the necessary system settings that influence
+     * local time interpretation and must be consulted to get
+     * the systems true date.
+     *
+     * @return
+     * Calendar date
+     */
+    [[nodiscard]] static Date getDate(
+        const stl::SystemTimePoint time_point, const bool local
+    ) noexcept
+    {
+        if (local)
+            return getDate(time_point);
+
+        const stl::UnixTimestamp secsSinceEpoch = stl::SystemClock::to_time_t(time_point);
+        return Calendar_Impl::fromUnixTimestamp(secsSinceEpoch);
+    }
+
+    /*!
+     * @brief
+     * Returns next calendar date on provided day-of-week.
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Calendar date
+     */
+    [[nodiscard]] static constexpr Date getNextDate(
+        const Date from_date, const DayOfWeek dow_repr
+    ) noexcept
+    {
+        if (!Calendar_Impl::isValidDate(from_date))
+            return from_date; // No next date
+        // NOTE: Return default constructed date above instead?
+
+        constexpr uint8_t daysInWeek =
+            static_cast<uint8_t>(Calendar_Impl::DAY_OF_WEEK_NAMES.size());
+        const int8_t fromDate_dow =
+            static_cast<int8_t>(Calendar_Impl::getDayOfWeekIndex(from_date));
+        const int8_t dowOffset = fromDate_dow - static_cast<int8_t>(dow_repr);
+
+        const Date next = from_date + Days{dowOffset + daysInWeek};
+        return next;
+    }
+
+    /*!
+     * @brief
+     * Returns next calendar date in provided month.
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Calendar date
+     */
+    [[nodiscard]] static constexpr Date getNextDate(
+        const Date from_date, const Month month_repr
+    ) noexcept
+    {
+        const uint8_t fromNumericMonth = from_date.month();
+        const uint8_t toNumericMonth   = static_cast<uint8_t>(month_repr) + 1;
+
+        if (fromNumericMonth != toNumericMonth) {
+            if (fromNumericMonth > toNumericMonth)
+                return Date{from_date.year() + 1, toNumericMonth, 1};
+            else if (fromNumericMonth < toNumericMonth)
+                return Date{from_date.year(), toNumericMonth, 1};
+        }
+
+        const uint8_t daysInMonth =
+            Calendar_Impl::getDaysInMonth(from_date.year(), fromNumericMonth);
+
+        if (from_date.day() != daysInMonth)
+            return from_date + Days{1};
+
+        return Date{from_date.year() + 1, fromNumericMonth, 1};
+        // NOTE: Check validity of above date values first before return?
+        // (wrap around to valid?)
+    }
+
+    /*!
+     * @brief
+     * Returns last calendar date on provided day-of-week.
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Calendar date
+     */
+    [[nodiscard]] static constexpr Date getLastDate(
+        const Date from_date, const DayOfWeek dow_repr
+    ) noexcept
+    {
+        if (!Calendar_Impl::isValidDate(from_date))
+            return from_date; // No last date
+        // NOTE: Return default constructed date above instead?
+
+        constexpr uint8_t daysInWeek =
+            static_cast<uint8_t>(Calendar_Impl::DAY_OF_WEEK_NAMES.size());
+        const int8_t fromDate_dow =
+            static_cast<int8_t>(Calendar_Impl::getDayOfWeekIndex(from_date));
+        const int8_t dowOffset = fromDate_dow - static_cast<int8_t>(dow_repr);
+
+        const Date last = from_date - Days{dowOffset + daysInWeek};
+        return last;
+    }
+
+    /*!
+     * @brief
+     * Returns last calendar date in provided month.
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Calendar date
+     */
+    [[nodiscard]] static constexpr Date getLastDate(
+        const Date from_date, const Month month_repr
+    ) noexcept
+    {
+        const uint8_t fromNumericMonth = from_date.month();
+        const uint8_t toNumericMonth   = static_cast<uint8_t>(month_repr) + 1;
+        uint8_t daysInMonth =
+            Calendar_Impl::getDaysInMonth(from_date.year(), fromNumericMonth);
+
+        if (fromNumericMonth != toNumericMonth) {
+            if (fromNumericMonth > toNumericMonth)
+                return Date{from_date.year(), toNumericMonth, daysInMonth};
+            else if (fromNumericMonth < toNumericMonth)
+                return Date{from_date.year() - 1, toNumericMonth, daysInMonth};
+        }
+
+        if (from_date.day() != 1)
+            return from_date - Days{1};
+
+        const YearInt_t previousYear = from_date.year() - 1;
+        daysInMonth = Calendar_Impl::getDaysInMonth(previousYear, toNumericMonth);
+        return Date{previousYear, toNumericMonth, daysInMonth};
+        // NOTE: Check validity of above date values first before return?
+        // (wrap around to valid?)
+    }
 
   private:
     CalendricalSystem()  = delete;
