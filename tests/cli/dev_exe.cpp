@@ -80,6 +80,7 @@ int main(int argc, char* argv[])
     constexpr const char* mmq             = dvq.hourPhaseStr();
     std::cout << "UTC Time: " << dvq << '\n';
     constexpr simplydt::Seconds evv = dvq.toSerialSeconds();
+    //constexpr GregorianDate next = GregorianCalendar::getNextDate(demo, simplydt::gregorian::FRIDAY);
     //
 
     std::cout << "\n\n\t[ Complete ]" << std::endl;
