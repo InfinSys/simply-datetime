@@ -86,7 +86,7 @@ using CalendarDateTime = std::tm;
 /*!
  * @brief
  * Broken-down calendar date structure.
- * 
+ *
  * @details
  * TODO: INCOMPLETE COMMENT!!!
  */
