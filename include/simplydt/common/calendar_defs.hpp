@@ -44,7 +44,7 @@ enum class CalendarComponent : uint8_t {
 /*!
  * @brief
  * Calendar year, month, and day value tuple.
- * 
+ *
  * @details
  * TODO: INCOMPLETE COMMENT!!!
  */
