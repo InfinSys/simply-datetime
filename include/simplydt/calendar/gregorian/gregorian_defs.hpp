@@ -15,8 +15,8 @@
 #ifndef SIMPLYDT_LIB_GREGORIAN_CALENDAR_DEFINITIONS_H_
 #define SIMPLYDT_LIB_GREGORIAN_CALENDAR_DEFINITIONS_H_
 
+#include "simplydt/common/calendar_defs.hpp"
 #include <array>
-#include <cstdint>
 #include <string_view>
 
 /*!
@@ -38,6 +38,15 @@ namespace simplydt::gregorian
  * representable dates.
  */
 using Year_Type = uint16_t;
+
+/*!
+ * @brief
+ * Gregorian calendar date values tuple.
+ * 
+ * @details
+ * TODO: INCOMPLETE COMMENT!!!
+ */
+using DateTuple = CalendarDateTuple<Year_Type>;
 
 /*!
  * @brief
