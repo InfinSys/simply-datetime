@@ -32,14 +32,14 @@ struct DateValidationPolicy {
     /*!
      * @brief
      * Determines if provided year is a leap year.
-     * 
+     *
      * @details
      * This function checks if the specified year qualifies
      * as a leap year under Gregorian calendar rules. A year
      * is considered a leap year if it is divisible by 4,
      * except for years divisible by 100 unless it is also
      * divisible by 400.
-     * 
+     *
      * @return
      * True if leap year
      */
@@ -51,12 +51,12 @@ struct DateValidationPolicy {
     /*!
      * @brief
      * Evaluates support of year value.
-     * 
+     *
      * @details
      * This function returns true if the given year falls
      * within the inclusive bounds defined by `YEAR_MINIMUM`
      * and `YEAR_MAXIMUM` for the Gregorian calendar system.
-     * 
+     *
      * @return
      * True if supported year
      */
@@ -68,13 +68,13 @@ struct DateValidationPolicy {
     /*!
      * @brief
      * Checks if a month value is within valid range.
-     * 
+     *
      * @details
      * This function returns true if the given month falls
      * within the inclusive bounds defined by
      * `MIN_MONTH_OF_YEAR` and `MAX_MONTH_OF_YEAR` for the
      * Gregorian calendar system.
-     * 
+     *
      * @return
      * True if valid numerical month
      */
@@ -87,7 +87,7 @@ struct DateValidationPolicy {
      * @brief
      * Calculates total number of days in a given month of
      * a specified year.
-     * 
+     *
      * @details
      * This function handles the varying lengths of months
      * in the Gregorian calendar, including the special
@@ -95,7 +95,7 @@ struct DateValidationPolicy {
      * first validates the year and month; if either is
      * invalid, it returns 0 to indicate an unsupported or
      * invalid date value.
-     * 
+     *
      * @return
      * Total days in month
      */
@@ -105,7 +105,7 @@ struct DateValidationPolicy {
     {
         if (!isValidYear(year) || !isValidMonth(month))
             return 0; // Unsupported or invalid
-        
+
         switch (month) {
         case February:
             switch (isLeapYear(year)) {
@@ -120,7 +120,7 @@ struct DateValidationPolicy {
         case September:
         case November:
             return 30;
-        
+
         // January, March, May, July, August, October, December
         default:
             return 31;
@@ -131,7 +131,7 @@ struct DateValidationPolicy {
      * @brief
      * Checks if given date values form a valid Gregorian
      * date.
-     * 
+     *
      * @details
      * This function returns true when the provided date
      * parameters describe a real date on the Gregorian
@@ -139,7 +139,7 @@ struct DateValidationPolicy {
      * day to the total number of days in the month. If
      * the provided year is not supported, the function
      * returns false.
-     * 
+     *
      * @return
      * True if date exists on calendar
      */
@@ -149,7 +149,7 @@ struct DateValidationPolicy {
     {
         if (!isValidYear(year))
             return false;
-        
+
         const uint8_t monthTotalDays = getDaysInMonth(year, month);
         return day <= monthTotalDays;
     }
