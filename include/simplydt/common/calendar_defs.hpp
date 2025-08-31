@@ -17,6 +17,7 @@
 
 #include "simplydt/common/simplydt_defs.hpp"
 #include <cstdint>
+#include <tuple>
 
 namespace simplydt
 {
@@ -39,6 +40,16 @@ enum class CalendarComponent : uint8_t {
     MONTH = DatetimeComponent::MONTH, ///< Calendar month component
     YEAR  = DatetimeComponent::YEAR   ///< Calendar year component
 };
+
+/*!
+ * @brief
+ * Calendar year, month, and day value tuple.
+ * 
+ * @details
+ * TODO: INCOMPLETE COMMENT!!!
+ */
+template <typename Year_T>
+using CalendarDateTuple = std::tuple<Year_T, uint8_t, uint8_t>;
 
 } // namespace simplydt
 
