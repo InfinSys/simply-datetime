@@ -83,6 +83,15 @@ using UnixTimestamp = int64_t;
  */
 using CalendarDateTime = std::tm;
 
+/*!
+ * @brief
+ * Broken-down calendar date structure.
+ * 
+ * @details
+ * TODO: INCOMPLETE COMMENT!!!
+ */
+using CalendarDate = std::chrono::year_month_day;
+
 } // namespace simplydt::stl
 
 #endif // SIMPLYDT_LIB_STL_CHRONO_ALIASES_H_
