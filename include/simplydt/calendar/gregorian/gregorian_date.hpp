@@ -35,10 +35,10 @@ struct GregorianDate :
     /*!
      * @brief
      * Intercepts invalid date constructor values.
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * Provided date in serial days if valid, epoch
      * otherwise
@@ -49,10 +49,10 @@ struct GregorianDate :
     {
         if (!ValidationPolicy::isValidDate(year, month, day))
             return 0; // Serial epoch
-        
+
         return toDaysSinceEpoch(year, month, day);
     }
-    
+
     /*!
      * @brief
      * Construct Gregorian calendar date using year,
@@ -62,8 +62,8 @@ struct GregorianDate :
         const YearInt_t year, const uint8_t month, const uint8_t day
     ) noexcept
         : SerialCalendarDate<GregorianDate, DateValidationPolicy, int32_t, Year_Type>{
-            useDefaultIfInvalid(year, month, day)
-        }
+              useDefaultIfInvalid(year, month, day)
+          }
     { }
 
     ~GregorianDate() = default;
