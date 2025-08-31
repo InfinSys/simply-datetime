@@ -42,7 +42,7 @@ using Year_Type = uint16_t;
 /*!
  * @brief
  * Gregorian calendar date values tuple.
- * 
+ *
  * @details
  * TODO: INCOMPLETE COMMENT!!!
  */
