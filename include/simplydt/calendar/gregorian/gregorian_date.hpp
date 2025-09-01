@@ -33,7 +33,7 @@ namespace simplydt::gregorian
  */
 struct GregorianDate :
     public SerialCalendarDate<GregorianDate, DateValidationPolicy, int32_t, Year_Type> {
-    /*! @brief Epoch date in serial form. */
+    /*! @brief Epoch date in serial days. */
     static constexpr Repr_Type SERIAL_EPOCH = 0;
 
     /*!
