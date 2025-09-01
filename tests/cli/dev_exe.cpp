@@ -45,6 +45,10 @@ int main(int argc, char* argv[])
 
     // GregorianDate constexpr tests:
     {
+        constexpr Date::YearInt_t today_yr = todayDate.year();
+        constexpr uint8_t today_mn = todayDate.month();
+        constexpr uint8_t today_dy = todayDate.day();
+
         constexpr bool eq  = todayDate == pastDate;
         constexpr bool lt  = todayDate < pastDate;
         constexpr bool gt  = todayDate > pastDate;
