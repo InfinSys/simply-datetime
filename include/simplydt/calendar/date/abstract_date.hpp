@@ -213,7 +213,7 @@ struct SerialCalendarDate {
     /*!
      * @brief
      * Determines if calendar date is epoch date.
-     * 
+     *
      * @return
      * True if serial day count is zero
      */
@@ -226,7 +226,7 @@ struct SerialCalendarDate {
      * @brief
      * Determines if date is sequentially before provided
      * date.
-     * 
+     *
      * @return
      * True if this date occurs before provided
      */
@@ -239,7 +239,7 @@ struct SerialCalendarDate {
      * @brief
      * Determines if date is sequentially after provided
      * date.
-     * 
+     *
      * @return
      * True if this date occurs after provided
      */
@@ -252,25 +252,28 @@ struct SerialCalendarDate {
      * @brief
      * Determines if date is sequentially between two
      * dates.
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * True if this date occurs between provided dates
      */
-    [[nodiscard]] constexpr bool isBetween(const Date_Impl start_date, const Date_Impl end_date) const noexcept
+    [[nodiscard]] constexpr bool isBetween(
+        const Date_Impl start_date, const Date_Impl end_date
+    ) const noexcept
     {
-        return start_date.serialDays <= this->serialDays && this->serialDays <= end_date.serialDays;
+        return start_date.serialDays <= this->serialDays &&
+               this->serialDays <= end_date.serialDays;
     }
 
     /*!
      * @brief
      * Calculates number of days between dates.
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * Days from this date to provided
      */
@@ -283,7 +286,7 @@ struct SerialCalendarDate {
      * @brief
      * Returns constant reference to underlying serial
      * day count.
-     * 
+     *
      * @return
      * Constant reference to serial day count
      */
@@ -306,7 +309,7 @@ struct SerialCalendarDate {
     /*!
      * @brief
      * Returns constant reference to this concrete derivative.
-     * 
+     *
      * @note
      * Do not call this from the derived class, YOU are the
      * `derivedImpl()` (a.k.a `this`)
