@@ -27,7 +27,36 @@ namespace simplydt
  * Base calendar date interface.
  *
  * @details
- * TODO: INCOMPLETE COMMENT!!!
+ * This is the foundational interface for serial calendar
+ * dates in Simply Datetime. It is agnostic of any specific
+ * calendar and allows derivatives to define their own
+ * implementation. Note that the assumption is made that
+ * the calendar model in question utilizes year, month,
+ * and day values to describe a date in time. This type
+ * is not meant to have calendar knowledge, its purpose
+ * is to point to a valid date on the calendar it is
+ * designed for. Simply Datetime relies on the object
+ * invariant that any constructed instance of this type
+ * represents a valid calendar date. Each implementation is
+ * responsible for enforcing this invariant to prevent bugs
+ * and undefined behavior. This structure timekeeps dates
+ * using a serial count of days relative to some epoch date.
+ * The provided underlying serial date representation type
+ * `Repr_T` is initialized in this base class but can also
+ * be accessed by the derived calendar date implementation.
+ * The class hierarchy implements the CRTP design pattern
+ * which allows this base to reference the derivative.
+ * Consequently, the convenience methods defined in this
+ * base structure depend on the concrete calendar dates
+ * public API for them to be well-formed. A derivative is
+ * expected to present the appropriate attributes and
+ * methods, which can be verified by invoking the contract
+ * enforcement macro (`SIMPLYDT_ENFORCE_DATE_CONTRACT`)
+ * just after the body of the implementation. Failing to
+ * have a compliant API can result in substitution errors
+ * or undefined behavior. This is not a self-constructable
+ * type, it must be inherited by a concrete implementation
+ * that presents the expected (public) API.
  */
 template <typename Date_Impl, typename Validation_Policy, typename Repr_T, typename Year_T>
 struct SerialCalendarDate {
@@ -48,31 +77,31 @@ struct SerialCalendarDate {
     }
 
     /*! @brief Evaluates equivalence of calendar dates. */
-    [[nodiscard]] constexpr bool operator==(const Date_Impl date) const noexcept
+    [[nodiscard]] constexpr bool operator==(const Base& serial_date) const noexcept
     {
-        return this->serialDays == date.serialDays;
+        return this->serialDays == serial_date.serialDays;
     }
 
     /*! @brief Determines if left-hand side is sequentially before right-hand side. */
-    [[nodiscard]] constexpr bool operator<(const Date_Impl date) const noexcept
+    [[nodiscard]] constexpr bool operator<(const Base& serial_date) const noexcept
     {
-        return this->serialDays < date.serialDays;
+        return this->serialDays < serial_date.serialDays;
     }
 
     /*! @brief Determines if left-hand side is sequentially after right-hand side. */
-    [[nodiscard]] constexpr bool operator>(const Date_Impl date) const noexcept
+    [[nodiscard]] constexpr bool operator>(const Base& serial_date) const noexcept
     {
-        return this->serialDays > date.serialDays;
+        return this->serialDays > serial_date.serialDays;
     }
 
-    [[nodiscard]] constexpr bool operator<=(const Date_Impl date) const noexcept
+    [[nodiscard]] constexpr bool operator<=(const Base& serial_date) const noexcept
     {
-        return this->serialDays <= date.serialDays;
+        return this->serialDays <= serial_date.serialDays;
     }
 
-    [[nodiscard]] constexpr bool operator>=(const Date_Impl date) const noexcept
+    [[nodiscard]] constexpr bool operator>=(const Base& serial_date) const noexcept
     {
-        return this->serialDays >= date.serialDays;
+        return this->serialDays >= serial_date.serialDays;
     }
 
     /*! @brief Returns this calendar date with provided amount of days added. */
@@ -99,9 +128,6 @@ struct SerialCalendarDate {
     [[nodiscard]] constexpr Days operator-(const Date_Impl date) const noexcept
     {
         return Days{this->serialDays - date.serialDays};
-        // TODO: This method is not safe nor complete...
-        // (the math was looking at me funny)
-        // (no but srsly, the math could overflow)
     }
 
     /*!
@@ -114,7 +140,7 @@ struct SerialCalendarDate {
     Date_Impl& operator++() noexcept
     {
         this->serialDays += 1;
-        return *this;
+        return static_cast<Date_Impl&>(*this);
         // TODO: This method is not safe nor complete...
         // ('this->serialDays' can overflow)
     }
@@ -139,7 +165,7 @@ struct SerialCalendarDate {
     Date_Impl& operator+=(const Days days) noexcept
     {
         this->serialDays += days.count();
-        return *this;
+        return static_cast<Date_Impl&>(*this);
         // TODO: This method is not safe nor complete...
         // ('days' can underflow or overflow 'this->serialDays')
     }
@@ -154,7 +180,7 @@ struct SerialCalendarDate {
     Date_Impl& operator--() noexcept
     {
         this->serialDays -= 1;
-        return *this;
+        return static_cast<Date_Impl&>(*this);
         // TODO: This method is not safe nor complete...
         // ('this->serialDays' can underflow)
     }
@@ -179,16 +205,97 @@ struct SerialCalendarDate {
     Date_Impl& operator-=(const Days days) noexcept
     {
         this->serialDays -= days.count();
-        return *this;
+        return static_cast<Date_Impl&>(*this);
         // TODO: This method is not safe nor complete...
         // ('days' can underflow or overflow 'this->serialDays')
     }
 
-    // Continue...
+    /*!
+     * @brief
+     * Determines if calendar date is epoch date.
+     * 
+     * @return
+     * True if serial day count is zero
+     */
+    [[nodiscard]] constexpr bool isZero() const noexcept
+    {
+        return this->serialDays == 0;
+    }
+
+    /*!
+     * @brief
+     * Determines if date is sequentially before provided
+     * date.
+     * 
+     * @return
+     * True if this date occurs before provided
+     */
+    [[nodiscard]] constexpr bool isBefore(const Date_Impl date) const noexcept
+    {
+        return this->serialDays < date.serialDays;
+    }
+
+    /*!
+     * @brief
+     * Determines if date is sequentially after provided
+     * date.
+     * 
+     * @return
+     * True if this date occurs after provided
+     */
+    [[nodiscard]] constexpr bool isAfter(const Date_Impl date) const noexcept
+    {
+        return this->serialDays > date.serialDays;
+    }
+
+    /*!
+     * @brief
+     * Determines if date is sequentially between two
+     * dates.
+     * 
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @return
+     * True if this date occurs between provided dates
+     */
+    [[nodiscard]] constexpr bool isBetween(const Date_Impl start_date, const Date_Impl end_date) const noexcept
+    {
+        return start_date.serialDays <= this->serialDays && this->serialDays <= end_date.serialDays;
+    }
+
+    /*!
+     * @brief
+     * Calculates number of days between dates.
+     * 
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @return
+     * Days from this date to provided
+     */
+    [[nodiscard]] constexpr Days daysUntil(const Date_Impl date) const noexcept
+    {
+        return Days{date.serialDays - this->serialDays};
+    }
+
+    /*!
+     * @brief
+     * Returns constant reference to underlying serial
+     * day count.
+     * 
+     * @return
+     * Constant reference to serial day count
+     */
+    [[nodiscard]] constexpr const Repr_Type& underlying() const noexcept
+    {
+        return this->serialDays;
+    }
 
   private:
     Repr_Type serialDays;
 
+    /*! @brief Construct calendar date with serial day count. */
     constexpr SerialCalendarDate(const Repr_Type serialDayCount) noexcept
         : serialDays{serialDayCount}
     { }
@@ -196,7 +303,15 @@ struct SerialCalendarDate {
     ~SerialCalendarDate() = default;
     friend Date_Impl;
 
-    [[nodiscard]] constexpr Date_Impl& derivedImpl() const noexcept
+    /*!
+     * @brief
+     * Returns constant reference to this concrete derivative.
+     * 
+     * @note
+     * Do not call this from the derived class, YOU are the
+     * `derivedImpl()` (a.k.a `this`)
+     */
+    [[nodiscard]] constexpr const Date_Impl& derivedImpl() const noexcept
     {
         return static_cast<const Date_Impl&>(*this);
     }
