@@ -16,6 +16,7 @@
 #define SIMPLYDT_LIB_SERIAL_GREGORIAN_CALENDAR_DATE_H_
 
 #include "simplydt/calendar/date/abstract_date.hpp"
+#include "simplydt/calendar/concepts/calendar_contract.hpp"
 #include "simplydt/calendar/gregorian/date_validation.hpp"
 #include "simplydt/calendar/gregorian/gregorian_defs.hpp"
 #include "simplydt/calendar/gregorian/helper_algorithms.hpp"
@@ -167,6 +168,8 @@ struct GregorianDate :
         return dateStr;
     }
 };
+
+SIMPLYDT_ENFORCE_DATE_CONTRACT(GregorianDate);
 
 } // namespace simplydt::gregorian
 
