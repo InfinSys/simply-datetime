@@ -24,15 +24,21 @@ namespace simplydt::concepts
  * @brief
  * Concept of a type that meets the criteria to be
  * considered a useable calendar date implementation.
+ * 
+ * @details
+ * TODO: INCOMPLETE COMMENT!!!
  */
 template <typename Date_Impl>
 concept contract_abiding_date = requires {
+    requires date::has_contextual_nested_types<Date_Impl>;
     requires std::is_integral_v<typename Date_Impl::YearInt_t>;
-    requires date::has_date_component_methods<Date_Impl, typename Date_Impl::YearInt_t>;
+    requires date::has_date_component_methods<Date_Impl>;
     requires date::has_logical_operators<Date_Impl>;
+    requires date::has_arithmetic_operators<Date_Impl>;
     requires date::has_basic_state_methods<Date_Impl>;
+    requires date::has_sequential_evaluation_methods<Date_Impl>;
     requires date::is_stream_out_compatible<Date_Impl>;
-    requires date::has_date_literal_methods<Date_Impl>;
+    requires date::has_date_string_methods<Date_Impl>;
     requires std::default_initializable<Date_Impl>;
     requires std::copyable<Date_Impl>;
     requires std::destructible<Date_Impl>;
@@ -41,7 +47,7 @@ concept contract_abiding_date = requires {
 } // namespace simplydt::concepts
 
 #ifndef SIMPLYDT_ENFORCE_DATE_CONTRACT
-/*! @brief Macro for asserting date implementation interface contract. */
+/*! @brief Macro for asserting date interface implementation contract. */
 #    define SIMPLYDT_ENFORCE_DATE_CONTRACT(Class)                                             \
         static_assert(                                                                        \
             simplydt::concepts::contract_abiding_date<Class>,                                 \
