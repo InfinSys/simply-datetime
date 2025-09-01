@@ -34,7 +34,7 @@ struct GregorianDate :
     public SerialCalendarDate<GregorianDate, DateValidationPolicy, int32_t, Year_Type> {
     /*! @brief Epoch date in serial form. */
     static constexpr Repr_Type SERIAL_EPOCH = 0;
-    
+
     /*!
      * @brief
      * Intercepts invalid date constructor values.
@@ -69,7 +69,20 @@ struct GregorianDate :
           }
     { }
 
+    /*!
+     * @brief
+     * Construct default Gregorian calendar date
+     * (epoch date).
+     */
+    constexpr GregorianDate() noexcept
+        : SerialCalendarDate<GregorianDate, DateValidationPolicy, int32_t, Year_Type>{
+              SERIAL_EPOCH
+          }
+    { }
+
     ~GregorianDate() = default;
+
+    // Continue...
 };
 
 } // namespace simplydt::gregorian
