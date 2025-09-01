@@ -296,7 +296,7 @@ struct SerialCalendarDate {
     }
 
   private:
-    Repr_Type serialDays;
+    Repr_Type serialDays; ///< Serial day count
 
     /*! @brief Construct calendar date with serial day count. */
     constexpr SerialCalendarDate(const Repr_Type serialDayCount) noexcept
