@@ -32,6 +32,9 @@ namespace simplydt::gregorian
  */
 struct GregorianDate :
     public SerialCalendarDate<GregorianDate, DateValidationPolicy, int32_t, Year_Type> {
+    /*! @brief Epoch date in serial form. */
+    static constexpr Repr_Type SERIAL_EPOCH = 0;
+    
     /*!
      * @brief
      * Intercepts invalid date constructor values.
@@ -48,7 +51,7 @@ struct GregorianDate :
     ) noexcept
     {
         if (!ValidationPolicy::isValidDate(year, month, day))
-            return 0; // Serial epoch
+            return SERIAL_EPOCH;
 
         return toDaysSinceEpoch(year, month, day);
     }
