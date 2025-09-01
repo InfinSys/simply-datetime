@@ -158,12 +158,12 @@ struct GregorianDate :
     [[nodiscard]] std::string toStr() const noexcept
     {
         const char delimiter = '-';
-
         std::string dateStr;
         dateStr.reserve(12);
-        dateStr += (std::to_string(this->year()) + delimiter);
-        dateStr += (toDoubleDigitStr(this->month()) + delimiter);
-        dateStr += toDoubleDigitStr(this->day());
+        const DateTuple dateValues = fromDaysSinceEpoch(this->serialDays);
+        dateStr += (std::to_string(std::get<0>(dateValues)) + delimiter);
+        dateStr += (toDoubleDigitStr(std::get<1>(dateValues)) + delimiter);
+        dateStr += toDoubleDigitStr(std::get<2>(dateValues));
         return dateStr;
     }
 };
