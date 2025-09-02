@@ -24,7 +24,7 @@ namespace simplydt::concepts
  * @brief
  * Concept of a type that meets the criteria to be
  * considered a useable calendar date implementation.
- * 
+ *
  * @details
  * TODO: INCOMPLETE COMMENT!!!
  */
