@@ -15,8 +15,8 @@
 #ifndef SIMPLYDT_LIB_SERIAL_GREGORIAN_CALENDAR_DATE_H_
 #define SIMPLYDT_LIB_SERIAL_GREGORIAN_CALENDAR_DATE_H_
 
-#include "simplydt/calendar/date/abstract_date.hpp"
 #include "simplydt/calendar/concepts/calendar_contract.hpp"
+#include "simplydt/calendar/date/abstract_date.hpp"
 #include "simplydt/calendar/gregorian/date_validation.hpp"
 #include "simplydt/calendar/gregorian/gregorian_defs.hpp"
 #include "simplydt/calendar/gregorian/helper_algorithms.hpp"
@@ -87,7 +87,7 @@ struct GregorianDate :
     /*!
      * @brief
      * Date year component.
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
      *
@@ -98,7 +98,7 @@ struct GregorianDate :
     {
         // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
         Repr_Type serial_days = this->serialDays + 719'468;
-        const int era      = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
+        const int era = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
         const unsigned doe = static_cast<unsigned>(serial_days - era * 146'097);
         const unsigned yoe = (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
         return static_cast<YearInt_t>(yoe) + era * YEARS_IN_ERA;
@@ -107,7 +107,7 @@ struct GregorianDate :
     /*!
      * @brief
      * Date month component.
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
      *
@@ -118,7 +118,7 @@ struct GregorianDate :
     {
         // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
         Repr_Type serial_days = this->serialDays + 719'468;
-        const int era      = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
+        const int era = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
         const unsigned doe = static_cast<unsigned>(serial_days - era * 146'097);
         const unsigned yoe = (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
         const unsigned doy = doe - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100);
@@ -129,7 +129,7 @@ struct GregorianDate :
     /*!
      * @brief
      * Date day component.
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
      *
@@ -140,7 +140,7 @@ struct GregorianDate :
     {
         // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
         Repr_Type serial_days = this->serialDays + 719'468;
-        const int era      = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
+        const int era = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
         const unsigned doe = static_cast<unsigned>(serial_days - era * 146'097);
         const unsigned yoe = (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
         const unsigned doy = doe - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100);
