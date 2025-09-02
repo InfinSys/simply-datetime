@@ -46,8 +46,8 @@ int main(int argc, char* argv[])
     // GregorianDate constexpr tests:
     {
         constexpr Date::YearInt_t today_yr = todayDate.year();
-        constexpr uint8_t today_mn = todayDate.month();
-        constexpr uint8_t today_dy = todayDate.day();
+        constexpr uint8_t today_mn         = todayDate.month();
+        constexpr uint8_t today_dy         = todayDate.day();
 
         constexpr bool eq  = todayDate == pastDate;
         constexpr bool lt  = todayDate < pastDate;
@@ -100,19 +100,19 @@ int main(int argc, char* argv[])
     //_SUSPEND_// constexpr const char* dowName                  =
     // GregorianCalendar::getDayOfWeekName(demo);
     //_SUSPEND_// constexpr std::string_view dowShort =
-    //GregorianCalendar::getDayOfWeekAbbrev(demo); _SUSPEND_// constexpr bool isLeap =
-    //GregorianCalendar::isLeapYear(demo); _SUSPEND_// constexpr uint16_t daysInYr         =
-    //GregorianCalendar::getDaysInYear(demo); _SUSPEND_// constexpr
-    //simplydt::gregorian::DayOfWeek dowRepr = _SUSPEND_//
-    //GregorianCalendar::getDayOfWeekEnumRepr(demo); _SUSPEND_// constexpr UnixTimestamp
-    //serialDays = GregorianCalendar::toDaysSinceEpoch(demo); _SUSPEND_// constexpr
-    //GregorianDate fromSerial = GregorianCalendar::fromDaysSinceEpoch(0); _SUSPEND_//
-    //constexpr UnixTimestamp tzz = _SUSPEND_//
-    //GregorianCalendar::toUnixTimestamp(GregorianDate{2'004, 9, 17}); _SUSPEND_// constexpr
-    //GregorianDate zzt = _SUSPEND_//     GregorianCalendar::fromUnixTimestamp(1'095'379'200);
+    // GregorianCalendar::getDayOfWeekAbbrev(demo); _SUSPEND_// constexpr bool isLeap =
+    // GregorianCalendar::isLeapYear(demo); _SUSPEND_// constexpr uint16_t daysInYr         =
+    // GregorianCalendar::getDaysInYear(demo); _SUSPEND_// constexpr
+    // simplydt::gregorian::DayOfWeek dowRepr = _SUSPEND_//
+    // GregorianCalendar::getDayOfWeekEnumRepr(demo); _SUSPEND_// constexpr UnixTimestamp
+    // serialDays = GregorianCalendar::toDaysSinceEpoch(demo); _SUSPEND_// constexpr
+    // GregorianDate fromSerial = GregorianCalendar::fromDaysSinceEpoch(0); _SUSPEND_//
+    // constexpr UnixTimestamp tzz = _SUSPEND_//
+    // GregorianCalendar::toUnixTimestamp(GregorianDate{2'004, 9, 17}); _SUSPEND_// constexpr
+    // GregorianDate zzt = _SUSPEND_//     GregorianCalendar::fromUnixTimestamp(1'095'379'200);
     //// 2004-09-17T00:00:00.00 _SUSPEND_// const GregorianDate bzr = _SUSPEND_//
-    //GregorianCalendar::fromTimePoint(std::chrono::system_clock::now(), false); _SUSPEND_//
-    //std::cout << bzr << '\n';
+    // GregorianCalendar::fromTimePoint(std::chrono::system_clock::now(), false); _SUSPEND_//
+    // std::cout << bzr << '\n';
 
     //_SUSPEND_// constexpr UTCTime dvq = UTCTime{14, 37, 48};
     //_SUSPEND_// constexpr UTCTime gbx = UTCTime{simplydt::Hours{23} + simplydt::Minutes{15}};
