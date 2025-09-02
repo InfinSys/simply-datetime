@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
     using Date = simplydt::gregorian::GregorianDate;
     using Days = simplydt::Days;
 
-    constexpr Date todayDate{2'025, 9, 1}; ///<---(The focus)
+    constexpr Date todayDate{2'025, 9, 2};
     constexpr Date pastDate{2'025, 8, 1};
 
     // GregorianDate constexpr tests:
