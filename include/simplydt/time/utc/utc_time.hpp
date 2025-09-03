@@ -12,12 +12,10 @@
  */
 
 
-#ifndef SIMPLYDT_LIB_COORDINATED_UNIVERSAL_TIME_STRUCT_H_
-#define SIMPLYDT_LIB_COORDINATED_UNIVERSAL_TIME_STRUCT_H_
+#ifndef SIMPLYDT_LIB_COORDINATED_UNIVERSAL_TIME_STANDARD_H_
+#define SIMPLYDT_LIB_COORDINATED_UNIVERSAL_TIME_STANDARD_H_
 
 #include "simplydt/time/abstract_time.hpp"
-#include "simplydt/time/concepts/time_api_contract.hpp"
-#include "simplydt/time/units/time_units.hpp"
 #include "simplydt/time/utc/utc_defs.hpp"
 
 namespace simplydt::utc
@@ -25,9 +23,12 @@ namespace simplydt::utc
 
 /*!
  * @brief
+ * Coordinated Universal Time.
+ *
+ * @details
  * TODO: INCOMPLETE COMMENT!!!
  */
-struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
+struct UTCTime : public SerialTimeStandard<UTCTime, Seconds, Time_t> {
     /*!
      * @brief
      * Identifies the time system represented by this
@@ -37,191 +38,60 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
 
     /*!
      * @brief
-     * Indicates the resolution this time system is based on.
+     * Indicates the resolution this time system is based
+     * on.
      */
     static constexpr TimeComponent resolution = TimeComponent::SECOND;
 
     /*!
      * @brief
-     * Indicates whether the time system is based on celestial
-     * motion.
+     * Indicates whether the time system is based on
+     * celestial motion.
      *
      * @details
-     * Specifies that UTC is a celestial time system. While its
-     * rate is derived from atomic clocks, it is fundamentally
-     * tied to the Earth's rotation (a celestial phenomenon)
-     * through the mechanism of leap seconds.
+     * Specifies that UTC is a celestial time system.
+     * While its rate is derived from atomic clocks, it is
+     * fundamentally tied to the Earth's rotation (a
+     * celestial phenomenon) through the mechanism of leap
+     * seconds.
      */
     static constexpr bool isCelestialTimeSystem = true;
 
     /*!
      * @brief
-     * Indicates whether the time system is a pure atomic time
-     * scale.
+     * Indicates whether the time system is a pure atomic
+     * time scale.
      *
      * @details
-     * Specifies that UTC is not a pure atomic time system which
-     * is a continuous time scale based solely on atomic clocks.
+     * Specifies that UTC is not a pure atomic time system
+     * which is a continuous time scale based solely on
+     * atomic clocks.
      */
     static constexpr bool isPureAtomicTimeSystem = false;
 
     /*!
      * @brief
-     * Intercepts invalid serial seconds values and returns
-     * midnight (00:00:00 AM).
-     *
-     * @return
-     * Midnight if invalid, provided time-in-day value otherwise
+     * Indicates whether the time system is derived from an
+     * atomic time scale.
      */
-    [[nodiscard]] static constexpr Time_t useDefaultIfInvalid(const Time_t& time_in_day
-    ) noexcept
-    {
-        return time_in_day >= SECONDS_IN_DAY ? MIDNIGHT : time_in_day;
-    }
+    static constexpr bool isAtomicDerivedTimeSystem = true;
 
     /*!
      * @brief
-     * Intercepts invalid time parameters and returns midnight
-     * (00:00:00 AM).
-     *
-     * @return
-     * Midnight if invalid, provided time-in-day value otherwise
-     */
-    [[nodiscard]] static constexpr Time_t useDefaultIfInvalid(
-        const uint8_t& hour, const uint8_t& minute, const uint8_t& second
-    ) noexcept
-    {
-        if ((hour >= HOURS_IN_DAY) || (minute >= MINUTES_IN_HOUR) ||
-            (second >= SECONDS_IN_MINUTE))
-            return MIDNIGHT; // Invalid time parameters
-
-        return Base::toSerialSeconds(hour, minute, second);
-    }
-
-    /*!
-     * @brief
-     * Intercepts invalid serial seconds and returns midnight
-     * (00:00:00 AM).
-     *
-     * @return
-     * Midnight if invalid, provided time-in-day value otherwise
-     */
-    [[nodiscard]] static constexpr Time_t useDefaultIfInvalid(const Seconds& secs_in_day
-    ) noexcept
-    {
-        if ((secs_in_day.count() < MIDNIGHT) || (secs_in_day.count() >= SECONDS_IN_DAY))
-            return MIDNIGHT;
-
-        return static_cast<Time_t>(secs_in_day.count());
-    }
-
-    /*!
-     * @brief
-     * Construct UTC time using hour, minute, and second
+     * Construct UTC time with hour, minute, and second
      * values.
      */
     constexpr UTCTime(const uint8_t hour, const uint8_t minute, const uint8_t second) noexcept
-        : TimeSystem<UTCTime, Time_t>{}, timeInDay{useDefaultIfInvalid(hour, minute, second)}
-    {
-        //
-    }
+        : SerialTimeStandard<UTCTime, Seconds, Time_t>{
+              Base::toSerialSeconds(hour, minute, second)
+          }
+    { }
 
-    /*!
-     * @brief
-     * Construct UTC time using hour and minute values;
-     * assume second = 0.
-     */
-    constexpr UTCTime(const uint8_t hour, const uint8_t minute) noexcept
-        : TimeSystem<UTCTime, Time_t>{}, timeInDay{useDefaultIfInvalid(hour, minute, 0)}
-    {
-        //
-    }
-
-    /*!
-     * @brief
-     * Construct UTC time using an hour value; assume
-     * minute and second = 0.
-     */
-    explicit constexpr UTCTime(const uint8_t hour) noexcept
-        : TimeSystem<UTCTime, Time_t>{}, timeInDay{useDefaultIfInvalid(hour, 0, 0)}
-    {
-        //
-    }
-
-    /*!
-     * @brief
-     * Construct UTC time from seconds since start of
-     * day.
-     */
-    constexpr UTCTime(const Seconds secs_in_day) noexcept
-        : TimeSystem<UTCTime, Time_t>{}, timeInDay{useDefaultIfInvalid(secs_in_day)}
-    {
-        //
-    }
-
-    /*!
-     * @brief
-     * Construct default UTC time (midnight).
-     */
-    constexpr UTCTime() noexcept : TimeSystem<UTCTime, Time_t>{}, timeInDay{MIDNIGHT}
-    {
-        //
-    }
+    /*! @brief Construct default UTC time (00:00:00 AM) */
+    constexpr UTCTime() noexcept : SerialTimeStandard<UTCTime, Seconds, Time_t>{MIDNIGHT}
+    { }
 
     ~UTCTime() = default;
-
-    friend inline std::ostream& operator<<(std::ostream& os, const UTCTime time) noexcept
-    {
-        os << time.toStr();
-        return os;
-    }
-
-    /*! @brief Evaluate equivalence of UTC times. */
-    [[nodiscard]] constexpr bool operator==(const UTCTime time) const noexcept
-    {
-        return this->timeInDay == time.timeInDay;
-    }
-
-    /*! @brief Determine if left-hand side is sequentially before right-hand side. */
-    [[nodiscard]] constexpr bool operator<(const UTCTime time) const noexcept
-    {
-        return this->timeInDay < time.timeInDay;
-    }
-
-    /*! @brief Determine if left-hand side is sequentially after right-hand side. */
-    [[nodiscard]] constexpr bool operator>(const UTCTime time) const noexcept
-    {
-        return this->timeInDay > time.timeInDay;
-    }
-
-    [[nodiscard]] constexpr bool operator<=(const UTCTime time) const noexcept
-    {
-        return this->timeInDay <= time.timeInDay;
-    }
-
-    [[nodiscard]] constexpr bool operator>=(const UTCTime time) const noexcept
-    {
-        return this->timeInDay >= time.timeInDay;
-    }
-
-    /*! @brief Index UTC time components. */
-    [[nodiscard]] std::optional<uint8_t> operator[](const TimeComponent component
-    ) const noexcept
-    {
-        return this->getComponent(component);
-    }
-
-    /*!
-     * @brief
-     * Evaluate if time is midnight.
-     *
-     * @return
-     * True if time is midnight
-     */
-    [[nodiscard]] constexpr bool isDefault() const noexcept
-    {
-        return this->timeInDay == MIDNIGHT;
-    }
 
     /*!
      * @brief
@@ -232,7 +102,7 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
      */
     [[nodiscard]] constexpr uint8_t hour() const noexcept
     {
-        return Base::hourFromSerialSecs(this->timeInDay);
+        return Base::hourFromSerialSecs(this->serialUnits);
     }
 
     /*!
@@ -244,7 +114,7 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
      */
     [[nodiscard]] constexpr uint8_t hour12() const noexcept
     {
-        return Base::hourFromSerialSecs(this->timeInDay) % 12;
+        return Base::hourFromSerialSecs(this->serialUnits) % 12;
     }
 
     /*!
@@ -286,7 +156,7 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
      */
     [[nodiscard]] constexpr uint8_t minute() const noexcept
     {
-        return Base::minuteFromSerialSecs(this->timeInDay);
+        return Base::minuteFromSerialSecs(this->serialUnits);
     }
 
     /*!
@@ -298,7 +168,7 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
      */
     [[nodiscard]] constexpr uint8_t second() const noexcept
     {
-        return Base::secondFromSerialSecs(this->timeInDay);
+        return Base::secondFromSerialSecs(this->serialUnits);
     }
 
     /*!
@@ -311,7 +181,6 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
     [[nodiscard]] const std::string toStr() const noexcept
     {
         const char delimiter = ':';
-
         std::string timeStr;
         timeStr.reserve(12);
         timeStr += (toDoubleDigitStr(this->hour()) + delimiter);
@@ -320,48 +189,10 @@ struct UTCTime final : public TimeSystem<UTCTime, Time_t> {
         timeStr += this->hourPhaseStr();
         return timeStr;
     }
-
-    /*!
-     * @brief
-     * Get specified UTC time component.
-     * 
-     * @return
-     * Requested time component
-     */
-    [[nodiscard]] std::optional<uint8_t> getComponent(const TimeComponent component
-    ) const noexcept
-    {
-        switch (component) {
-        case TimeComponent::HOUR:
-            return this->hour();
-        case TimeComponent::MINUTE:
-            return this->minute();
-        case TimeComponent::SECOND:
-            return this->second();
-        default: // Invalid component request
-            return std::nullopt;
-        };
-    }
-
-    /*!
-     * @brief
-     * Converts UTC time to serial count of seconds since
-     * midnight.
-     * 
-     * @return
-     * Serial count of seconds since start of day
-     */
-    [[nodiscard]] constexpr Seconds toSerialSeconds() const noexcept
-    {
-        return Seconds{this->timeInDay};
-    }
-
-  private:
-    Time_t timeInDay; ///< Time of day
 };
 
-SIMPLYDT_ENFORCE_TIME_CONTRACT(UTCTime);
+// SIMPLYDT_ENFORCE_TIME_CONTRACT(UTCTime);
 
 } // namespace simplydt::utc
 
-#endif // SIMPLYDT_LIB_COORDINATED_UNIVERSAL_TIME_STRUCT_H_
+#endif // SIMPLYDT_LIB_COORDINATED_UNIVERSAL_TIME_STANDARD_H_
