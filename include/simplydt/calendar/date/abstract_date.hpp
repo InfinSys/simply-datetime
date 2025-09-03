@@ -282,6 +282,9 @@ struct SerialCalendarDate {
         return Days{date.serialDays - this->serialDays};
     }
 
+    // TODO: Implement functionality here...
+    // constexpr Days units() const noexcept
+
     /*!
      * @brief
      * Returns constant reference to underlying serial
