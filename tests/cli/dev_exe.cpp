@@ -14,18 +14,8 @@
 * -> [] ...
 *
 *
-* -> [] :: GregorianCalendar Static Methods ::
-* -> [] static constexpr uint8_t getWeeksInMonth()  <------(Returns whole weeks in month)
-* -> [] static constexpr uint8_t getWeeksMonthSpans()  <---(Returns weeks spanned by month)
-*
-*
 * -> [] :: Common Time Definitions ::
 * -> [] using ExTime_t = uint64_t;
-* -> [] constexpr ExTime_t EX_TIME_MAX = NANOSECS_IN_DAY - 1;
-*
-*
-* -> [] :: Library Compile-Time Utilities ::
-* -> [] template struct ArgParams<...>;  <---(Holds argument parameter types)
 *
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
@@ -112,6 +102,20 @@ int main(int argc, char* argv[])
         constexpr bool pst     = rightNow.isBefore(secondsAgo);
         constexpr bool btw     = rightNow.isBetween(secondsAgo, rightNow);
         constexpr uint32_t tck = rightNow.underlying();
+    }
+
+    // UTCTime increment/decrement tests:
+    {
+        Time now  = rightNow;
+        Time next = ++now;
+        next      = now++;
+
+        next = rightNow - Seconds{30};
+        next = --now;
+        next = now--;
+
+        next += Seconds{15};
+        next -= Seconds{10};
     }
 
     // SerialCalendarDate and SerialTimeStandard Stream out tests:
