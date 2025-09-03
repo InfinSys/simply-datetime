@@ -31,17 +31,23 @@
 
 // Includes...
 #include "simplydt/calendar/gregorian/gregorian_date.hpp"
+#include "simplydt/time/utc/utc_time.hpp"
 
 int main(int argc, char* argv[])
 {
     ProjectInfoOut();
 
     //\\//
-    using Date = simplydt::gregorian::GregorianDate;
-    using Days = simplydt::Days;
+    using Date    = simplydt::gregorian::GregorianDate;
+    using Time    = simplydt::utc::UTCTime;
+    using Days    = simplydt::Days;
+    using Seconds = simplydt::Seconds;
 
-    constexpr Date todayDate{2'025, 9, 2};
+    constexpr Date todayDate{2'025, 9, 3};
     constexpr Date pastDate{2'025, 8, 1};
+
+    constexpr Time rightNow{1, 54, 19};
+    constexpr Time secondsAgo{1, 53, 48};
 
     // GregorianDate constexpr tests:
     {
@@ -81,6 +87,37 @@ int main(int argc, char* argv[])
 
         next += Days{15};
         last -= Days{10};
+    }
+
+    // UTCTime constexpr tests:
+    {
+        constexpr uint8_t now_hr  = rightNow.hour12();
+        constexpr uint8_t now_min = rightNow.minute();
+        constexpr uint8_t now_sec = rightNow.second();
+
+        constexpr bool eq  = rightNow == secondsAgo;
+        constexpr bool lt  = rightNow < secondsAgo;
+        constexpr bool gt  = rightNow > secondsAgo;
+        constexpr bool lte = rightNow <= secondsAgo;
+        constexpr bool gte = rightNow >= secondsAgo;
+
+        constexpr Time ps       = rightNow + Seconds{15};
+        constexpr Time ms       = rightNow - Seconds{15};
+        constexpr Seconds diff1 = rightNow - secondsAgo;
+        constexpr Seconds diff2 = secondsAgo - rightNow;
+        constexpr Time arith    = secondsAgo + (rightNow - secondsAgo);
+
+        constexpr bool zro     = rightNow.isZero();
+        constexpr bool ftr     = rightNow.isAfter(secondsAgo);
+        constexpr bool pst     = rightNow.isBefore(secondsAgo);
+        constexpr bool btw     = rightNow.isBetween(secondsAgo, rightNow);
+        constexpr uint32_t tck = rightNow.underlying();
+    }
+
+    // SerialCalendarDate and SerialTimeStandard Stream out tests:
+    {
+        std::cout << "\nToday date: " << todayDate << "\nTime: " << rightNow << '\n';
+        std::cout << "\nToday + 19 days = " << (todayDate + Days{19}) << '\n';
     }
 
     //_SUSPEND_// const GregorianDate blizz =
