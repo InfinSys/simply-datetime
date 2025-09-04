@@ -5,7 +5,7 @@
 // [ISJTB-CXX-XL20230401-000001]
 
 /*!
- * @file date_contract.hpp
+ * @file date_api_contract.hpp
  *
  * @brief
  * Conceptual calendar date implementation contract.
