@@ -17,6 +17,7 @@
 
 #include "simplydt/time/abstract_time.hpp"
 #include "simplydt/time/utc/utc_defs.hpp"
+#include "simplydt/time/concepts/time_api_contract.hpp"
 
 namespace simplydt::utc
 {
@@ -178,7 +179,7 @@ struct UTCTime : public SerialTimeStandard<UTCTime, Seconds, Time_t> {
      * @return
      * UTC time as string
      */
-    [[nodiscard]] const std::string toStr() const noexcept
+    [[nodiscard]] std::string toStr() const noexcept
     {
         const char delimiter = ':';
         std::string timeStr;
@@ -191,7 +192,7 @@ struct UTCTime : public SerialTimeStandard<UTCTime, Seconds, Time_t> {
     }
 };
 
-// SIMPLYDT_ENFORCE_TIME_CONTRACT(UTCTime);
+SIMPLYDT_ENFORCE_TIME_CONTRACT(UTCTime);
 
 } // namespace simplydt::utc
 
