@@ -5,7 +5,7 @@
 // [ISJTB-CXX-XL20230401-000001]
 
 /*!
- * @file calendar_contract.hpp
+ * @file calendar_api_contract.hpp
  *
  * @brief
  * Conceptual calendar implementation contract.
@@ -16,7 +16,7 @@
 #define SIMPLYDT_LIB_CALENDAR_CONTRACT_CONCEPT_H_
 
 #include "simplydt/calendar/concepts/calendar_concepts.hpp"
-#include "simplydt/calendar/concepts/date_contract.hpp"
+#include "simplydt/calendar/concepts/date_api_contract.hpp"
 
 namespace simplydt::concepts
 {
