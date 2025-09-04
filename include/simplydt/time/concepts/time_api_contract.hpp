@@ -27,8 +27,18 @@ namespace simplydt::concepts
  */
 template <typename Time_Impl>
 concept contract_abiding_time = requires {
-    // TODO: INCOMPLETE!!!
-    requires std::is_same_v<Time_Impl, Time_Impl>;
+    requires time::has_contextual_nested_types<Time_Impl>;
+    // NOTE: Perhaps enforcing  v below v  here is too specific?
+    requires time::has_time_component_methods<Time_Impl>;
+    requires time::has_logical_operators<Time_Impl>;
+    requires time::has_arithmetic_operators<Time_Impl>;
+    requires time::has_basic_state_methods<Time_Impl>;
+    requires time::has_sequential_evaluation_methods<Time_Impl>;
+    requires time::is_stream_out_compatible<Time_Impl>;
+    requires time::has_time_string_methods<Time_Impl>;
+    requires std::default_initializable<Time_Impl>;
+    requires std::copyable<Time_Impl>;
+    requires std::destructible<Time_Impl>;
 };
 
 } // namespace simplydt::concepts
