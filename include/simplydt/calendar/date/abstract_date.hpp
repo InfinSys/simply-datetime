@@ -282,8 +282,21 @@ struct SerialCalendarDate {
         return Days{date.serialDays - this->serialDays};
     }
 
-    // TODO: Implement functionality here...
-    // constexpr Days units() const noexcept
+    /*!
+     * @brief
+     * Returns serial day count as explicit units
+     * of precision.
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Serial day count
+     */
+    [[nodiscard]] constexpr Days units() const noexcept
+    {
+        return Days{this->serialDays};
+    }
 
     /*!
      * @brief
