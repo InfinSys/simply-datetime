@@ -62,7 +62,8 @@ int main(int argc, char* argv[])
         constexpr bool pst    = todayDate.isBefore(pastDate);
         constexpr bool btw    = todayDate.isBetween(pastDate, todayDate);
         constexpr Days ntl    = pastDate.daysUntil(todayDate);
-        constexpr int32_t tck = todayDate.underlying();
+        constexpr Days unit   = todayDate.units();
+        constexpr int32_t rep = todayDate.underlying();
     }
 
     // GregorianDate increment/decrement tests:
@@ -101,7 +102,8 @@ int main(int argc, char* argv[])
         constexpr bool ftr     = rightNow.isAfter(secondsAgo);
         constexpr bool pst     = rightNow.isBefore(secondsAgo);
         constexpr bool btw     = rightNow.isBetween(secondsAgo, rightNow);
-        constexpr uint32_t tck = rightNow.underlying();
+        constexpr Seconds unit = rightNow.units();
+        constexpr uint32_t rep = rightNow.underlying();
     }
 
     // UTCTime increment/decrement tests:
@@ -122,6 +124,11 @@ int main(int argc, char* argv[])
     {
         std::cout << "\nToday date: " << todayDate << "\nTime: " << rightNow << '\n';
         std::cout << "\nToday + 19 days = " << (todayDate + Days{19}) << '\n';
+    }
+
+    // General Demo
+    {
+        //...
     }
 
     //_SUSPEND_// const GregorianDate blizz =
