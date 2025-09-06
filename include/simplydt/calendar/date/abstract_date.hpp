@@ -284,7 +284,7 @@ struct SerialCalendarDate {
 
     /*!
      * @brief
-     * Returns serial day count as explicit units
+     * Returns serial calendar date as explicit units
      * of precision.
      *
      * @details
