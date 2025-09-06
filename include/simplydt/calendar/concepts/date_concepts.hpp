@@ -56,10 +56,10 @@ concept has_logical_operators = requires(const Date_Impl& d) {
 };
 
 template <typename Date_Impl>
-concept has_arithmetic_operators = requires(Date_Impl& d, Days days) {
+concept has_arithmetic_operators = requires(Date_Impl& d, simplydt::Days days) {
     { d + days } -> std::same_as<Date_Impl>;
     { d - days } -> std::same_as<Date_Impl>;
-    { d - d } -> std::same_as<Days>;
+    { d - d } -> std::same_as<simplydt::Days>;
     { d += days } -> std::same_as<Date_Impl&>;
     { d -= days } -> std::same_as<Date_Impl&>;
     { ++d } -> std::same_as<Date_Impl&>;
@@ -72,6 +72,7 @@ template <typename Date_Impl>
 concept has_basic_state_methods = requires(const Date_Impl& d) {
     { d.isZero() } -> std::same_as<bool>;
     { d.underlying() } -> std::same_as<const typename Date_Impl::Repr_Type&>;
+    { d.units() } -> std::same_as<simplydt::Days>;
 };
 
 template <typename Date_Impl>
@@ -84,7 +85,7 @@ concept has_sequential_evaluation_methods = requires(const Date_Impl& d) {
     { d.isBefore(d) } -> std::same_as<bool>;
     { d.isAfter(d) } -> std::same_as<bool>;
     { d.isBetween(d, d) } -> std::same_as<bool>;
-    { d.daysUntil(d) } -> std::same_as<Days>;
+    { d.daysUntil(d) } -> std::same_as<simplydt::Days>;
 };
 
 template <typename Date_Impl>
