@@ -120,13 +120,13 @@ int main(int argc, char* argv[])
         next -= Seconds{10};
     }
 
-    // SerialCalendarDate and SerialTimeStandard Stream out tests:
+    // SerialCalendarDate and SerialTimeStandard stream out tests:
     {
         std::cout << "\nToday date: " << todayDate << "\nTime: " << rightNow << '\n';
         std::cout << "\nToday + 19 days = " << (todayDate + Days{19}) << '\n';
     }
 
-    // General Demo
+    // Gregorian calendar tests:
     {
         //...
     }
