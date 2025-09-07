@@ -66,6 +66,8 @@ struct CalendricalSystem {
     using Date = Date_Impl;
     /*! @brief Calendar year integer type. */
     using YearInt_t = typename Date::YearInt_t;
+    /*! @brief Calendar date validation policy. */
+    using DatePolicy = typename Date::ValidationPolicy;
     /*! @brief Enumeration of calendar months. */
     using Month = Month_Enum;
     /*! @brief Enumeration of calendar days of week. */
