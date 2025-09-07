@@ -99,6 +99,7 @@ template <typename Date_Impl>
 concept has_contextual_nested_types = requires {
     typename Date_Impl::Repr_Type;
     typename Date_Impl::YearInt_t;
+    typename Date_Impl::ValidationPolicy;
 };
 
 } // namespace simplydt::concepts::date
