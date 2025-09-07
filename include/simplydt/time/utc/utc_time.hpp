@@ -16,8 +16,8 @@
 #define SIMPLYDT_LIB_COORDINATED_UNIVERSAL_TIME_STANDARD_H_
 
 #include "simplydt/time/abstract_time.hpp"
-#include "simplydt/time/utc/utc_defs.hpp"
 #include "simplydt/time/concepts/time_api_contract.hpp"
+#include "simplydt/time/utc/utc_defs.hpp"
 
 namespace simplydt::utc
 {
