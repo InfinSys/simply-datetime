@@ -51,17 +51,18 @@ concept has_logical_operators = requires(const Time_Impl& t) {
 };
 
 template <typename Time_Impl>
-concept has_arithmetic_operators = requires(Time_Impl& t, typename Time_Impl::Unit_Resolution units) {
-    { t + units } -> std::same_as<Time_Impl>;
-    { t - units } -> std::same_as<Time_Impl>;
-    { t - t } -> std::same_as<typename Time_Impl::Unit_Resolution>;
-    { t += units } -> std::same_as<Time_Impl&>;
-    { t -= units } -> std::same_as<Time_Impl&>;
-    { ++t } -> std::same_as<Time_Impl&>;
-    { t++ } -> std::same_as<Time_Impl>;
-    { --t } -> std::same_as<Time_Impl&>;
-    { t-- } -> std::same_as<Time_Impl>;
-};
+concept has_arithmetic_operators =
+    requires(Time_Impl& t, typename Time_Impl::Unit_Resolution units) {
+        { t + units } -> std::same_as<Time_Impl>;
+        { t - units } -> std::same_as<Time_Impl>;
+        { t - t } -> std::same_as<typename Time_Impl::Unit_Resolution>;
+        { t += units } -> std::same_as<Time_Impl&>;
+        { t -= units } -> std::same_as<Time_Impl&>;
+        { ++t } -> std::same_as<Time_Impl&>;
+        { t++ } -> std::same_as<Time_Impl>;
+        { --t } -> std::same_as<Time_Impl&>;
+        { t-- } -> std::same_as<Time_Impl>;
+    };
 
 template <typename Time_Impl>
 concept has_basic_state_methods = requires(const Time_Impl& t) {
