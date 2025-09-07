@@ -36,6 +36,7 @@ concept has_contextual_nested_types = requires {
     typename Calendar_Impl::Date;
     typename Calendar_Impl::Month;
     typename Calendar_Impl::DayOfWeek;
+    typename Calendar_Impl::DatePolicy;
 };
 
 template <typename Calendar_Impl>
