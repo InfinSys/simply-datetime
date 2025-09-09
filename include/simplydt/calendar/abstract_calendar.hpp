@@ -140,7 +140,8 @@ struct CalendricalSystem {
      */
     [[nodiscard]] static constexpr const char* getMonthName(const Date date) noexcept
     {
-        return getMonthName(date.month());
+        const uint8_t monthIndex = date.month() - 1;
+        return Calendar_Impl::MONTH_NAMES[monthIndex];
     }
 
     /*!
@@ -212,7 +213,8 @@ struct CalendricalSystem {
      */
     [[nodiscard]] static constexpr std::string_view getMonthAbbrev(const Date date) noexcept
     {
-        return getMonthAbbrev(date.month());
+        const uint8_t monthIndex = date.month() - 1;
+        return Calendar_Impl::MONTH_ABBREVS[monthIndex];
     }
 
     /*!
@@ -254,7 +256,8 @@ struct CalendricalSystem {
      */
     [[nodiscard]] static constexpr Month getMonthEnumRepr(const Date date) noexcept
     {
-        return getMonthEnumRepr(date.month());
+        const uint8_t monthIndex = date.month() - 1;
+        return static_cast<Month>(monthIndex);
     }
 
     /*!
@@ -388,9 +391,6 @@ struct CalendricalSystem {
      */
     [[nodiscard]] static constexpr DayOfWeek getDayOfWeekEnumRepr(const Date date) noexcept
     {
-        if (!Calendar_Impl::isValidDate(date))
-            return static_cast<DayOfWeek>(0); // TODO: Fallback value not acceptable here...
-
         const uint8_t dowIndex = Calendar_Impl::getDayOfWeekIndex(date);
         return static_cast<DayOfWeek>(dowIndex);
     }
