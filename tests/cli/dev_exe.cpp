@@ -21,6 +21,7 @@
 
 // Includes...
 #include "simplydt/calendar/gregorian/gregorian_date.hpp"
+#include "simplydt/calendar/gregorian/gregorian_calendar2.hpp"
 #include "simplydt/time/utc/utc_time.hpp"
 
 int main(int argc, char* argv[])
@@ -28,13 +29,14 @@ int main(int argc, char* argv[])
     ProjectInfoOut();
 
     //\\//
-    using Date    = simplydt::gregorian::GregorianDate;
-    using Time    = simplydt::utc::UTCTime;
-    using Days    = simplydt::Days;
-    using Seconds = simplydt::Seconds;
+    using Calendar = simplydt::gregorian::GregorianCalendar;
+    using Date     = simplydt::gregorian::GregorianDate;
+    using Time     = simplydt::utc::UTCTime;
+    using Days     = simplydt::Days;
+    using Seconds  = simplydt::Seconds;
 
-    constexpr Date todayDate{2'025, 9, 3};
-    constexpr Date pastDate{2'025, 8, 1};
+    constexpr Date todayDate{2'025, 9, 7};
+    constexpr Date pastDate{2'025, 8, 23};
 
     constexpr Time rightNow{1, 54, 19};
     constexpr Time secondsAgo{1, 53, 48};
@@ -128,7 +130,9 @@ int main(int argc, char* argv[])
 
     // Gregorian calendar tests:
     {
-        //...
+        constexpr const char* mnm        = Calendar::getMonthName(todayDate);
+        constexpr std::string_view mabbr = Calendar::getMonthAbbrev(todayDate);
+        constexpr Calendar::Month mrepr  = Calendar::getMonthEnumRepr(todayDate);
     }
 
     //_SUSPEND_// const GregorianDate blizz =
