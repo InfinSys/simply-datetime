@@ -29,7 +29,7 @@ namespace simplydt::gregorian
  * @details
  * TODO: INCOMPLETE COMMENT!!!
  */
-struct GregorianCalendar :
+struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
     public CalendricalSystem<GregorianCalendar, GregorianDate, Month, DayOfWeek> {
     /*! @brief Array of dates in one calendar week. */
     using WeekDates = std::array<Date, DAYS_IN_WEEK>;
@@ -384,10 +384,16 @@ struct GregorianCalendar :
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Number of full 7-day weeks contained in
+     * specified month.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Calculates how many full seven-day calendar
+     * weeks are in the provided month. Fractional
+     * week information is truncated (*floor*) and
+     * results are not dependent on current day of
+     * the week. Returns 0 if the month is invalid
+     * or if the provided year is unsupported.
      *
      * @return
      * Number of weeks in month
@@ -396,8 +402,12 @@ struct GregorianCalendar :
         const YearInt_t year, const uint8_t month
     ) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return 0;
+        const uint8_t monthTotalDays = getDaysInMonth(year, month);
+
+        if (monthTotalDays == 0)
+            return 0; // Unsupported or invalid
+
+        return static_cast<uint8_t>(monthTotalDays / DAYS_IN_WEEK);
     }
 
     /*!
@@ -431,7 +441,214 @@ struct GregorianCalendar :
         return (monthCells + 6) / DAYS_IN_WEEK;
     }
 
-    // Continue...
+    /*!
+     * @brief
+     * Converts a calendar date to serial number of
+     * days since Unix epoch.
+     *
+     * @details
+     * Uses Howard Hinnant’s civil date algorithm to
+     * convert a year, month, day combination into a
+     * signed day count relative to the Unix epoch
+     * (1970-01-01 = day 0). The result can be
+     * negative for dates before the epoch.
+     *
+     * @return
+     * Days since January 1, 1970
+     */
+    [[nodiscard]] static constexpr Days toDaysSinceEpoch(
+        YearInt_t year, uint8_t month, uint8_t day
+    ) noexcept
+    {
+        // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
+        // Convert {year, month, day} triple into a serial count of days.
+        year -= month <= February;
+        const int era      = year / YEARS_IN_ERA;
+        const unsigned yoe = static_cast<unsigned>(year - era * YEARS_IN_ERA);
+        const unsigned doy = (153 * (month + (month > February ? -3 : 9)) + 2) / 5 + day - 1;
+        const unsigned doe = yoe * DAYS_IN_YEAR + yoe / 4 - yoe / 100 + doy;
+        return Days{static_cast<Days::rep>(era * 146'097 + static_cast<long>(doe) - 719'468)};
+    }
+
+    /*!
+     * @brief
+     * Converts a serial count of days since Unix
+     * epoch to a calendar date.
+     *
+     * @details
+     * Uses Howard Hinnant’s civil date algorithm
+     * to convert a signed day count relative to
+     * the Unix epoch (1970-01-01 = day 0) into a
+     * year, month, day combination. Returns a
+     * `GregorianDate` representing the calculated
+     * civil date.
+     *
+     * @return
+     * Gregorian calendar date
+     */
+    [[nodiscard]] static constexpr Date fromDaysSinceEpoch(Days serial_days) noexcept
+    {
+        // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
+        // Convert a serial count of days into a {year, month, day} triple.
+        unsigned long serialCount = serial_days.count();
+        serialCount += 719'468;
+        const int era = (serialCount >= 0 ? serialCount : serialCount - 146'096) / 146'097;
+        const unsigned doe = static_cast<unsigned>(serialCount - era * 146'097);
+        const unsigned yoe = (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
+        const YearInt_t y  = static_cast<YearInt_t>(yoe) + era * YEARS_IN_ERA;
+        const unsigned doy = doe - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100);
+        const unsigned mp  = (5 * doy + 2) / 153;
+        const uint8_t d    = static_cast<uint8_t>(doy - (153 * mp + 2) / 5 + 1);
+        const uint8_t m    = static_cast<uint8_t>(mp + (mp < 10 ? 3 : -9));
+        return Date{static_cast<YearInt_t>(y + (m <= 2)), m, d};
+    }
+
+    /*!
+     * @brief
+     * Converts a calendar date to a Unix timestamp
+     * (seconds since epoch).
+     *
+     * @details
+     * Uses `toDaysSinceEpoch()` to calculate the
+     * number of days since the Unix epoch
+     * (1970-01-01) and multiplies by the number
+     * of seconds in a day to obtain the equivalent
+     * timestamp in seconds. The returned value is
+     * stored in `stl::UnixTimestamp` and may be
+     * negative for dates before the epoch.
+     *
+     * @return
+     * Unix timestamp
+     */
+    [[nodiscard]] static constexpr stl::UnixTimestamp toUnixTimestamp(
+        const YearInt_t year, const uint8_t month, const uint8_t day
+    ) noexcept
+    {
+        return static_cast<stl::UnixTimestamp>(
+            Seconds{toDaysSinceEpoch(year, month, day)}.count()
+        );
+    }
+
+    /*!
+     * @brief
+     * Converts a Unix timestamp (seconds since
+     * epoch) to a calendar date.
+     *
+     * @details
+     * Divides the given `stl::UnixTimestamp` by the
+     * number of seconds in a day to convert seconds
+     * to whole days since the Unix epoch (1970-01-01),
+     * then calls `fromDaysSinceEpoch()` to obtain the
+     * corresponding calendar date.
+     *
+     * @return
+     * Gregorian calendar date
+     */
+    [[nodiscard]] static constexpr Date fromUnixTimestamp(const stl::UnixTimestamp& timestamp
+    ) noexcept
+    {
+        return fromDaysSinceEpoch(
+            Days{static_cast<Days::rep>(timestamp / SECONDS_IN_DAY)}
+        );
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @return
+     * Next date between Mon and Fri
+     */
+    [[nodiscard]] static constexpr Date getNextWeekday(const Date from_date) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return Date{};
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @return
+     * Last date between Mon and Fri
+     */
+    [[nodiscard]] static constexpr Date getLastWeekday(const Date from_date) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return Date{};
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @return
+     * Next Saturday date
+     */
+    [[nodiscard]] static constexpr Date getNextWeekend(const Date from_date) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return Date{};
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @return
+     * Last Saturday date
+     */
+    [[nodiscard]] static constexpr Date getLastWeekend(const Date from_date) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return Date{};
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @return
+     * Array of calendar week dates
+     */
+    [[nodiscard]] static constexpr WeekDates getWeek(
+        const YearInt_t year, const uint8_t week_index
+    ) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return WeekDates{};
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @return
+     * Array of calendar week dates
+     */
+    [[nodiscard]] static constexpr WeekDates getWeek(const Date date) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return WeekDates{};
+    }
 
   private:
     GregorianCalendar()  = delete;
