@@ -29,11 +29,12 @@ int main(int argc, char* argv[])
     ProjectInfoOut();
 
     //\\//
-    using Calendar = simplydt::gregorian::GregorianCalendar;
-    using Date     = simplydt::gregorian::GregorianDate;
-    using Time     = simplydt::utc::UTCTime;
-    using Days     = simplydt::Days;
-    using Seconds  = simplydt::Seconds;
+    using Calendar      = simplydt::gregorian::GregorianCalendar;
+    using Date          = simplydt::gregorian::GregorianDate;
+    using Time          = simplydt::utc::UTCTime;
+    using Days          = simplydt::Days;
+    using Seconds       = simplydt::Seconds;
+    using UnixTimestamp = simplydt::stl::UnixTimestamp;
 
     constexpr Date todayDate{2'025, 9, 7};
     constexpr Date pastDate{2'025, 8, 23};
@@ -133,6 +134,10 @@ int main(int argc, char* argv[])
         constexpr const char* mnm        = Calendar::getMonthName(todayDate);
         constexpr std::string_view mabbr = Calendar::getMonthAbbrev(todayDate);
         constexpr Calendar::Month mrepr  = Calendar::getMonthEnumRepr(todayDate);
+        constexpr Days jtb               = Calendar::toDaysSinceEpoch(2001, 2, 23);
+        constexpr Date rtc               = Calendar::fromDaysSinceEpoch(jtb);
+        constexpr UnixTimestamp ts       = Calendar::toUnixTimestamp(2001, 2, 23);
+        constexpr Date rtc2              = Calendar::fromUnixTimestamp(ts);
     }
 
     //_SUSPEND_// const GregorianDate blizz =
