@@ -443,6 +443,24 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
 
     /*!
      * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @return
+     * Index of week in year (0 - 51)
+     */
+    [[nodiscard]] static constexpr uint8_t getWeekIndex(
+        YearInt_t year, uint8_t month, uint8_t day
+    ) noexcept
+    {
+        // TODO: INCOMPLETE!!!
+        return 0;
+    }
+
+    /*!
+     * @brief
      * Converts a calendar date to serial number of
      * days since Unix epoch.
      *
