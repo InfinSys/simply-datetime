@@ -490,6 +490,22 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
 
     /*!
      * @brief
+     * Converts a calendar date to serial number of
+     * days since Unix epoch.
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Days since January 1, 1970
+     */
+    [[nodiscard]] static constexpr Days toDaysSinceEpoch(const Date date) noexcept
+    {
+        return toDaysSinceEpoch(date.year(), date.month(), date.day());
+    }
+
+    /*!
+     * @brief
      * Converts a serial count of days since Unix
      * epoch to a calendar date.
      *
@@ -634,8 +650,12 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
      */
     [[nodiscard]] static constexpr Date getNextWeekend(const Date from_date) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return Date{};
+        const uint8_t dowDiff = SATURDAY - getDayOfWeekIndex(from_date);
+
+        if (dowDiff == 0)
+            return from_date + Days{DAYS_IN_WEEK};
+        
+        return from_date + Days{dowDiff};
     }
 
     /*!
@@ -650,8 +670,12 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
      */
     [[nodiscard]] static constexpr Date getLastWeekend(const Date from_date) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return Date{};
+        const uint8_t dowDiff = SATURDAY - getDayOfWeekIndex(from_date);
+
+        if (dowDiff == 0)
+            return from_date - Days{DAYS_IN_WEEK};
+        
+        return from_date - Days{DAYS_IN_WEEK - dowDiff};
     }
 
     /*!
@@ -668,8 +692,21 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
         const YearInt_t year, const uint8_t week_index
     ) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return WeekDates{};
+        if (week_index > 51)
+            return WeekDates{};
+
+        const Days serialStart{
+            toDaysSinceEpoch(year, January, 1) + Days{week_index * DAYS_IN_WEEK}
+        };
+        const DayOfWeek fromDow = static_cast<DayOfWeek>(getDayOfWeekIndex(year, January, 1));
+        WeekDates week{};
+
+        for (uint8_t dowIndex = SUNDAY; dowIndex < DAYS_IN_WEEK; dowIndex++) {
+            const int8_t dowDiff = dowIndex - fromDow;
+            week[dowIndex] = fromDaysSinceEpoch(Days{serialStart + Days{dowDiff}});
+        }
+
+        return week;
     }
 
     /*!
@@ -684,8 +721,16 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
      */
     [[nodiscard]] static constexpr WeekDates getWeek(const Date date) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return WeekDates{};
+        const Days serialStart{toDaysSinceEpoch(date)};
+        const DayOfWeek fromDow = static_cast<DayOfWeek>(getDayOfWeekIndex(date));
+        WeekDates week{};
+
+        for (uint8_t dowIndex = SUNDAY; dowIndex < DAYS_IN_WEEK; dowIndex++) {
+            const int8_t dowDiff = dowIndex - fromDow;
+            week[dowIndex] = fromDaysSinceEpoch(Days{serialStart + Days{dowDiff}});
+        }
+
+        return week;
     }
 
   private:
