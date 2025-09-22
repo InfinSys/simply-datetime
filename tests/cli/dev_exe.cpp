@@ -138,17 +138,17 @@ int main(int argc, char* argv[])
 
     // Gregorian calendar tests:
     {
-        constexpr const char* mnm        = Calendar::getMonthName(todayDate);
-        constexpr std::string_view mabbr = Calendar::getMonthAbbrev(todayDate);
-        constexpr Calendar::Month mrepr  = Calendar::getMonthEnumRepr(todayDate);
-        constexpr Days serial            = Calendar::toDaysSinceEpoch(2001, 2, 23);
-        constexpr Date jtb               = Calendar::fromDaysSinceEpoch(serial);
-        constexpr UnixTimestamp ts       = Calendar::toUnixTimestamp(2001, 2, 23);
-        constexpr Date rtc2              = Calendar::fromUnixTimestamp(ts);
-        constexpr Date next              = Calendar::getNextWeekday(jtb);
-        constexpr simplydt::gregorian::DayOfWeek g =
-            Calendar::getDayOfWeekEnumRepr(next);
-        constexpr Date last              = Calendar::getLastWeekday(next);
+        constexpr const char* mnm          = Calendar::getMonthName(todayDate);
+        constexpr std::string_view mabbr   = Calendar::getMonthAbbrev(todayDate);
+        constexpr Calendar::Month mrepr    = Calendar::getMonthEnumRepr(todayDate);
+        constexpr Days serial              = Calendar::toDaysSinceEpoch(2001, 2, 23);
+        constexpr Date jtb                 = Calendar::fromDaysSinceEpoch(serial);
+        constexpr UnixTimestamp ts         = Calendar::toUnixTimestamp(2001, 2, 23);
+        constexpr Date rtc2                = Calendar::fromUnixTimestamp(ts);
+        constexpr Date next                = Calendar::getNextWeekday(jtb);
+        constexpr Date last                = Calendar::getLastWeekday(next);
+        constexpr Date weekend             = Calendar::getLastWeekend(jtb);
+        constexpr Calendar::WeekDates week = Calendar::getWeek(2025, 0);
     }
 
     //_SUSPEND_// const GregorianDate blizz =
