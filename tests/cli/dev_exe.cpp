@@ -24,9 +24,16 @@
 #include "simplydt/calendar/gregorian/gregorian_calendar.hpp"
 #include "simplydt/time/utc/utc_time.hpp"
 
+struct ICanWat {
+    bool testing = true;
+};
+
 int main(int argc, char* argv[])
 {
     ProjectInfoOut();
+
+    bool ICanWat::* frtho = nullptr;
+    bool* known = nullptr;
 
     //\\//
     using Calendar      = simplydt::gregorian::GregorianCalendar;
@@ -134,10 +141,14 @@ int main(int argc, char* argv[])
         constexpr const char* mnm        = Calendar::getMonthName(todayDate);
         constexpr std::string_view mabbr = Calendar::getMonthAbbrev(todayDate);
         constexpr Calendar::Month mrepr  = Calendar::getMonthEnumRepr(todayDate);
-        constexpr Days jtb               = Calendar::toDaysSinceEpoch(2001, 2, 23);
-        constexpr Date rtc               = Calendar::fromDaysSinceEpoch(jtb);
+        constexpr Days serial            = Calendar::toDaysSinceEpoch(2001, 2, 23);
+        constexpr Date jtb               = Calendar::fromDaysSinceEpoch(serial);
         constexpr UnixTimestamp ts       = Calendar::toUnixTimestamp(2001, 2, 23);
         constexpr Date rtc2              = Calendar::fromUnixTimestamp(ts);
+        constexpr Date next              = Calendar::getNextWeekday(jtb);
+        constexpr simplydt::gregorian::DayOfWeek g =
+            Calendar::getDayOfWeekEnumRepr(next);
+        constexpr Date last              = Calendar::getLastWeekday(next);
     }
 
     //_SUSPEND_// const GregorianDate blizz =
