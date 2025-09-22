@@ -179,6 +179,13 @@ constexpr inline float AVG_DAYS_IN_YEAR = 365.25;
 
 /*!
  * @brief
+ * Whole number of seven-day periods in a
+ * calendar year.
+ */
+constexpr uint8_t WEEKS_IN_YEAR = 52;
+
+/*!
+ * @brief
  * Total number of months in one calendar year.
  */
 constexpr uint8_t MONTHS_IN_YEAR = 12;
