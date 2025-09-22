@@ -101,7 +101,9 @@ struct GregorianDate :
         const int era = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
         const unsigned doe = static_cast<unsigned>(serial_days - era * 146'097);
         const unsigned yoe = (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
-        return static_cast<YearInt_t>(yoe) + era * YEARS_IN_ERA;
+        const unsigned doy = doe - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100);
+        const unsigned mp  = (5 * doy + 2) / 153;
+        return static_cast<YearInt_t>((yoe + era * YEARS_IN_ERA) + (mp >= 10));
     }
 
     /*!
