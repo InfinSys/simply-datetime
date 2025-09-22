@@ -582,8 +582,18 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
      */
     [[nodiscard]] static constexpr Date getNextWeekday(const Date from_date) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return Date{};
+        const DayOfWeek fromDow = static_cast<DayOfWeek>(getDayOfWeekIndex(from_date));
+
+        switch (fromDow) {
+        case FRIDAY:
+            return from_date + Days{3};
+
+        case SATURDAY:
+            return from_date + Days{2};
+
+        default: // SUNDAY - THURSDAY
+            return from_date + Days{1};
+        }
     }
 
     /*!
@@ -598,8 +608,18 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
      */
     [[nodiscard]] static constexpr Date getLastWeekday(const Date from_date) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return Date{};
+        const DayOfWeek fromDow = static_cast<DayOfWeek>(getDayOfWeekIndex(from_date));
+
+        switch (fromDow) {
+        case SUNDAY:
+            return from_date - Days{2};
+
+        case MONDAY:
+            return from_date - Days{3};
+
+        default: // TUESDAY - SATURDAY
+            return from_date - Days{1};
+        }
     }
 
     /*!
