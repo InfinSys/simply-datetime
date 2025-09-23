@@ -73,6 +73,9 @@ struct CalendricalSystem {
     /*! @brief Enumeration of calendar days of week. */
     using DayOfWeek = DOW_Enum;
 
+    /*! @brief No system local time tag struct. */
+    struct NonLocal {};
+
     /*!
      * @brief
      * Returns name of calendar month by its numeric value.
@@ -500,12 +503,9 @@ struct CalendricalSystem {
      * Calendar date
      */
     [[nodiscard]] static Date getDate(
-        const stl::SystemTimePoint time_point, const bool local
+        const stl::SystemTimePoint time_point, const NonLocal
     ) noexcept
     {
-        if (local)
-            return getDate(time_point);
-
         const stl::UnixTimestamp secsSinceEpoch = stl::SystemClock::to_time_t(time_point);
         return Calendar_Impl::fromUnixTimestamp(secsSinceEpoch);
     }
