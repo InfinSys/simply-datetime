@@ -79,7 +79,7 @@ namespace simplydt::gregorian
     const unsigned mp  = (5 * doy + 2) / 153;
     const uint8_t d    = static_cast<uint8_t>(doy - (153 * mp + 2) / 5 + 1);
     const uint8_t m    = static_cast<uint8_t>(mp + (mp < 10 ? 3 : -9));
-    return DateTuple{y, m, d};
+    return DateTuple{y + (m <= February), m, d};
 }
 
 } // namespace simplydt::gregorian
