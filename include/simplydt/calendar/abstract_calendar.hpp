@@ -524,10 +524,6 @@ struct CalendricalSystem {
         const Date from_date, const DayOfWeek dow_repr
     ) noexcept
     {
-        if (!Calendar_Impl::isValidDate(from_date))
-            return from_date; // No next date
-        // NOTE: Return default constructed date above instead?
-
         constexpr uint8_t daysInWeek =
             static_cast<uint8_t>(Calendar_Impl::DAY_OF_WEEK_NAMES.size());
         const int8_t fromDate_dow =
@@ -557,7 +553,7 @@ struct CalendricalSystem {
 
         if (fromNumericMonth != toNumericMonth) {
             if (fromNumericMonth > toNumericMonth)
-                return Date{from_date.year() + 1, toNumericMonth, 1};
+                return Date{static_cast<YearInt_t>(from_date.year() + 1), toNumericMonth, 1};
             else if (fromNumericMonth < toNumericMonth)
                 return Date{from_date.year(), toNumericMonth, 1};
         }
@@ -568,7 +564,7 @@ struct CalendricalSystem {
         if (from_date.day() != daysInMonth)
             return from_date + Days{1};
 
-        return Date{from_date.year() + 1, fromNumericMonth, 1};
+        return Date{static_cast<YearInt_t>(from_date.year() + 1), fromNumericMonth, 1};
         // NOTE: Check validity of above date values first before return?
         // (wrap around to valid?)
     }
@@ -587,10 +583,6 @@ struct CalendricalSystem {
         const Date from_date, const DayOfWeek dow_repr
     ) noexcept
     {
-        if (!Calendar_Impl::isValidDate(from_date))
-            return from_date; // No last date
-        // NOTE: Return default constructed date above instead?
-
         constexpr uint8_t daysInWeek =
             static_cast<uint8_t>(Calendar_Impl::DAY_OF_WEEK_NAMES.size());
         const int8_t fromDate_dow =
@@ -624,7 +616,7 @@ struct CalendricalSystem {
             if (fromNumericMonth > toNumericMonth)
                 return Date{from_date.year(), toNumericMonth, daysInMonth};
             else if (fromNumericMonth < toNumericMonth)
-                return Date{from_date.year() - 1, toNumericMonth, daysInMonth};
+                return Date{static_cast<YearInt_t>(from_date.year() - 1), toNumericMonth, daysInMonth};
         }
 
         if (from_date.day() != 1)
