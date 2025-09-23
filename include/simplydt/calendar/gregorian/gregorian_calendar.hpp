@@ -29,7 +29,7 @@ namespace simplydt::gregorian
  * @details
  * TODO: INCOMPLETE COMMENT!!!
  */
-struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
+struct GregorianCalendar :
     public CalendricalSystem<GregorianCalendar, GregorianDate, Month, DayOfWeek> {
     /*! @brief Array of dates in one calendar week. */
     using WeekDates = std::array<Date, DAYS_IN_WEEK>;
@@ -320,11 +320,7 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
         const YearInt_t year, const uint8_t month, const uint8_t day
     ) noexcept
     {
-        if (!isValidYear(year))
-            return false;
-        
-        const uint8_t monthTotalDays = getDaysInMonth(year, month);
-        return day <= monthTotalDays;
+        return DatePolicy::isValidDate(year, month, day);
     }
 
     /*!
@@ -348,8 +344,8 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
         YearInt_t year, uint8_t month, uint8_t day
     ) noexcept
     {
-        if (!isValidDate(year, month, day))
-            return INVALID_DOW_INDEX;
+        if (!DatePolicy::isValidDate(year, month, day))
+            return INVALID_DOW_INDEX; // NOTE: This has to go...
         
         // CREDITS: Tomohiko Sakamoto
         // Day-of-week index algorithm
@@ -412,6 +408,22 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
 
     /*!
      * @brief
+     * Number of full 7-day weeks contained in
+     * specified month.
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Number of weeks in month
+     */
+    [[nodiscard]] static constexpr uint8_t getWeeksInMonth(const Date date) noexcept
+    {
+        return getWeeksInMonth(date.year(), date.month());
+    }
+
+    /*!
+     * @brief
      * Determines number of weeks a specified month
      * spans over the calendar.
      *
@@ -443,6 +455,45 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
 
     /*!
      * @brief
+     * Determines number of weeks a specified month
+     * spans over the calendar.
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Number of weeks month spans
+     */
+    [[nodiscard]] static constexpr uint8_t getWeeksMonthSpans(const Date date) noexcept
+    {
+        return getWeeksMonthSpans(date.year(), date.month());
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @return
+     * Index of week in year (0 - 52)
+     */
+    [[nodiscard]] static constexpr uint8_t getWeekIndex(
+        YearInt_t year, uint8_t month, uint8_t day
+    ) noexcept
+    {
+        if (!DatePolicy::isValidDate(year, month, day))
+            return 0; // NOTE: Unexpected behavior?
+        
+        const int8_t sundayDiff = SUNDAY - getDayOfWeekIndex(year, January, 1);
+        const Days firstSunday{toDaysSinceEpoch(year, January, 1) + Days{sundayDiff}};
+        const Days serialDate{toDaysSinceEpoch(year, month, day)};
+        return static_cast<uint8_t>((serialDate - firstSunday).count() / DAYS_IN_WEEK);
+    }
+
+    /*!
+     * @brief
      * TODO: INCOMPLETE COMMENT!!!
      * 
      * @details
@@ -451,12 +502,9 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
      * @return
      * Index of week in year (0 - 51)
      */
-    [[nodiscard]] static constexpr uint8_t getWeekIndex(
-        YearInt_t year, uint8_t month, uint8_t day
-    ) noexcept
+    [[nodiscard]] static constexpr uint8_t getWeekIndex(const Date date) noexcept
     {
-        // TODO: INCOMPLETE!!!
-        return 0;
+        return getWeekIndex(date.year(), date.month(), date.day());
     }
 
     /*!
@@ -478,6 +526,9 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
         YearInt_t year, uint8_t month, uint8_t day
     ) noexcept
     {
+        if (!DatePolicy::isValidDate(year, month, day))
+            return Days{0}; // Epoch date
+
         // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
         // Convert {year, month, day} triple into a serial count of days.
         year -= month <= February;
@@ -520,8 +571,10 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
      * @return
      * Gregorian calendar date
      */
-    [[nodiscard]] static constexpr Date fromDaysSinceEpoch(Days serial_days) noexcept
+    [[nodiscard]] static constexpr Date fromDaysSinceEpoch(const Days serial_days) noexcept
     {
+        // NOTE: Need to validate bounds of serial count beforehand...
+
         // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
         // Convert a serial count of days into a {year, month, day} triple.
         unsigned long serialCount = serial_days.count();
@@ -565,6 +618,22 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
 
     /*!
      * @brief
+     * Converts a calendar date to a Unix timestamp
+     * (seconds since epoch).
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Unix timestamp
+     */
+    [[nodiscard]] static constexpr stl::UnixTimestamp toUnixTimestamp(const Date date) noexcept
+    {
+        return toUnixTimestamp(date.year(), date.month(), date.day());
+    }
+
+    /*!
+     * @brief
      * Converts a Unix timestamp (seconds since
      * epoch) to a calendar date.
      *
@@ -584,6 +653,23 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
         return fromDaysSinceEpoch(
             Days{static_cast<Days::rep>(timestamp / SECONDS_IN_DAY)}
         );
+    }
+
+    /*!
+     * @brief
+     * Converts a serial count of seconds to
+     * a calendar date.
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Gregorian calendar date
+     */
+    [[nodiscard]] static constexpr Date fromUnixTimestamp(const Seconds serial_secs
+    ) noexcept
+    {
+        return fromDaysSinceEpoch(duration_cast<Days>(serial_secs));
     }
 
     /*!
@@ -692,14 +778,15 @@ struct GregorianCalendar : // TODO: INCOMPLETE!!! (methods missing)
         const YearInt_t year, const uint8_t week_index
     ) noexcept
     {
-        if (week_index > 51)
-            return WeekDates{};
+        WeekDates week{};
+
+        if (week_index > WEEKS_IN_YEAR)
+            return week; // Invalid week index
 
         const Days serialStart{
             toDaysSinceEpoch(year, January, 1) + Days{week_index * DAYS_IN_WEEK}
         };
         const DayOfWeek fromDow = static_cast<DayOfWeek>(getDayOfWeekIndex(year, January, 1));
-        WeekDates week{};
 
         for (uint8_t dowIndex = SUNDAY; dowIndex < DAYS_IN_WEEK; dowIndex++) {
             const int8_t dowDiff = dowIndex - fromDow;
