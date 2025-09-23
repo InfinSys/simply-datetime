@@ -41,6 +41,7 @@ int main(int argc, char* argv[])
     using Time          = simplydt::utc::UTCTime;
     using Days          = simplydt::Days;
     using Seconds       = simplydt::Seconds;
+    using SystemClock   = simplydt::stl::SystemClock;
     using UnixTimestamp = simplydt::stl::UnixTimestamp;
 
     constexpr Date todayDate{2'025, 9, 7};
@@ -150,6 +151,12 @@ int main(int argc, char* argv[])
         constexpr Date weekend             = Calendar::getLastWeekend(jtb);
         constexpr Calendar::WeekDates week = Calendar::getWeek(2025, 0);
         constexpr uint8_t wkIndex          = Calendar::getWeekIndex(2025, 9, 22);
+        constexpr Date today               = Calendar::getDate(2025, 9, 23);
+        const Date rightNow                = Calendar::getDate(SystemClock::now());
+        constexpr Date nxt                 = Calendar::getNextDate(jtb, simplydt::gregorian::MONDAY);
+        constexpr Date nxtMonth            = Calendar::getNextDate(nxt, simplydt::gregorian::OCTOBER);
+        constexpr Date lstMonth            = Calendar::getLastDate(jtb, simplydt::gregorian::JANUARY);
+        constexpr Date lst                 = Calendar::getLastDate(nxt, simplydt::gregorian::SUNDAY);
     }
 
     std::cout << "\n\n\t[ Complete ]" << std::endl;
