@@ -56,7 +56,7 @@ namespace simplydt
  * have a compliant API can result in substitution errors
  * or undefined behavior. This is not a self-constructable
  * type, it must be inherited by a concrete implementation
- * that presents the expected (public) API.
+ * that presents the expected public API.
  */
 template <typename Date_Impl, typename Validation_Policy, typename Repr_T, typename Year_T>
 struct SerialCalendarDate {
