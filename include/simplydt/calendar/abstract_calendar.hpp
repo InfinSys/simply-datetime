@@ -528,7 +528,8 @@ struct CalendricalSystem {
             static_cast<uint8_t>(Calendar_Impl::DAY_OF_WEEK_NAMES.size());
         const int8_t fromDate_dow =
             static_cast<int8_t>(Calendar_Impl::getDayOfWeekIndex(from_date));
-        const int8_t dowOffset = fromDate_dow - static_cast<int8_t>(dow_repr);
+        // const int8_t dowOffset = fromDate_dow - static_cast<int8_t>(dow_repr);
+        const int8_t dowOffset = static_cast<int8_t>(dow_repr) - fromDate_dow;
 
         const Date next = from_date + Days{dowOffset + daysInWeek};
         return next;
@@ -610,13 +611,17 @@ struct CalendricalSystem {
         const uint8_t fromNumericMonth = from_date.month();
         const uint8_t toNumericMonth   = static_cast<uint8_t>(month_repr) + 1;
         uint8_t daysInMonth =
-            Calendar_Impl::getDaysInMonth(from_date.year(), fromNumericMonth);
+            Calendar_Impl::getDaysInMonth(from_date.year(), toNumericMonth);
 
         if (fromNumericMonth != toNumericMonth) {
-            if (fromNumericMonth > toNumericMonth)
+            if (fromNumericMonth > toNumericMonth) {
                 return Date{from_date.year(), toNumericMonth, daysInMonth};
-            else if (fromNumericMonth < toNumericMonth)
-                return Date{static_cast<YearInt_t>(from_date.year() - 1), toNumericMonth, daysInMonth};
+            }
+            else { // fromNumericMonth < toNumericMonth
+                const YearInt_t previousYear = from_date.year() - 1;
+                daysInMonth = Calendar_Impl::getDaysInMonth(previousYear, toNumericMonth);
+                return Date{previousYear, toNumericMonth, daysInMonth};
+            }
         }
 
         if (from_date.day() != 1)
