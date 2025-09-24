@@ -55,7 +55,7 @@ struct GregorianDate :
         if (!ValidationPolicy::isValidDate(year, month, day))
             return SERIAL_EPOCH;
 
-        return toDaysSinceEpoch(year, month, day);
+        return hinnant::toDaysSinceEpoch(year, month, day);
     }
 
     /*!
@@ -96,14 +96,9 @@ struct GregorianDate :
      */
     [[nodiscard]] constexpr YearInt_t year() const noexcept
     {
-        // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
-        Repr_Type serial_days = this->serialDays + 719'468;
-        const int era = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
-        const unsigned doe = static_cast<unsigned>(serial_days - era * 146'097);
-        const unsigned yoe = (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
-        const unsigned doy = doe - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100);
-        const unsigned mp  = (5 * doy + 2) / 153;
-        return static_cast<YearInt_t>((yoe + era * YEARS_IN_ERA) + (mp >= 10));
+        const int era = hinnant::eraFromSerialDays(this->serialDays);
+        const unsigned yearOfEra = hinnant::yearOfEraFromSerialDays(this->serialDays);
+        return (era * YEARS_IN_ERA) + yearOfEra;
     }
 
     /*!
@@ -118,12 +113,7 @@ struct GregorianDate :
      */
     [[nodiscard]] constexpr uint8_t month() const noexcept
     {
-        // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
-        Repr_Type serial_days = this->serialDays + 719'468;
-        const int era = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
-        const unsigned doe = static_cast<unsigned>(serial_days - era * 146'097);
-        const unsigned yoe = (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
-        const unsigned doy = doe - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100);
+        const unsigned doy = hinnant::dayOfYearFromSerialDays(this->serialDays);
         const unsigned mp  = (5 * doy + 2) / 153;
         return static_cast<uint8_t>(mp + (mp < 10 ? 3 : -9));
     }
@@ -140,12 +130,7 @@ struct GregorianDate :
      */
     [[nodiscard]] constexpr uint8_t day() const noexcept
     {
-        // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
-        Repr_Type serial_days = this->serialDays + 719'468;
-        const int era = (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
-        const unsigned doe = static_cast<unsigned>(serial_days - era * 146'097);
-        const unsigned yoe = (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
-        const unsigned doy = doe - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100);
+        const unsigned doy = hinnant::dayOfYearFromSerialDays(this->serialDays);
         const unsigned mp  = (5 * doy + 2) / 153;
         return static_cast<uint8_t>(doy - (153 * mp + 2) / 5 + 1);
     }
@@ -163,7 +148,7 @@ struct GregorianDate :
         const char delimiter = '-';
         std::string dateStr;
         dateStr.reserve(12);
-        const DateTuple dateValues = fromDaysSinceEpoch(this->serialDays);
+        const DateTuple dateValues = hinnant::fromDaysSinceEpoch(this->serialDays);
         dateStr += (std::to_string(std::get<0>(dateValues)) + delimiter);
         dateStr += (toDoubleDigitStr(std::get<1>(dateValues)) + delimiter);
         dateStr += toDoubleDigitStr(std::get<2>(dateValues));
