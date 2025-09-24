@@ -97,8 +97,13 @@ struct GregorianDate :
     [[nodiscard]] constexpr YearInt_t year() const noexcept
     {
         const int era = hinnant::eraFromSerialDays(this->serialDays);
-        const unsigned yearOfEra = hinnant::yearOfEraFromSerialDays(this->serialDays);
-        return static_cast<YearInt_t>(era * YEARS_IN_ERA + yearOfEra);
+        const unsigned yoe = hinnant::yearOfEraFromSerialDays(this->serialDays);
+        const unsigned doy = (
+            hinnant::dayOfEraFromSerialDays(this->serialDays)
+            - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100)
+        );
+        const unsigned mp = hinnant::monthPrime(doy);
+        return static_cast<YearInt_t>(era * YEARS_IN_ERA + yoe + (mp >= 10));
     }
 
     /*!
@@ -114,7 +119,7 @@ struct GregorianDate :
     [[nodiscard]] constexpr uint8_t month() const noexcept
     {
         const unsigned doy = hinnant::dayOfYearFromSerialDays(this->serialDays);
-        const unsigned mp  = (5 * doy + 2) / 153;
+        const unsigned mp  = hinnant::monthPrime(doy);
         return static_cast<uint8_t>(mp + (mp < 10 ? 3 : -9));
     }
 
@@ -131,7 +136,7 @@ struct GregorianDate :
     [[nodiscard]] constexpr uint8_t day() const noexcept
     {
         const unsigned doy = hinnant::dayOfYearFromSerialDays(this->serialDays);
-        const unsigned mp  = (5 * doy + 2) / 153;
+        const unsigned mp  = hinnant::monthPrime(doy);
         return static_cast<uint8_t>(doy - (153 * mp + 2) / 5 + 1);
     }
 
