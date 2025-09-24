@@ -96,12 +96,11 @@ struct GregorianDate :
      */
     [[nodiscard]] constexpr YearInt_t year() const noexcept
     {
-        const int era = hinnant::eraFromSerialDays(this->serialDays);
+        const int era      = hinnant::eraFromSerialDays(this->serialDays);
         const unsigned yoe = hinnant::yearOfEraFromSerialDays(this->serialDays);
-        const unsigned doy = (
-            hinnant::dayOfEraFromSerialDays(this->serialDays)
-            - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100)
-        );
+        const unsigned doy =
+            (hinnant::dayOfEraFromSerialDays(this->serialDays) -
+             (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100));
         const unsigned mp = hinnant::monthPrime(doy);
         return static_cast<YearInt_t>(era * YEARS_IN_ERA + yoe + (mp >= 10));
     }

@@ -73,8 +73,8 @@ struct CalendricalSystem {
     /*! @brief Enumeration of calendar days of week. */
     using DayOfWeek = DOW_Enum;
 
-    /*! @brief No system local time tag struct. */
-    struct NonLocal {};
+    /*! @brief TODO: INCOMPLETE COMMENT!!! */
+    struct NonLocal { };
 
     /*!
      * @brief
@@ -610,14 +610,12 @@ struct CalendricalSystem {
     {
         const uint8_t fromNumericMonth = from_date.month();
         const uint8_t toNumericMonth   = static_cast<uint8_t>(month_repr) + 1;
-        uint8_t daysInMonth =
-            Calendar_Impl::getDaysInMonth(from_date.year(), toNumericMonth);
+        uint8_t daysInMonth = Calendar_Impl::getDaysInMonth(from_date.year(), toNumericMonth);
 
         if (fromNumericMonth != toNumericMonth) {
             if (fromNumericMonth > toNumericMonth) {
                 return Date{from_date.year(), toNumericMonth, daysInMonth};
-            }
-            else { // fromNumericMonth < toNumericMonth
+            } else { // fromNumericMonth < toNumericMonth
                 const YearInt_t previousYear = from_date.year() - 1;
                 daysInMonth = Calendar_Impl::getDaysInMonth(previousYear, toNumericMonth);
                 return Date{previousYear, toNumericMonth, daysInMonth};

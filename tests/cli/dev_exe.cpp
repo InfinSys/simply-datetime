@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     ProjectInfoOut();
 
     bool ICanWat::* frtho = nullptr;
-    bool* known = nullptr;
+    bool* known           = nullptr;
 
     //\\//
     using Calendar      = simplydt::gregorian::GregorianCalendar;
@@ -142,21 +142,21 @@ int main(int argc, char* argv[])
         constexpr const char* mnm          = Calendar::getMonthName(todayDate);
         constexpr std::string_view mabbr   = Calendar::getMonthAbbrev(todayDate);
         constexpr Calendar::Month mrepr    = Calendar::getMonthEnumRepr(todayDate);
-        constexpr Days serial              = Calendar::toDaysSinceEpoch(2001, 2, 23);
+        constexpr Days serial              = Calendar::toDaysSinceEpoch(2'001, 2, 23);
         constexpr Date jtb                 = Calendar::fromDaysSinceEpoch(serial);
-        constexpr UnixTimestamp ts         = Calendar::toUnixTimestamp(2001, 2, 23);
+        constexpr UnixTimestamp ts         = Calendar::toUnixTimestamp(2'001, 2, 23);
         constexpr Date rtc2                = Calendar::fromUnixTimestamp(ts);
         constexpr Date next                = Calendar::getNextWeekday(jtb);
         constexpr Date last                = Calendar::getLastWeekday(next);
         constexpr Date weekend             = Calendar::getLastWeekend(jtb);
-        constexpr Calendar::WeekDates week = Calendar::getWeek(2025, 0);
-        constexpr uint8_t wkIndex          = Calendar::getWeekIndex(2025, 9, 22);
-        constexpr Date today               = Calendar::getDate(2025, 9, 23);
+        constexpr Calendar::WeekDates week = Calendar::getWeek(2'025, 0);
+        constexpr uint8_t wkIndex          = Calendar::getWeekIndex(2'025, 9, 22);
+        constexpr Date today               = Calendar::getDate(2'025, 9, 23);
         const Date rightNow                = Calendar::getDate(SystemClock::now());
-        constexpr Date nxt             = Calendar::getNextDate(jtb, simplydt::gregorian::MONDAY);
-        constexpr Date nxtMonth        = Calendar::getNextDate(nxt, simplydt::gregorian::MARCH);
-        constexpr Date lstMonth        = Calendar::getLastDate(jtb, simplydt::gregorian::JANUARY);
-        constexpr Date lst             = Calendar::getLastDate(nxt, simplydt::gregorian::SUNDAY);
+        constexpr Date nxt      = Calendar::getNextDate(jtb, simplydt::gregorian::MONDAY);
+        constexpr Date nxtMonth = Calendar::getNextDate(nxt, simplydt::gregorian::MARCH);
+        constexpr Date lstMonth = Calendar::getLastDate(jtb, simplydt::gregorian::JANUARY);
+        constexpr Date lst      = Calendar::getLastDate(nxt, simplydt::gregorian::SUNDAY);
     }
 
     std::cout << "\n\n\t[ Complete ]" << std::endl;

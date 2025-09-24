@@ -57,10 +57,10 @@ namespace simplydt::gregorian::hinnant
 /*!
  * @brief
  * TODO: INCOMPLETE COMMENT!!!
- * 
+ *
  * @details
  * TODO: INCOMPLETE COMMENT!!!
- * 
+ *
  * @return
  * Year era index
  */
@@ -73,10 +73,10 @@ namespace simplydt::gregorian::hinnant
 /*!
  * @brief
  * TODO: INCOMPLETE COMMENT!!!
- * 
+ *
  * @details
  * TODO: INCOMPLETE COMMENT!!!
- * 
+ *
  * @return
  * Day offset from start of era
  */
@@ -90,10 +90,10 @@ namespace simplydt::gregorian::hinnant
 /*!
  * @brief
  * TODO: INCOMPLETE COMMENT!!!
- * 
+ *
  * @details
  * TODO: INCOMPLETE COMMENT!!!
- * 
+ *
  * @return
  * Year offset in current era
  */
@@ -106,10 +106,10 @@ namespace simplydt::gregorian::hinnant
 /*!
  * @brief
  * TODO: INCOMPLETE COMMENT!!!
- * 
+ *
  * @details
  * TODO: INCOMPLETE COMMENT!!!
- * 
+ *
  * @return
  * Day offset in current year
  */
@@ -122,10 +122,10 @@ namespace simplydt::gregorian::hinnant
 /*!
  * @brief
  * TODO: INCOMPLETE COMMENT!!!
- * 
+ *
  * @details
  * TODO: INCOMPLETE COMMENT!!!
- * 
+ *
  * @return
  * March-based month index
  */
@@ -166,6 +166,6 @@ namespace simplydt::gregorian::hinnant
     return DateTuple{y + (m <= February), m, d};
 }
 
-}
+} // namespace simplydt::gregorian::hinnant
 
 #endif // SIMPLYDT_LIB_GREGORIAN_HELPER_ALGORITHMS_H_

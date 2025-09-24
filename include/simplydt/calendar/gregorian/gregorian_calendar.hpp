@@ -180,7 +180,7 @@ struct GregorianCalendar :
     {
         if (!DatePolicy::isValidYear(year))
             return 0; // Unsupported year
-        
+
         return DatePolicy::isLeapYear(year) ? DAYS_IN_LEAP_YEAR : DAYS_IN_YEAR;
     }
 
@@ -346,7 +346,7 @@ struct GregorianCalendar :
     {
         if (!DatePolicy::isValidDate(year, month, day))
             return INVALID_DOW_INDEX; // NOTE: This has to go...
-        
+
         // CREDITS: Tomohiko Sakamoto
         // Day-of-week index algorithm
         year -= (month < March); // Extra days from leap year
@@ -356,7 +356,7 @@ struct GregorianCalendar :
             ((year + year / 4 - year / 100 + year / YEARS_IN_ERA +
               sakamoto::MONTH_KEY[monthIndex] + day) %
              DAYS_IN_WEEK);
-        
+
         return static_cast<uint8_t>(index);
     }
 
@@ -447,7 +447,7 @@ struct GregorianCalendar :
 
         if (monthTotalDays == 0)
             return 0; // Unsupported or invalid
-        
+
         const uint8_t firstOfMonthDowIndex = getDayOfWeekIndex(year, month, 1);
         const uint8_t monthCells           = firstOfMonthDowIndex + monthTotalDays;
         return (monthCells + 6) / DAYS_IN_WEEK;
@@ -472,10 +472,10 @@ struct GregorianCalendar :
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * Index of week in year (0 - 52)
      */
@@ -485,7 +485,7 @@ struct GregorianCalendar :
     {
         if (!DatePolicy::isValidDate(year, month, day))
             return 0; // NOTE: Unexpected behavior?
-        
+
         const int8_t sundayDiff = SUNDAY - getDayOfWeekIndex(year, January, 1);
         const Days firstSunday{toDaysSinceEpoch(year, January, 1) + Days{sundayDiff}};
         const Days serialDate{toDaysSinceEpoch(year, month, day)};
@@ -495,10 +495,10 @@ struct GregorianCalendar :
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * Index of week in year (0 - 51)
      */
@@ -528,7 +528,7 @@ struct GregorianCalendar :
     {
         if (!DatePolicy::isValidDate(year, month, day))
             return Days{0}; // Epoch date
-        
+
         return Days{static_cast<Days::rep>(hinnant::toDaysSinceEpoch(year, month, day))};
     }
 
@@ -545,11 +545,9 @@ struct GregorianCalendar :
      */
     [[nodiscard]] static constexpr Days toDaysSinceEpoch(const Date date) noexcept
     {
-        return Days{
-            static_cast<Days::rep>(
-                hinnant::toDaysSinceEpoch(date.year(), date.month(), date.day())
-            )
-        };
+        return Days{static_cast<Days::rep>(
+            hinnant::toDaysSinceEpoch(date.year(), date.month(), date.day())
+        )};
     }
 
     /*!
@@ -639,9 +637,7 @@ struct GregorianCalendar :
     [[nodiscard]] static constexpr Date fromUnixTimestamp(const stl::UnixTimestamp& timestamp
     ) noexcept
     {
-        return fromDaysSinceEpoch(
-            Days{static_cast<Days::rep>(timestamp / SECONDS_IN_DAY)}
-        );
+        return fromDaysSinceEpoch(Days{static_cast<Days::rep>(timestamp / SECONDS_IN_DAY)});
     }
 
     /*!
@@ -655,8 +651,7 @@ struct GregorianCalendar :
      * @return
      * Gregorian calendar date
      */
-    [[nodiscard]] static constexpr Date fromUnixTimestamp(const Seconds serial_secs
-    ) noexcept
+    [[nodiscard]] static constexpr Date fromUnixTimestamp(const Seconds serial_secs) noexcept
     {
         return fromDaysSinceEpoch(duration_cast<Days>(serial_secs));
     }
@@ -664,10 +659,10 @@ struct GregorianCalendar :
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * Next date between Mon and Fri
      */
@@ -690,10 +685,10 @@ struct GregorianCalendar :
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * Last date between Mon and Fri
      */
@@ -716,10 +711,10 @@ struct GregorianCalendar :
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * Next Saturday date
      */
@@ -729,17 +724,17 @@ struct GregorianCalendar :
 
         if (dowDiff == 0)
             return from_date + Days{DAYS_IN_WEEK};
-        
+
         return from_date + Days{dowDiff};
     }
 
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * Last Saturday date
      */
@@ -749,17 +744,17 @@ struct GregorianCalendar :
 
         if (dowDiff == 0)
             return from_date - Days{DAYS_IN_WEEK};
-        
+
         return from_date - Days{DAYS_IN_WEEK - dowDiff};
     }
 
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * Array of calendar week dates
      */
@@ -779,7 +774,7 @@ struct GregorianCalendar :
 
         for (uint8_t dowIndex = SUNDAY; dowIndex < DAYS_IN_WEEK; dowIndex++) {
             const int8_t dowDiff = dowIndex - fromDow;
-            week[dowIndex] = fromDaysSinceEpoch(Days{serialStart + Days{dowDiff}});
+            week[dowIndex]       = fromDaysSinceEpoch(Days{serialStart + Days{dowDiff}});
         }
 
         return week;
@@ -788,10 +783,10 @@ struct GregorianCalendar :
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * Array of calendar week dates
      */
@@ -803,7 +798,7 @@ struct GregorianCalendar :
 
         for (uint8_t dowIndex = SUNDAY; dowIndex < DAYS_IN_WEEK; dowIndex++) {
             const int8_t dowDiff = dowIndex - fromDow;
-            week[dowIndex] = fromDaysSinceEpoch(Days{serialStart + Days{dowDiff}});
+            week[dowIndex]       = fromDaysSinceEpoch(Days{serialStart + Days{dowDiff}});
         }
 
         return week;
