@@ -570,14 +570,12 @@ struct GregorianCalendar :
      */
     [[nodiscard]] static constexpr Date fromDaysSinceEpoch(const Days serial_days) noexcept
     {
-        // NOTE: Need to validate bounds of serial count beforehand...
-
         DateTuple dateComponents = hinnant::fromDaysSinceEpoch(serial_days.count());
 
         return Date{
-            std::get<0>(dateComponents),
-            std::get<1>(dateComponents),
-            std::get<2>(dateComponents)
+            std::get<0>(dateComponents), ///< Year
+            std::get<1>(dateComponents), ///< Month
+            std::get<2>(dateComponents)  ///< Day
         };
     }
 
