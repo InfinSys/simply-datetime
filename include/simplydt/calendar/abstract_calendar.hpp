@@ -512,6 +512,21 @@ struct CalendricalSystem {
 
     /*!
      * @brief
+     * Returns next calendar date.
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Calendar date
+     */
+    [[nodiscard]] inline static constexpr Date getNextDate(const Date from_date) noexcept
+    {
+        return from_date + Days{1};
+    }
+
+    /*!
+     * @brief
      * Returns next calendar date on provided day-of-week.
      *
      * @details
@@ -568,6 +583,21 @@ struct CalendricalSystem {
         return Date{static_cast<YearInt_t>(from_date.year() + 1), fromNumericMonth, 1};
         // NOTE: Check validity of above date values first before return?
         // (wrap around to valid?)
+    }
+
+    /*!
+     * @brief
+     * Returns last calendar date.
+     *
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     *
+     * @return
+     * Calendar date
+     */
+    [[nodiscard]] inline static constexpr Date getLastDate(const Date from_date) noexcept
+    {
+        return from_date - Days{1};
     }
 
     /*!
