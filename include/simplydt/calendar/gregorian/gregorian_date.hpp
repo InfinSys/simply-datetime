@@ -42,7 +42,14 @@ struct GregorianDate :
      * Intercepts invalid date constructor values.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function verifies that the provided year,
+     * month, and day values form a valid Gregorian
+     * calendar date according to the associated
+     * `ValidationPolicy`. If the date is valid, it is
+     * converted into its corresponding serial day
+     * representation relative to the Unix epoch
+     * (January 1, 1970). If the date is invalid, the
+     * function returns the Unix epoch (0) as a default.
      *
      * @return
      * Provided date in serial days if valid, epoch
@@ -89,7 +96,13 @@ struct GregorianDate :
      * Date year component.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function derives the year value from the
+     * internal serial day count using algorithms from
+     * Howard Hinnant. The calculation decomposes the
+     * serial day count into its era, year-of-era,
+     * day-of-era, and month-prime components. These
+     * values are then combined to yield the correct
+     * Gregorian calendar year.
      *
      * @return
      * Year of Gregorian calendar date
@@ -110,7 +123,13 @@ struct GregorianDate :
      * Date month component.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function derives the month value from the
+     * internal serial day count using algorithms from
+     * Howard Hinnant. The calculation decomposes the
+     * serial day count into its day-of-year and
+     * month-prime components. These values are then
+     * combined to yield the correct numeric Gregorian
+     * calendar month.
      *
      * @return
      * Month of Gregorian calendar date
@@ -127,7 +146,12 @@ struct GregorianDate :
      * Date day component.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function derives the day value from the
+     * internal serial day count using algorithms from
+     * Howard Hinnant. The calculation decomposes the
+     * serial day count into its day-of-year and
+     * month-prime components. These values are then
+     * combined to yield the correct day of month.
      *
      * @return
      * Day of Gregorian calendar date
