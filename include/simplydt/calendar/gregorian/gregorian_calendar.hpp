@@ -528,15 +528,8 @@ struct GregorianCalendar :
     {
         if (!DatePolicy::isValidDate(year, month, day))
             return Days{0}; // Epoch date
-
-        // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
-        // Convert {year, month, day} triple into a serial count of days.
-        year -= month <= February;
-        const int era      = year / YEARS_IN_ERA;
-        const unsigned yoe = static_cast<unsigned>(year - era * YEARS_IN_ERA);
-        const unsigned doy = (153 * (month + (month > February ? -3 : 9)) + 2) / 5 + day - 1;
-        const unsigned doe = yoe * DAYS_IN_YEAR + yoe / 4 - yoe / 100 + doy;
-        return Days{static_cast<Days::rep>(era * 146'097 + static_cast<long>(doe) - 719'468)};
+        
+        return Days{static_cast<Days::rep>(hinnant::toDaysSinceEpoch(year, month, day))};
     }
 
     /*!
@@ -552,7 +545,11 @@ struct GregorianCalendar :
      */
     [[nodiscard]] static constexpr Days toDaysSinceEpoch(const Date date) noexcept
     {
-        return toDaysSinceEpoch(date.year(), date.month(), date.day());
+        return Days{
+            static_cast<Days::rep>(
+                hinnant::toDaysSinceEpoch(date.year(), date.month(), date.day())
+            )
+        };
     }
 
     /*!
@@ -575,19 +572,13 @@ struct GregorianCalendar :
     {
         // NOTE: Need to validate bounds of serial count beforehand...
 
-        // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
-        // Convert a serial count of days into a {year, month, day} triple.
-        unsigned long serialCount = serial_days.count();
-        serialCount += 719'468;
-        const int era = (serialCount >= 0 ? serialCount : serialCount - 146'096) / 146'097;
-        const unsigned doe = static_cast<unsigned>(serialCount - era * 146'097);
-        const unsigned yoe = (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
-        const YearInt_t y  = static_cast<YearInt_t>(yoe) + era * YEARS_IN_ERA;
-        const unsigned doy = doe - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100);
-        const unsigned mp  = (5 * doy + 2) / 153;
-        const uint8_t d    = static_cast<uint8_t>(doy - (153 * mp + 2) / 5 + 1);
-        const uint8_t m    = static_cast<uint8_t>(mp + (mp < 10 ? 3 : -9));
-        return Date{static_cast<YearInt_t>(y + (m <= 2)), m, d};
+        DateTuple dateComponents = hinnant::fromDaysSinceEpoch(serial_days.count());
+
+        return Date{
+            std::get<0>(dateComponents),
+            std::get<1>(dateComponents),
+            std::get<2>(dateComponents)
+        };
     }
 
     /*!
