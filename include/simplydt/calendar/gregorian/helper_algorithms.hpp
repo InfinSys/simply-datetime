@@ -18,7 +18,11 @@
 #include "simplydt/calendar/gregorian/gregorian_defs.hpp"
 #include "simplydt/common/stl_chrono_defs.hpp"
 
-namespace simplydt::gregorian
+/*!
+ * @brief
+ * TODO: INCOMPLETE COMMENT!!!
+ */
+namespace simplydt::gregorian::hinnant
 {
 
 /*!
@@ -48,6 +52,71 @@ namespace simplydt::gregorian
     const unsigned doy = (153 * (month + (month > February ? -3 : 9)) + 2) / 5 + day - 1;
     const unsigned doe = yoe * DAYS_IN_YEAR + yoe / 4 - yoe / 100 + doy;
     return static_cast<int32_t>(era * 146'097 + static_cast<long>(doe) - 719'468);
+}
+
+/*!
+ * @brief
+ * TODO: INCOMPLETE COMMENT!!!
+ * 
+ * @details
+ * TODO: INCOMPLETE COMMENT!!!
+ * 
+ * @return
+ * Year era index
+ */
+[[nodiscard]] constexpr int eraFromSerialDays(int32_t serial_days) noexcept
+{
+    serial_days += 719'468;
+    return (serial_days >= 0 ? serial_days : serial_days - 146'096) / 146'097;
+}
+
+/*!
+ * @brief
+ * TODO: INCOMPLETE COMMENT!!!
+ * 
+ * @details
+ * TODO: INCOMPLETE COMMENT!!!
+ * 
+ * @return
+ * Day offset from start of era
+ */
+[[nodiscard]] constexpr unsigned dayOfEraFromSerialDays(int32_t serial_days) noexcept
+{
+    const int era = eraFromSerialDays(serial_days);
+    serial_days += 719'468;
+    return static_cast<unsigned>(serial_days - era * 146'097);
+}
+
+/*!
+ * @brief
+ * TODO: INCOMPLETE COMMENT!!!
+ * 
+ * @details
+ * TODO: INCOMPLETE COMMENT!!!
+ * 
+ * @return
+ * Year offset in current era
+ */
+[[nodiscard]] constexpr unsigned yearOfEraFromSerialDays(int32_t serial_days) noexcept
+{
+    const unsigned doe = dayOfEraFromSerialDays(serial_days);
+    return (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
+}
+
+/*!
+ * @brief
+ * TODO: INCOMPLETE COMMENT!!!
+ * 
+ * @details
+ * TODO: INCOMPLETE COMMENT!!!
+ * 
+ * @return
+ * Day offset in current year
+ */
+[[nodiscard]] constexpr unsigned dayOfYearFromSerialDays(int32_t serial_days) noexcept
+{
+    const unsigned yoe = yearOfEraFromSerialDays(serial_days);
+    return dayOfEraFromSerialDays(serial_days) - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100);
 }
 
 /*!
@@ -82,6 +151,6 @@ namespace simplydt::gregorian
     return DateTuple{y + (m <= February), m, d};
 }
 
-} // namespace simplydt::gregorian
+}
 
 #endif // SIMPLYDT_LIB_GREGORIAN_HELPER_ALGORITHMS_H_
