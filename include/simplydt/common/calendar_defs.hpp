@@ -46,7 +46,11 @@ enum class CalendarComponent : uint8_t {
  * Calendar year, month, and day value tuple.
  *
  * @details
- * TODO: INCOMPLETE COMMENT!!!
+ * This alias defines a generic date container
+ * independent of any specific calendar system.
+ * It is primarily used as a lightweight value
+ * type for passing or storing complete date
+ * information without additional calendar logic.
  */
 template <typename Year_T>
 using CalendarDateTuple = std::tuple<Year_T, uint8_t, uint8_t>;
