@@ -26,7 +26,33 @@ namespace simplydt
  * Base time standard interface.
  *
  * @details
- * TODO: INCOMPLETE COMMENT!!!
+ * This is the foundational interface for serial time in
+ * Simply Datetime. This class is agnostic of any specific
+ * time standard and avoids assumptions on underlying time
+ * units used to represent a time in day. This type holds
+ * both time standard knowledge and state. Simply Datetime
+ * relies on the object invariant that any constructed
+ * instance of this type represents a valid time of day.
+ * Each implementation is responsible for enforcing this
+ * invariant to prevent bugs and undefined behavior. This
+ * structure expects timekeeping to be conducted as a serial
+ * count of a time unit relative to midnight (0 = 00:00:00
+ * AM). The provided underlying serial time representation
+ * type `Repr_T` is initialized in this base class but can
+ * also be accessed by the derived time implementation. The
+ * class hierarchy implements the CRTP design pattern which
+ * allows this base to reference the derivative. Consequently,
+ * the convenience methods defined in this base structure
+ * depend on the concrete time standards public API for them
+ * to be well-formed. A derivative is expected to present
+ * the appropriate attributes and methods, which can be
+ * verified by invoking the contract enforcement macro
+ * (`SIMPLYDT_ENFORCE_TIME_CONTRACT`) just after the body of
+ * the implementation. Failing to have a compliant API can
+ * result in substitution errors or undefined behavior. This
+ * is not a self-constructable type, it must be inherited by
+ * a concrete implementation that presents the expected
+ * public API.
  */
 template <typename Standard_Impl, typename Resolution_T, typename Repr_T>
 struct SerialTimeStandard {
@@ -273,14 +299,20 @@ struct SerialTimeStandard {
 
     /*!
      * @brief
-     * Determines if time is sequentially between two
-     * times.
+     * Checks if this time falls within a specified
+     * time range.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function compares the serial time count of
+     * the current time instance against two provided
+     * times, expressed in the same serial-time format.
+     * The comparison is inclusive, meaning the
+     * function returns true if this time is equal to
+     * either boundary time or lies strictly between
+     * them.
      *
      * @return
-     * True if this time occurs between provided times
+     * True if time lies within inclusive time range
      */
     [[nodiscard]] constexpr bool isBetween(
         const Standard_Impl start_time, const Standard_Impl end_time
@@ -296,7 +328,11 @@ struct SerialTimeStandard {
      * of precision.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function exposes the underlying serial time
+     * count of the current time instance, wrapped in
+     * the standards units of precision. The value
+     * represents the total number of units elapsed since
+     * midnight (00:00:00 AM).
      *
      * @return
      * Serial time count
@@ -311,11 +347,12 @@ struct SerialTimeStandard {
      * Returns constant reference to underlying serial
      * time count.
      *
-     * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * @note
+     * The units of measure used by the value returned
+     * depend on the current time implementation.
      *
      * @return
-     * Serial time count
+     * Constant reference to serial time count
      */
     [[nodiscard]] constexpr const Repr_Type& underlying() const noexcept
     {
