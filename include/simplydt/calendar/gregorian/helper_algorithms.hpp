@@ -121,6 +121,21 @@ namespace simplydt::gregorian::hinnant
 
 /*!
  * @brief
+ * TODO: INCOMPLETE COMMENT!!!
+ * 
+ * @details
+ * TODO: INCOMPLETE COMMENT!!!
+ * 
+ * @return
+ * March-based month index
+ */
+[[nodiscard]] inline constexpr unsigned monthPrime(const unsigned dayOfYear) noexcept
+{
+    return (5 * dayOfYear + 2) / 153;
+}
+
+/*!
+ * @brief
  * Converts a serial count of days since Unix
  * epoch to calendar date values.
  *
