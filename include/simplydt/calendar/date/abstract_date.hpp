@@ -250,14 +250,20 @@ struct SerialCalendarDate {
 
     /*!
      * @brief
-     * Determines if date is sequentially between two
-     * dates.
+     * Checks if this date falls within a specified
+     * date range.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function compares the serial day count of
+     * the current date instance against two provided
+     * dates, expressed in the same serial-day format.
+     * The comparison is inclusive, meaning the
+     * function returns true if this date is equal to
+     * either boundary date or lies strictly between
+     * them.
      *
      * @return
-     * True if this date occurs between provided dates
+     * True if date lies within inclusive date range
      */
     [[nodiscard]] constexpr bool isBetween(
         const Date_Impl start_date, const Date_Impl end_date
@@ -269,10 +275,15 @@ struct SerialCalendarDate {
 
     /*!
      * @brief
-     * Calculates number of days between dates.
+     * Calculates day difference between dates.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function calculates the signed number of
+     * days from the current date instance to the
+     * specified `date`. A positive result indicates
+     * that the given `date` occurs after this date,
+     * while a negative result indicates it occurs
+     * before.
      *
      * @return
      * Days from this date to provided
@@ -288,7 +299,11 @@ struct SerialCalendarDate {
      * of precision.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function exposes the underlying serial day
+     * count of the current date instance, wrapped in
+     * `Days` units. The value represents the total
+     * number of days elapsed since the calendar's
+     * defined epoch date.
      *
      * @return
      * Serial day count
