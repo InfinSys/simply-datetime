@@ -491,13 +491,12 @@ struct CalendricalSystem {
      * Create calendar date using system clock.
      *
      * @details
-     * If `local` is true the given `stl::SystemTimePoint` is
-     * interpreted as local time (OS time-zone applied). If
-     * `local` is false the time point is interpreted without
-     * the assistance of the host OS (no time-zone). The OS has
-     * access to the necessary system settings that influence
-     * local time interpretation and must be consulted to get
-     * the systems true date.
+     * When the `NonLocal` tag struct is supplied, the provided
+     * timepoint is interpreted without the assistance of the
+     * host OS (no time-zone applied). The OS has access to the
+     * necessary system settings that influence local time
+     * interpretation and must be consulted to get the systems
+     * true date (time-zone applied).
      *
      * @return
      * Calendar date
@@ -515,7 +514,7 @@ struct CalendricalSystem {
      * Returns next calendar date.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Increments the provided date by 1 day.
      *
      * @return
      * Calendar date
@@ -527,10 +526,14 @@ struct CalendricalSystem {
 
     /*!
      * @brief
-     * Returns next calendar date on provided day-of-week.
+     * Finds next calendar date on specified day-of-week.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function determines the first calendar date that
+     * falls on the specified day of the week strictly after
+     * the provided `from_date`. The calculation uses the
+     * day-of-week index supplied by the derived calendar
+     * implementation and advances by at least one full week.
      *
      * @return
      * Calendar date
@@ -543,19 +546,26 @@ struct CalendricalSystem {
             static_cast<uint8_t>(Calendar_Impl::DAY_OF_WEEK_NAMES.size());
         const int8_t fromDate_dow =
             static_cast<int8_t>(Calendar_Impl::getDayOfWeekIndex(from_date));
-        // const int8_t dowOffset = fromDate_dow - static_cast<int8_t>(dow_repr);
         const int8_t dowOffset = static_cast<int8_t>(dow_repr) - fromDate_dow;
-
-        const Date next = from_date + Days{dowOffset + daysInWeek};
-        return next;
+        return from_date + Days{dowOffset + daysInWeek};
     }
 
     /*!
      * @brief
-     * Returns next calendar date in provided month.
+     * Finds next calendar date within specified month.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function calculates the next date in the given
+     * `month_repr` relative to the provided `from_date`. If
+     * the target month has not yet occurred in the current
+     * year, the result is the first day of that month within
+     * the same year. If the target month has already passed,
+     * the result is the first day of that month in the
+     * following year. If the `from_date` is already within
+     * the target month, the function advances to the very
+     * next day, unless the date is the last day of the month,
+     * in which case it rolls over to the first day of the
+     * same month in the next year.
      *
      * @return
      * Calendar date
@@ -568,10 +578,13 @@ struct CalendricalSystem {
         const uint8_t toNumericMonth   = static_cast<uint8_t>(month_repr) + 1;
 
         if (fromNumericMonth != toNumericMonth) {
-            if (fromNumericMonth > toNumericMonth)
-                return Date{static_cast<YearInt_t>(from_date.year() + 1), toNumericMonth, 1};
-            else if (fromNumericMonth < toNumericMonth)
+            if (fromNumericMonth > toNumericMonth) {
+                const YearInt_t nextYear = from_date.year() + 1;
+                return Date{nextYear, toNumericMonth, 1};
+            }
+            else { // fromNumericMonth < toNumericMonth
                 return Date{from_date.year(), toNumericMonth, 1};
+            }
         }
 
         const uint8_t daysInMonth =
@@ -579,8 +592,9 @@ struct CalendricalSystem {
 
         if (from_date.day() != daysInMonth)
             return from_date + Days{1};
-
-        return Date{static_cast<YearInt_t>(from_date.year() + 1), fromNumericMonth, 1};
+        
+        const YearInt_t nextYear = from_date.year() + 1;
+        return Date{nextYear, fromNumericMonth, 1};
         // NOTE: Check validity of above date values first before return?
         // (wrap around to valid?)
     }
@@ -590,7 +604,7 @@ struct CalendricalSystem {
      * Returns last calendar date.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Decrements the provided date by 1 day.
      *
      * @return
      * Calendar date
@@ -602,10 +616,14 @@ struct CalendricalSystem {
 
     /*!
      * @brief
-     * Returns last calendar date on provided day-of-week.
+     * Finds last calendar date on provided day-of-week.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function determines the first calendar date that
+     * falls on the specified day of the week strictly before
+     * the provided `from_date`. The calculation uses the
+     * day-of-week index supplied by the derived calendar
+     * implementation and decreases by at least one full week.
      *
      * @return
      * Calendar date
@@ -619,17 +637,25 @@ struct CalendricalSystem {
         const int8_t fromDate_dow =
             static_cast<int8_t>(Calendar_Impl::getDayOfWeekIndex(from_date));
         const int8_t dowOffset = fromDate_dow - static_cast<int8_t>(dow_repr);
-
-        const Date last = from_date - Days{dowOffset + daysInWeek};
-        return last;
+        return from_date - Days{dowOffset + daysInWeek};
     }
 
     /*!
      * @brief
-     * Returns last calendar date in provided month.
+     * Finds last calendar date within specified month.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function calculates the last date in the given
+     * `month_repr` relative to the provided `from_date`. If
+     * the target month has not yet occurred in the current
+     * year, the result will be the last day of that month
+     * in the previous year. If the target month has already
+     * passed, the result is the last day of that month in
+     * the same year. If `from_date` is already within the
+     * target month, the function returns the day
+     * immediately preceding it, unless `from_date` is the
+     * first day of the month, in which case it rolls back
+     * to the last day of the same month in the previous year.
      *
      * @return
      * Calendar date
