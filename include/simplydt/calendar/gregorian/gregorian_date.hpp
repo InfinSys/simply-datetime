@@ -98,7 +98,7 @@ struct GregorianDate :
     {
         const int era = hinnant::eraFromSerialDays(this->serialDays);
         const unsigned yearOfEra = hinnant::yearOfEraFromSerialDays(this->serialDays);
-        return (era * YEARS_IN_ERA) + yearOfEra;
+        return static_cast<YearInt_t>(era * YEARS_IN_ERA + yearOfEra);
     }
 
     /*!
