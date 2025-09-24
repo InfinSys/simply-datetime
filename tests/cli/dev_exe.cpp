@@ -157,6 +157,8 @@ int main(int argc, char* argv[])
         constexpr Date nxtMonth = Calendar::getNextDate(nxt, simplydt::gregorian::MARCH);
         constexpr Date lstMonth = Calendar::getLastDate(jtb, simplydt::gregorian::JANUARY);
         constexpr Date lst      = Calendar::getLastDate(nxt, simplydt::gregorian::SUNDAY);
+        constexpr Date n        = Calendar::getNextDate(jtb);
+        constexpr Date l        = Calendar::getLastDate(jtb);
     }
 
     std::cout << "\n\n\t[ Complete ]" << std::endl;
