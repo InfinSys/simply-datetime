@@ -183,9 +183,11 @@ int main(int argc, char* argv[])
                 }
 
                 if (date == today)
-                    std::cout << ">_" << simplydt::toDoubleDigitStr(date.day()) << "_|";
+                    std::cout << ">_";
                 else
-                    std::cout << "__" << simplydt::toDoubleDigitStr(date.day()) << "_|";
+                    std::cout << "__";
+                
+                std::cout << simplydt::toDoubleDigitStr(date.day()) << "_|";
             }
 
             std::cout << std::endl;
