@@ -77,7 +77,7 @@ struct CalendricalSystem {
      * @brief
      * Tag indicating timepoint should be interpreted
      * without local timezone conversion.
-     * 
+     *
      * @details
      * When passed to date conversion functions, this
      * tag specifies that the input timepoint should
@@ -595,8 +595,7 @@ struct CalendricalSystem {
             if (fromNumericMonth > toNumericMonth) {
                 const YearInt_t nextYear = from_date.year() + 1;
                 return Date{nextYear, toNumericMonth, 1};
-            }
-            else { // fromNumericMonth < toNumericMonth
+            } else { // fromNumericMonth < toNumericMonth
                 return Date{from_date.year(), toNumericMonth, 1};
             }
         }
@@ -606,7 +605,7 @@ struct CalendricalSystem {
 
         if (from_date.day() != daysInMonth)
             return from_date + Days{1};
-        
+
         const YearInt_t nextYear = from_date.year() + 1;
         return Date{nextYear, fromNumericMonth, 1};
         // NOTE: Check validity of above date values first before return?

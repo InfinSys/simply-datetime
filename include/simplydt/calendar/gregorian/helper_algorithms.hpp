@@ -21,7 +21,7 @@
 /*!
  * @brief
  * Algorithms from Howard Hinnant.
- * 
+ *
  * @note
  * https://howardhinnant.github.io/date_algorithms.html
  * for more details.
@@ -32,7 +32,7 @@ namespace simplydt::gregorian::hinnant
 /*!
  * @brief
  * Days from 1970-01-01 to 0000-03-01.
- * 
+ *
  * @details
  * This value shifts the epoch from 1970-01-01
  * to 0000-03-01 (March 1 of year 0) when
@@ -51,7 +51,7 @@ constexpr int32_t EPOCH_SHIFT = 719'468;
 /*!
  * @brief
  * Total number of days in one Gregorian era.
- * 
+ *
  * @details
  * Represents the number of days in a 400-year
  * Gregorian cycle. The patterns of the Gregorian
@@ -238,7 +238,7 @@ constexpr uint32_t DAYS_IN_ERA = YEARS_IN_ERA * DAYS_IN_YEAR + 97;
     // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
     // Convert a serial count of days into a {year, month, day} triple.
     serial_days += EPOCH_SHIFT;
-    const int era      = (serial_days >= 0 ? serial_days : serial_days - 146'096) / DAYS_IN_ERA;
+    const int era = (serial_days >= 0 ? serial_days : serial_days - 146'096) / DAYS_IN_ERA;
     const unsigned doe = static_cast<unsigned>(serial_days - era * DAYS_IN_ERA);
     const unsigned yoe = (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
     const Year_Type y  = static_cast<Year_Type>(yoe) + era * YEARS_IN_ERA;

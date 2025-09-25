@@ -290,14 +290,15 @@ struct GregorianCalendar :
     /*!
      * @brief
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @details
      * TODO: INCOMPLETE COMMENT!!!
-     * 
+     *
      * @return
      * True if valid calendar week index
      */
-    [[nodiscard]] inline static constexpr bool isValidWeekIndex(const uint8_t week_index) noexcept
+    [[nodiscard]] inline static constexpr bool isValidWeekIndex(const uint8_t week_index
+    ) noexcept
     {
         return week_index <= WEEKS_IN_YEAR;
     }
@@ -315,7 +316,8 @@ struct GregorianCalendar :
      * @return
      * True if valid day-of-week index
      */
-    [[nodiscard]] inline static constexpr bool isValidDOWIndex(const uint8_t dow_index) noexcept
+    [[nodiscard]] inline static constexpr bool isValidDOWIndex(const uint8_t dow_index
+    ) noexcept
     {
         return dow_index < DAYS_IN_WEEK;
     }

@@ -71,7 +71,8 @@ concept has_calendar_name_arrays = requires {
         Calendar_Impl::DAY_OF_WEEK_ABBREVS
     } -> std::same_as<const std::array<
         std::string_view,
-        std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::DAY_OF_WEEK_ABBREVS)>>>&>;
+        std::tuple_size_v<
+            std::remove_cvref_t<decltype(Calendar_Impl::DAY_OF_WEEK_ABBREVS)>>>&>;
 };
 
 template <typename Calendar_Impl>
@@ -102,22 +103,19 @@ concept has_structure_query_methods = requires {
 
     {
         Calendar_Impl::getDaysInMonth(
-            std::declval<typename Calendar_Impl::YearInt_t>(),
-            std::declval<uint8_t>()
+            std::declval<typename Calendar_Impl::YearInt_t>(), std::declval<uint8_t>()
         )
     } -> std::same_as<uint8_t>;
 
     {
         Calendar_Impl::getWeeksInMonth(
-            std::declval<typename Calendar_Impl::YearInt_t>(),
-            std::declval<uint8_t>()
+            std::declval<typename Calendar_Impl::YearInt_t>(), std::declval<uint8_t>()
         )
     } -> std::same_as<uint8_t>;
 
     {
         Calendar_Impl::getWeeksMonthSpans(
-            std::declval<typename Calendar_Impl::YearInt_t>(),
-            std::declval<uint8_t>()
+            std::declval<typename Calendar_Impl::YearInt_t>(), std::declval<uint8_t>()
         )
     } -> std::same_as<uint8_t>;
 
@@ -174,8 +172,7 @@ concept has_date_query_methods = requires {
 
     {
         Calendar_Impl::getDate(
-            std::declval<stl::SystemTimePoint>(),
-            typename Calendar_Impl::NonLocal{}
+            std::declval<stl::SystemTimePoint>(), typename Calendar_Impl::NonLocal{}
         )
     } -> std::same_as<typename Calendar_Impl::Date>;
 
@@ -252,9 +249,7 @@ concept has_standard_date_conversion_methods = requires {
 
 template <typename Calendar_Impl>
 concept has_name_methods = requires {
-    {
-        Calendar_Impl::getMonthName(std::declval<uint8_t>())
-    } -> std::same_as<const char*>;
+    { Calendar_Impl::getMonthName(std::declval<uint8_t>()) } -> std::same_as<const char*>;
 
     {
         Calendar_Impl::getMonthName(std::declval<typename Calendar_Impl::Month>())

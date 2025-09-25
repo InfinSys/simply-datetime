@@ -160,21 +160,19 @@ int main(int argc, char* argv[])
 
     // Console calendar test:
     {
-        constexpr Date::YearInt_t year = 2025;
+        constexpr Date::YearInt_t year = 2'025;
         constexpr uint8_t month        = simplydt::gregorian::September;
 
-        std::cout
-            << "\n\n\t[ ~ " << Calendar::getMonthName(month)
-            << ' ' << year << " ~ ]"
-            << std::endl;
-        
+        std::cout << "\n\n\t[ ~ " << Calendar::getMonthName(month) << ' ' << year << " ~ ]"
+                  << std::endl;
+
         for (const std::string_view& dowAbbrev : Calendar::DAY_OF_WEEK_ABBREVS) {
             std::cout << ' ' << dowAbbrev << "  ";
         }
 
         std::cout << std::endl;
         Calendar::WeekDates week = Calendar::getWeek(Date{year, month, 1});
-        const Date today = Calendar::getDate(SystemClock::now());
+        const Date today         = Calendar::getDate(SystemClock::now());
 
         while (true) {
             for (const Date date : week) {
@@ -187,7 +185,7 @@ int main(int argc, char* argv[])
                     std::cout << ">_";
                 else
                     std::cout << "__";
-                
+
                 std::cout << simplydt::toDoubleDigitStr(date.day()) << "_|";
             }
 
