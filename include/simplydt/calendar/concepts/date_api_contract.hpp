@@ -26,7 +26,15 @@ namespace simplydt::concepts
  * considered a useable calendar date implementation.
  *
  * @details
- * TODO: INCOMPLETE COMMENT!!!
+ * A valid date type must provide contextual nested
+ * types (for library internal-use), integer-based
+ * year representation, and component accessors for
+ * date parts. It must support logical and arithmetic
+ * operators, basic state and sequential evaluation
+ * methods, as well as stream output and string
+ * conversion utilities. In addition, it must satisfy
+ * fundamental C++ type requirements including default
+ * initialization, copyability, and destructibility.
  */
 template <typename Date_Impl>
 concept contract_abiding_date = requires {
