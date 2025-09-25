@@ -27,7 +27,16 @@ namespace simplydt::concepts
  * considered a useable calendar implementation.
  *
  * @details
- * TODO: INCOMPLETE COMMENT!!!
+ * A valid calendar type must provide contextual
+ * nested types for library integration and utilize
+ * a date type that satisfies the date contract.
+ * It must include characteristic members defining
+ * calendar properties, name arrays for month and
+ * day identification, and comprehensive structure
+ * validation and query methods. The implementation
+ * must support date queries, standard date
+ * conversion operations, and calendar naming
+ * utilities, through static members.
  */
 template <typename Calendar_Impl>
 concept contract_abiding_calendar = requires {
