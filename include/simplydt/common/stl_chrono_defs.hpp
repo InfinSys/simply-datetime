@@ -88,7 +88,10 @@ using CalendarDateTime = std::tm;
  * Broken-down calendar date structure.
  *
  * @details
- * TODO: INCOMPLETE COMMENT!!!
+ * A type alias for `std::chrono::year_month_day`
+ * that provides a structured representation of a
+ * calendar date with explicit year, month, and day
+ * fields.
  */
 using CalendarDate = std::chrono::year_month_day;
 
