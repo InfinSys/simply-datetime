@@ -73,7 +73,21 @@ struct CalendricalSystem {
     /*! @brief Enumeration of calendar days of week. */
     using DayOfWeek = DOW_Enum;
 
-    /*! @brief TODO: INCOMPLETE COMMENT!!! */
+    /*!
+     * @brief
+     * Tag indicating timepoint should be interpreted
+     * without local timezone conversion.
+     * 
+     * @details
+     * When passed to date conversion functions, this
+     * tag specifies that the input timepoint should
+     * be treated as a raw UTC value rather than being
+     * adjusted for the system's local timezone. This
+     * bypasses the operating system's timezone
+     * database and provides direct calendar date
+     * conversion based solely on the universal time
+     * count since the epoch.
+     */
     struct NonLocal { };
 
     /*!
