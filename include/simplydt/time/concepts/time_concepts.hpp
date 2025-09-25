@@ -35,7 +35,7 @@ concept has_contextual_nested_types = requires {
 };
 
 template <typename Time_Impl>
-concept has_time_component_methods = requires(const Time_Impl& t) {
+concept has_standard_time_component_methods = requires(const Time_Impl& t) {
     { t.hour() } -> std::same_as<uint8_t>;
     { t.minute() } -> std::same_as<uint8_t>;
     { t.second() } -> std::same_as<uint8_t>;

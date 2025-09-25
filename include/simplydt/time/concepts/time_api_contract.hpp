@@ -23,13 +23,23 @@ namespace simplydt::concepts
 /*!
  * @brief
  * Concept of a type that meets the criteria to be
- * considered a useable calendar date implementation.
+ * considered a useable time standard implementation.
+ *
+ * @details
+ * A valid time standard type must provide contextual
+ * nested types (for library internal-use), time
+ * component accessors, and support for logical and
+ * arithmetic operators. It must include basic state
+ * management and sequential evaluation methods, as
+ * well as stream output and string conversion
+ * capabilities. Additionally, it must satisfy
+ * fundamental C++ type requirements including default
+ * initialization, copyability, and destructibility.
  */
 template <typename Time_Impl>
 concept contract_abiding_time = requires {
     requires time::has_contextual_nested_types<Time_Impl>;
-    // NOTE: Perhaps enforcing  v below v  here is too specific?
-    requires time::has_time_component_methods<Time_Impl>;
+    requires time::has_standard_time_component_methods<Time_Impl>;
     requires time::has_logical_operators<Time_Impl>;
     requires time::has_arithmetic_operators<Time_Impl>;
     requires time::has_basic_state_methods<Time_Impl>;
