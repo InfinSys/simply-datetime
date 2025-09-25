@@ -261,7 +261,12 @@ struct GregorianCalendar :
      */
     [[nodiscard]] static constexpr uint8_t getDaysInMonth(const Date date) noexcept
     {
-        return DatePolicy::getDaysInMonth(date.year(), date.month());
+        const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
+
+        return DatePolicy::getDaysInMonth(
+            std::get<0>(dateComponents), ///< Year
+            std::get<1>(dateComponents)  ///< Month
+        );
     }
 
     /*!
@@ -375,7 +380,13 @@ struct GregorianCalendar :
      */
     [[nodiscard]] static constexpr uint8_t getDayOfWeekIndex(const Date date) noexcept
     {
-        return getDayOfWeekIndex(date.year(), date.month(), date.day());
+        const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
+
+        return getDayOfWeekIndex(
+            std::get<0>(dateComponents), ///< Year
+            std::get<1>(dateComponents), ///< Month
+            std::get<2>(dateComponents)  ///< Day
+        );
     }
 
     /*!
@@ -398,7 +409,7 @@ struct GregorianCalendar :
         const YearInt_t year, const uint8_t month
     ) noexcept
     {
-        const uint8_t monthTotalDays = getDaysInMonth(year, month);
+        const uint8_t monthTotalDays = DatePolicy::getDaysInMonth(year, month);
 
         if (monthTotalDays == 0)
             return 0; // Unsupported or invalid
@@ -412,14 +423,23 @@ struct GregorianCalendar :
      * specified month.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Extracts the year and month components from
+     * the provided `Date` instance to calculate
+     * how many full seven-day calendar weeks are
+     * in the provided month. Fractional week
+     * information is truncated.
      *
      * @return
-     * Number of weeks in month
+     * Number of full 7-day weeks in month
      */
     [[nodiscard]] static constexpr uint8_t getWeeksInMonth(const Date date) noexcept
     {
-        return getWeeksInMonth(date.year(), date.month());
+        const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
+
+        return getWeeksInMonth(
+            std::get<0>(dateComponents), ///< Year
+            std::get<1>(dateComponents)  ///< Month
+        );
     }
 
     /*!
@@ -432,7 +452,7 @@ struct GregorianCalendar :
      * needed to contain all days of the specified
      * month in a standard calendar grid. The result
      * depends on the day of the week the month starts
-     * on and the total number of days in the monthh.
+     * on and the total number of days in the month.
      * Returns 0 if the month is invalid or if the
      * provided year is unsupported.
      *
@@ -443,7 +463,7 @@ struct GregorianCalendar :
         const YearInt_t year, const uint8_t month
     ) noexcept
     {
-        const uint8_t monthTotalDays = getDaysInMonth(year, month);
+        const uint8_t monthTotalDays = DatePolicy::getDaysInMonth(year, month);
 
         if (monthTotalDays == 0)
             return 0; // Unsupported or invalid
@@ -459,25 +479,49 @@ struct GregorianCalendar :
      * spans over the calendar.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Extracts year and month components from the
+     * provided `Date` instance to calculates how
+     * many full or partial weeks are needed to
+     * contain all days of the specified month in
+     * a standard calendar grid.
      *
      * @return
      * Number of weeks month spans
      */
     [[nodiscard]] static constexpr uint8_t getWeeksMonthSpans(const Date date) noexcept
     {
-        return getWeeksMonthSpans(date.year(), date.month());
+        const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
+
+        return getWeeksMonthSpans(
+            std::get<0>(dateComponents), ///< Year
+            std::get<1>(dateComponents)  ///< Month
+        );
     }
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Determines zero-based index of week for a
+     * specified date within its year.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function calculates which week of the year
+     * [0–52] the given Gregorian calendar date falls
+     * into. Weeks are defined relative to Sundays,
+     * with week 0 beginning on the first Sunday before,
+     * on, or after January 1 of the given year. The
+     * weeks are calendar aligned. Consequently, the week
+     * index can range from [0-52] (inclusive) because
+     * the potential partial week(s) at the beginning and
+     * end of the year are taken into account. The index
+     * is obtained by computing the difference in days
+     * between the target date and that first Sunday,
+     * then dividing by the number of days in a week. If
+     * the provided year, month, or day values do not
+     * form a valid Gregorian date, the function returns
+     * index 0 as a fallback.
      *
      * @return
-     * Index of week in year (0 - 52)
+     * Index of week within year [0 - 52]
      */
     [[nodiscard]] static constexpr uint8_t getWeekIndex(
         YearInt_t year, uint8_t month, uint8_t day
@@ -494,17 +538,27 @@ struct GregorianCalendar :
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Determines zero-based index of week for a
+     * specified date within its year.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Extracts year, month, and day components from
+     * the provided `Date` instance to calculate which
+     * week of the year [0–52] the given Gregorian
+     * calendar date falls into.
      *
      * @return
-     * Index of week in year (0 - 51)
+     * Index of week within year [0 - 52]
      */
     [[nodiscard]] static constexpr uint8_t getWeekIndex(const Date date) noexcept
     {
-        return getWeekIndex(date.year(), date.month(), date.day());
+        const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
+
+        return getWeekIndex(
+            std::get<0>(dateComponents), ///< Year
+            std::get<1>(dateComponents), ///< Month
+            std::get<2>(dateComponents)  ///< Day
+        );
     }
 
     /*!
@@ -538,16 +592,16 @@ struct GregorianCalendar :
      * days since Unix epoch.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Returns serial date count in explicit units of
+     * precision (days) using the provided `Date`
+     * instances `units()` function.
      *
      * @return
      * Days since January 1, 1970
      */
-    [[nodiscard]] static constexpr Days toDaysSinceEpoch(const Date date) noexcept
+    [[nodiscard]] inline static constexpr Days toDaysSinceEpoch(const Date date) noexcept
     {
-        return Days{static_cast<Days::rep>(
-            hinnant::toDaysSinceEpoch(date.year(), date.month(), date.day())
-        )};
+        return date.units();
     }
 
     /*!
@@ -609,14 +663,22 @@ struct GregorianCalendar :
      * (seconds since epoch).
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Extracts year, month, and day components from
+     * the provided `Date` instance to calculate the
+     * number of days since the Unix epoch (1970-01-01).
      *
      * @return
      * Unix timestamp
      */
     [[nodiscard]] static constexpr stl::UnixTimestamp toUnixTimestamp(const Date date) noexcept
     {
-        return toUnixTimestamp(date.year(), date.month(), date.day());
+        const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
+
+        return toUnixTimestamp(
+            std::get<0>(dateComponents), ///< Year
+            std::get<1>(dateComponents), ///< Month
+            std::get<2>(dateComponents)  ///< Day
+        );
     }
 
     /*!
@@ -646,7 +708,9 @@ struct GregorianCalendar :
      * a calendar date.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Converts the provided serial seconds count
+     * timestamp to days, which is then interpreted
+     * using Howard Hinnants algorithm.
      *
      * @return
      * Gregorian calendar date
@@ -658,13 +722,22 @@ struct GregorianCalendar :
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Finds next weekday [Monday – Friday] after a
+     * given date.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function advances the provided `from_date`
+     * to the next date that falls on a weekday
+     * (Monday through Friday). If the current date is
+     * Friday, the result is the following Monday
+     * (skipping the weekend). If the current date is
+     * Saturday or Sunday, the function advances to
+     * the upcoming Monday. For all other weekdays
+     * (Monday–Thursday), the result is simply the
+     * next calendar day.
      *
      * @return
-     * Next date between Mon and Fri
+     * Next date between [Monday - Friday]
      */
     [[nodiscard]] static constexpr Date getNextWeekday(const Date from_date) noexcept
     {
@@ -684,13 +757,22 @@ struct GregorianCalendar :
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Finds most recent weekday [Monday – Friday]
+     * before a given date.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function rolls the provided `from_date`
+     * back to the last date that falls on a weekday
+     * (Monday through Friday). If the current date is
+     * Monday, the result is the previous Friday. If
+     * the current date is Sunday, the result is the
+     * previous Friday as well. For all other days
+     * (Tuesday through Saturday), the result is simply
+     * the preceding calendar day, provided it falls
+     * within the weekday range.
      *
      * @return
-     * Last date between Mon and Fri
+     * Last date between [Monday - Friday]
      */
     [[nodiscard]] static constexpr Date getLastWeekday(const Date from_date) noexcept
     {
@@ -710,10 +792,16 @@ struct GregorianCalendar :
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Finds next Saturday following a provided date.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function advances the provided `from_date`
+     * to the next occurrence of Saturday in the
+     * Gregorian calendar. If the given date already
+     * falls on a Saturday, the function returns the
+     * Saturday of the following week. For all other
+     * days, the function computes the offset to the
+     * upcoming Saturday and advances accordingly.
      *
      * @return
      * Next Saturday date
@@ -730,10 +818,16 @@ struct GregorianCalendar :
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Finds last Saturday before provided date.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * This function decreases the provided `from_date`
+     * to the last occurrence of Saturday in the
+     * Gregorian calendar. If the given date already
+     * falls on a Saturday, the function returns the
+     * Saturday of the prior week. For all other
+     * days, the function computes the offset to the
+     * previous Saturday and decreases accordingly.
      *
      * @return
      * Last Saturday date
@@ -750,10 +844,21 @@ struct GregorianCalendar :
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Finds all dates associated with provided week
+     * within a year.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Gathers all 7 dates of a specified week within a
+     * year into an array and returns the results.
+     * Weeks are defined relative to Sundays, with week
+     * 0 beginning on the first Sunday before or on
+     * January 1 of the given year. The weeks are
+     * calendar aligned. Consequently, a request for the
+     * first and last week of a given year may result in
+     * dates from the previous or next year. If the
+     * provided year value is not supported or an invalid
+     * week index is provided, the function returns an
+     * array of epoch dates.
      *
      * @return
      * Array of calendar week dates
@@ -764,8 +869,8 @@ struct GregorianCalendar :
     {
         WeekDates week{};
 
-        if (week_index > WEEKS_IN_YEAR)
-            return week; // Invalid week index
+        if (week_index > WEEKS_IN_YEAR || !DatePolicy::isValidYear(year))
+            return week; // Invalid week index or unsupported year
 
         const Days serialStart{
             toDaysSinceEpoch(year, January, 1) + Days{week_index * DAYS_IN_WEEK}
@@ -782,10 +887,14 @@ struct GregorianCalendar :
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Finds all dates associated with week containing
+     * provided date.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Determines the full calendar week (Sunday through
+     * Saturday) that the provided date falls within by
+     * aligning to the date’s weekday and filling in
+     * surrounding dates.
      *
      * @return
      * Array of calendar week dates
