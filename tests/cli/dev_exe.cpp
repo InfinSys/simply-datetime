@@ -24,7 +24,8 @@
 #include "simplydt/calendar/gregorian/gregorian_calendar.hpp"
 #include "simplydt/time/utc/utc_time.hpp"
 
-struct ICanWat {
+/* @brief Dummy structure. */
+struct Object {
     bool testing = true;
 };
 
@@ -32,8 +33,8 @@ int main(int argc, char* argv[])
 {
     ProjectInfoOut();
 
-    bool ICanWat::* frtho = nullptr;
-    bool* known           = nullptr;
+    bool Object::* frtho = nullptr; // Member pointer
+    bool* known          = nullptr; // Raw pointer
 
     //\\//
     using Calendar      = simplydt::gregorian::GregorianCalendar;
@@ -44,8 +45,8 @@ int main(int argc, char* argv[])
     using SystemClock   = simplydt::stl::SystemClock;
     using UnixTimestamp = simplydt::stl::UnixTimestamp;
 
-    constexpr Date todayDate{2'025, 9, 7};
-    constexpr Date pastDate{2'025, 8, 23};
+    constexpr Date todayDate{2'025, 9, 25};
+    constexpr Date pastDate{2'025, 9, 7};
 
     constexpr Time rightNow{1, 54, 19};
     constexpr Time secondsAgo{1, 53, 48};
@@ -154,7 +155,7 @@ int main(int argc, char* argv[])
         constexpr Date lst      = Calendar::getLastDate(nxt, simplydt::gregorian::SUNDAY);
         constexpr Date n        = Calendar::getNextDate(jtb);
         constexpr Date l        = Calendar::getLastDate(jtb);
-        constexpr uint8_t dow = Calendar::getDayOfWeekIndex(jtb);
+        constexpr uint8_t dow   = Calendar::getDayOfWeekIndex(jtb);
     }
 
     // Console calendar test:
