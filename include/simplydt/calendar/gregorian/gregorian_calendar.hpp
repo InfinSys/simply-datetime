@@ -289,10 +289,21 @@ struct GregorianCalendar :
 
     /*!
      * @brief
-     * TODO: INCOMPLETE COMMENT!!!
+     * Checks if week index is within valid range.
      *
      * @details
-     * TODO: INCOMPLETE COMMENT!!!
+     * Checks whether the given week index represents
+     * a valid calendar week, accounting for the fact
+     * that weeks are aligned to calendar boundaries
+     * rather than strictly contained within a single
+     * year. A week index is considered valid if it
+     * falls within the complete set of weeks that
+     * contain days from the current year, which may
+     * include partial weeks from adjacent years.
+     * This accommodates cases where the first week
+     * contains days from the previous December or
+     * the last week contains days from the following
+     * January.
      *
      * @return
      * True if valid calendar week index
