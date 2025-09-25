@@ -44,7 +44,12 @@ using Year_Type = uint16_t;
  * Gregorian calendar date values tuple.
  *
  * @details
- * TODO: INCOMPLETE COMMENT!!!
+ * A specialized tuple type containing the three
+ * fundamental components of a Gregorian calendar
+ * date: year, month, and day. The tuple structure
+ * provides a lightweight container for date
+ * storage while maintaining clear separation of
+ * the individual components.
  */
 using DateTuple = CalendarDateTuple<Year_Type>;
 
