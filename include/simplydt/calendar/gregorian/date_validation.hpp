@@ -26,7 +26,12 @@ namespace simplydt::gregorian
  * Gregorian calendar date validation policy.
  *
  * @details
- * TODO: INCOMPLETE COMMENT!!!
+ * This is the Gregorian calendar date validator, which is
+ * responsible for determining if a given set of date params
+ * describe a real date on the Gregorian calendar. This
+ * structure serves no purpose beyond validating potential
+ * Gregorian calendar dates and only maintains functions
+ * necessarry for validation.
  */
 struct DateValidationPolicy {
     /*!
