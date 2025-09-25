@@ -131,18 +131,13 @@ int main(int argc, char* argv[])
         next -= Seconds{10};
     }
 
-    // SerialCalendarDate and SerialTimeStandard stream out tests:
-    {
-        std::cout << "\nToday date: " << todayDate << "\nTime: " << rightNow << '\n';
-        std::cout << "\nToday + 19 days = " << (todayDate + Days{19}) << '\n';
-    }
-
     // Gregorian calendar tests:
     {
         constexpr const char* mnm          = Calendar::getMonthName(todayDate);
         constexpr std::string_view mabbr   = Calendar::getMonthAbbrev(todayDate);
         constexpr Calendar::Month mrepr    = Calendar::getMonthEnumRepr(todayDate);
         constexpr Days serial              = Calendar::toDaysSinceEpoch(2'001, 2, 23);
+        constexpr Days serial2             = Calendar::toDaysSinceEpoch(todayDate);
         constexpr Date jtb                 = Calendar::fromDaysSinceEpoch(serial);
         constexpr UnixTimestamp ts         = Calendar::toUnixTimestamp(2'001, 2, 23);
         constexpr Date rtc2                = Calendar::fromUnixTimestamp(ts);
@@ -159,6 +154,43 @@ int main(int argc, char* argv[])
         constexpr Date lst      = Calendar::getLastDate(nxt, simplydt::gregorian::SUNDAY);
         constexpr Date n        = Calendar::getNextDate(jtb);
         constexpr Date l        = Calendar::getLastDate(jtb);
+        constexpr uint8_t dow = Calendar::getDayOfWeekIndex(jtb);
+    }
+
+    // Console calendar test:
+    {
+        constexpr Date::YearInt_t year = 2025;
+        constexpr uint8_t month        = simplydt::gregorian::October;
+
+        std::cout
+            << "\n\n\t[ ~ " << Calendar::getMonthName(month)
+            << ' ' << year << " ~ ]"
+            << std::endl;
+        
+        for (const std::string_view& dowAbbrev : Calendar::DAY_OF_WEEK_ABBREVS) {
+            std::cout << ' ' << dowAbbrev << "  ";
+        }
+
+        std::cout << std::endl;
+        Calendar::WeekDates week = Calendar::getWeek(Date{year, month, 1});
+
+        while (true) {
+            for (const Date date : week) {
+                if (date.month() != month) {
+                    std::cout << "      ";
+                    continue;
+                }
+
+                std::cout << "  " << simplydt::toDoubleDigitStr(date.day()) << " |";
+            }
+
+            std::cout << std::endl;
+
+            if (week[simplydt::gregorian::SATURDAY].month() != month)
+                break;
+
+            week = Calendar::getWeek(week[simplydt::gregorian::SATURDAY] + Days{1});
+        }
     }
 
     std::cout << "\n\n\t[ Complete ]" << std::endl;
