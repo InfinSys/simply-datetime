@@ -16,7 +16,6 @@
 #define SIMPLYDT_LIB_CALENDAR_CONCEPTS_H_
 
 #include "simplydt/calendar/concepts/date_concepts.hpp"
-#include "simplydt/calendar/type_traits/calendar_traits.hpp"
 #include "simplydt/common/calendar_defs.hpp"
 #include "simplydt/common/stl_chrono_defs.hpp"
 #include <concepts>

@@ -15,7 +15,6 @@
 #ifndef SIMPLYDT_LIB_CALENDAR_DATE_CONCEPTS_H_
 #define SIMPLYDT_LIB_CALENDAR_DATE_CONCEPTS_H_
 
-#include "simplydt/calendar/type_traits/date_traits.hpp"
 #include "simplydt/time/units/time_units.hpp"
 #include <concepts>
 #include <ostream>
