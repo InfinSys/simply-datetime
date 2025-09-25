@@ -264,8 +264,8 @@ struct GregorianCalendar :
         const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
 
         return DatePolicy::getDaysInMonth(
-            std::get<0>(dateComponents), ///< Year
-            std::get<1>(dateComponents)  ///< Month
+            std::get<0>(dateComponents), // Year
+            std::get<1>(dateComponents)  // Month
         );
     }
 
@@ -383,9 +383,9 @@ struct GregorianCalendar :
         const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
 
         return getDayOfWeekIndex(
-            std::get<0>(dateComponents), ///< Year
-            std::get<1>(dateComponents), ///< Month
-            std::get<2>(dateComponents)  ///< Day
+            std::get<0>(dateComponents), // Year
+            std::get<1>(dateComponents), // Month
+            std::get<2>(dateComponents)  // Day
         );
     }
 
@@ -437,8 +437,8 @@ struct GregorianCalendar :
         const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
 
         return getWeeksInMonth(
-            std::get<0>(dateComponents), ///< Year
-            std::get<1>(dateComponents)  ///< Month
+            std::get<0>(dateComponents), // Year
+            std::get<1>(dateComponents)  // Month
         );
     }
 
@@ -493,8 +493,8 @@ struct GregorianCalendar :
         const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
 
         return getWeeksMonthSpans(
-            std::get<0>(dateComponents), ///< Year
-            std::get<1>(dateComponents)  ///< Month
+            std::get<0>(dateComponents), // Year
+            std::get<1>(dateComponents)  // Month
         );
     }
 
@@ -507,11 +507,11 @@ struct GregorianCalendar :
      * This function calculates which week of the year
      * [0–52] the given Gregorian calendar date falls
      * into. Weeks are defined relative to Sundays,
-     * with week 0 beginning on the first Sunday before,
-     * on, or after January 1 of the given year. The
-     * weeks are calendar aligned. Consequently, the week
-     * index can range from [0-52] (inclusive) because
-     * the potential partial week(s) at the beginning and
+     * with week 0 beginning on the first Sunday before
+     * or on January 1 of the given year. The weeks are
+     * calendar aligned. Consequently, the week index
+     * can range from [0-52] (inclusive) because the
+     * potential partial week(s) at the beginning and
      * end of the year are taken into account. The index
      * is obtained by computing the difference in days
      * between the target date and that first Sunday,
@@ -555,9 +555,9 @@ struct GregorianCalendar :
         const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
 
         return getWeekIndex(
-            std::get<0>(dateComponents), ///< Year
-            std::get<1>(dateComponents), ///< Month
-            std::get<2>(dateComponents)  ///< Day
+            std::get<0>(dateComponents), // Year
+            std::get<1>(dateComponents), // Month
+            std::get<2>(dateComponents)  // Day
         );
     }
 
@@ -625,9 +625,9 @@ struct GregorianCalendar :
         DateTuple dateComponents = hinnant::fromDaysSinceEpoch(serial_days.count());
 
         return Date{
-            std::get<0>(dateComponents), ///< Year
-            std::get<1>(dateComponents), ///< Month
-            std::get<2>(dateComponents)  ///< Day
+            std::get<0>(dateComponents), // Year
+            std::get<1>(dateComponents), // Month
+            std::get<2>(dateComponents)  // Day
         };
     }
 
@@ -675,9 +675,9 @@ struct GregorianCalendar :
         const DateTuple dateComponents = hinnant::fromDaysSinceEpoch(date.underlying());
 
         return toUnixTimestamp(
-            std::get<0>(dateComponents), ///< Year
-            std::get<1>(dateComponents), ///< Month
-            std::get<2>(dateComponents)  ///< Day
+            std::get<0>(dateComponents), // Year
+            std::get<1>(dateComponents), // Month
+            std::get<2>(dateComponents)  // Day
         );
     }
 
