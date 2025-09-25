@@ -96,7 +96,18 @@ include(linker/config)
 
 # Sources
 add_subdirectory(lib)
-add_subdirectory(src)
+
+include(utility/project_tools)
+
+# Set library-wide C++ standard
+use_project_cxx_standard(GLOBAL_CXX_OPTIONS INTERFACE)
+
+target_link_options(
+    GLOBAL_CXX_OPTIONS
+
+    INTERFACE
+    ${GLOBAL_LINK_FLAGS}
+)
 
 # C Interface Source
 if(CFFI_BUILD)
