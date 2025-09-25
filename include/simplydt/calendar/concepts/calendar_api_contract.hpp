@@ -25,16 +25,21 @@ namespace simplydt::concepts
  * @brief
  * Concept of a type that meets the criteria to be
  * considered a useable calendar implementation.
+ * 
+ * @details
+ * TODO: INCOMPLETE COMMENT!!!
  */
 template <typename Calendar_Impl>
 concept contract_abiding_calendar = requires {
     requires calendar::has_contextual_nested_types<Calendar_Impl>;
     requires contract_abiding_date<typename Calendar_Impl::Date>;
-    requires calendar::has_characteristic_query_members<Calendar_Impl>;
+    requires calendar::has_characteristic_members<Calendar_Impl>;
     requires calendar::has_calendar_name_arrays<Calendar_Impl>;
-    requires calendar::has_calendar_structure_methods<Calendar_Impl>;
-    requires calendar::has_date_validation_methods<Calendar_Impl>;
-    requires calendar::has_date_conversion_methods<Calendar_Impl>;
+    requires calendar::has_structure_validation_methods<Calendar_Impl>;
+    requires calendar::has_structure_query_methods<Calendar_Impl>;
+    requires calendar::has_date_query_methods<Calendar_Impl>;
+    requires calendar::has_standard_date_conversion_methods<Calendar_Impl>;
+    requires calendar::has_name_methods<Calendar_Impl>;
 };
 
 #ifndef SIMPLYDT_ENFORCE_CALENDAR_CONTRACT

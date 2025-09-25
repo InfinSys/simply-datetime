@@ -282,9 +282,24 @@ struct GregorianCalendar :
      * @return
      * True if valid day value
      */
-    [[nodiscard]] static constexpr bool isValidDay(const uint8_t day) noexcept
+    [[nodiscard]] inline static constexpr bool isValidDay(const uint8_t day) noexcept
     {
         return day >= MIN_DAY_OF_MONTH && day <= MAX_DAY_OF_MONTH;
+    }
+
+    /*!
+     * @brief
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @details
+     * TODO: INCOMPLETE COMMENT!!!
+     * 
+     * @return
+     * True if valid calendar week index
+     */
+    [[nodiscard]] inline static constexpr bool isValidWeekIndex(const uint8_t week_index) noexcept
+    {
+        return week_index <= WEEKS_IN_YEAR;
     }
 
     /*!
@@ -300,7 +315,7 @@ struct GregorianCalendar :
      * @return
      * True if valid day-of-week index
      */
-    [[nodiscard]] static constexpr bool isValidDOWIndex(const uint8_t dow_index) noexcept
+    [[nodiscard]] inline static constexpr bool isValidDOWIndex(const uint8_t dow_index) noexcept
     {
         return dow_index < DAYS_IN_WEEK;
     }
@@ -415,6 +430,7 @@ struct GregorianCalendar :
             return 0; // Unsupported or invalid
 
         return static_cast<uint8_t>(monthTotalDays / DAYS_IN_WEEK);
+        // NOTE: This is useless, instead make it number of whole weeks?
     }
 
     /*!
@@ -869,7 +885,7 @@ struct GregorianCalendar :
     {
         WeekDates week{};
 
-        if (week_index > WEEKS_IN_YEAR || !DatePolicy::isValidYear(year))
+        if (!isValidWeekIndex(week_index) || !DatePolicy::isValidYear(year))
             return week; // Invalid week index or unsupported year
 
         const Days serialStart{
@@ -917,6 +933,8 @@ struct GregorianCalendar :
     GregorianCalendar()  = delete;
     ~GregorianCalendar() = delete;
 };
+
+SIMPLYDT_ENFORCE_CALENDAR_CONTRACT(GregorianCalendar);
 
 } // namespace simplydt::gregorian
 

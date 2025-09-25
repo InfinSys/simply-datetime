@@ -36,10 +36,11 @@ concept has_contextual_nested_types = requires {
     typename Calendar_Impl::Month;
     typename Calendar_Impl::DayOfWeek;
     typename Calendar_Impl::DatePolicy;
+    typename Calendar_Impl::NonLocal;
 };
 
 template <typename Calendar_Impl>
-concept has_characteristic_query_members = requires {
+concept has_characteristic_members = requires {
     { Calendar_Impl::calendar } -> std::same_as<const CalendarSystem&>;
     { Calendar_Impl::isSolarCalendar } -> std::same_as<const bool&>;
     { Calendar_Impl::isLunarCalendar } -> std::same_as<const bool&>;
@@ -58,7 +59,7 @@ concept has_calendar_name_arrays = requires {
         Calendar_Impl::MONTH_ABBREVS
     } -> std::same_as<const std::array<
         std::string_view,
-        std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::MONTH_NAMES)>>>&>;
+        std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::MONTH_ABBREVS)>>>&>;
 
     {
         Calendar_Impl::DAY_OF_WEEK_NAMES
@@ -70,11 +71,11 @@ concept has_calendar_name_arrays = requires {
         Calendar_Impl::DAY_OF_WEEK_ABBREVS
     } -> std::same_as<const std::array<
         std::string_view,
-        std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::DAY_OF_WEEK_NAMES)>>>&>;
+        std::tuple_size_v<std::remove_cvref_t<decltype(Calendar_Impl::DAY_OF_WEEK_ABBREVS)>>>&>;
 };
 
 template <typename Calendar_Impl>
-concept has_date_validation_methods = requires {
+concept has_structure_validation_methods = requires {
     {
         Calendar_Impl::isValidYear(std::declval<const typename Calendar_Impl::YearInt_t>())
     } -> std::same_as<bool>;
@@ -82,6 +83,7 @@ concept has_date_validation_methods = requires {
     { Calendar_Impl::isValidMonth(std::declval<const uint8_t>()) } -> std::same_as<bool>;
     { Calendar_Impl::isValidDay(std::declval<const uint8_t>()) } -> std::same_as<bool>;
     { Calendar_Impl::isValidDOWIndex(std::declval<const uint8_t>()) } -> std::same_as<bool>;
+    { Calendar_Impl::isValidWeekIndex(std::declval<const uint8_t>()) } -> std::same_as<bool>;
 
     {
         Calendar_Impl::isValidDate(
@@ -90,46 +92,152 @@ concept has_date_validation_methods = requires {
             std::declval<const uint8_t>()
         )
     } -> std::same_as<bool>;
-
-    {
-        Calendar_Impl::isValidDate(std::declval<const typename Calendar_Impl::Date>())
-    } -> std::same_as<bool>;
 };
 
 template <typename Calendar_Impl>
-concept has_calendar_structure_methods = requires {
-    {
-        Calendar_Impl::getDayOfWeekIndex(
-            std::declval<const typename Calendar_Impl::YearInt_t>(),
-            std::declval<const uint8_t>(),
-            std::declval<const uint8_t>()
-        )
-    } -> std::same_as<uint8_t>;
-
-    {
-        Calendar_Impl::getDaysInMonth(
-            std::declval<typename Calendar_Impl::YearInt_t>(), std::declval<uint8_t>()
-        )
-    } -> std::same_as<uint8_t>;
-
+concept has_structure_query_methods = requires {
     {
         Calendar_Impl::getDaysInYear(std::declval<typename Calendar_Impl::YearInt_t>())
     } -> std::same_as<uint16_t>;
 
     {
-        Calendar_Impl::getWeeksInMonth(
-            std::declval<typename Calendar_Impl::YearInt_t>(), std::declval<uint8_t>()
+        Calendar_Impl::getDaysInMonth(
+            std::declval<typename Calendar_Impl::YearInt_t>(),
+            std::declval<uint8_t>()
         )
     } -> std::same_as<uint8_t>;
+
+    {
+        Calendar_Impl::getWeeksInMonth(
+            std::declval<typename Calendar_Impl::YearInt_t>(),
+            std::declval<uint8_t>()
+        )
+    } -> std::same_as<uint8_t>;
+
+    {
+        Calendar_Impl::getWeeksMonthSpans(
+            std::declval<typename Calendar_Impl::YearInt_t>(),
+            std::declval<uint8_t>()
+        )
+    } -> std::same_as<uint8_t>;
+
+    {
+        Calendar_Impl::getWeekIndex(
+            std::declval<typename Calendar_Impl::YearInt_t>(),
+            std::declval<uint8_t>(),
+            std::declval<uint8_t>()
+        )
+    } -> std::same_as<uint8_t>;
+
+    {
+        Calendar_Impl::getDayOfWeekIndex(
+            std::declval<typename Calendar_Impl::YearInt_t>(),
+            std::declval<uint8_t>(),
+            std::declval<uint8_t>()
+        )
+    } -> std::same_as<uint8_t>;
+
+    {
+        Calendar_Impl::getMonthEnumRepr(std::declval<uint8_t>())
+    } -> std::same_as<typename Calendar_Impl::Month>;
+
+    {
+        Calendar_Impl::getMonthEnumRepr(std::declval<typename Calendar_Impl::Date>())
+    } -> std::same_as<typename Calendar_Impl::Month>;
+
+    {
+        Calendar_Impl::getDayOfWeekEnumRepr(std::declval<typename Calendar_Impl::Date>())
+    } -> std::same_as<typename Calendar_Impl::DayOfWeek>;
 };
 
 template <typename Calendar_Impl>
-concept has_date_conversion_methods = requires {
+concept has_date_query_methods = requires {
+    {
+        Calendar_Impl::getDate(
+            std::declval<typename Calendar_Impl::YearInt_t>(),
+            std::declval<uint8_t>(),
+            std::declval<uint8_t>()
+        )
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
+    {
+        Calendar_Impl::getDate(
+            std::declval<typename Calendar_Impl::YearInt_t>(),
+            std::declval<typename Calendar_Impl::Month>(),
+            std::declval<uint8_t>()
+        )
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
+    {
+        Calendar_Impl::getDate(std::declval<stl::SystemTimePoint>())
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
+    {
+        Calendar_Impl::getDate(
+            std::declval<stl::SystemTimePoint>(),
+            typename Calendar_Impl::NonLocal{}
+        )
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
+    {
+        Calendar_Impl::getNextDate(std::declval<typename Calendar_Impl::Date>())
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
+    {
+        Calendar_Impl::getNextDate(
+            std::declval<typename Calendar_Impl::Date>(),
+            std::declval<typename Calendar_Impl::DayOfWeek>()
+        )
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
+    {
+        Calendar_Impl::getNextDate(
+            std::declval<typename Calendar_Impl::Date>(),
+            std::declval<typename Calendar_Impl::Month>()
+        )
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
+    {
+        Calendar_Impl::getLastDate(std::declval<typename Calendar_Impl::Date>())
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
+    {
+        Calendar_Impl::getLastDate(
+            std::declval<typename Calendar_Impl::Date>(),
+            std::declval<typename Calendar_Impl::DayOfWeek>()
+        )
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
+    {
+        Calendar_Impl::getLastDate(
+            std::declval<typename Calendar_Impl::Date>(),
+            std::declval<typename Calendar_Impl::Month>()
+        )
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
+    // TODO: Add `Calendar_Impl::getWeek()` at some point...
+    // (Requires generic `WeekDates` container alias)
+};
+
+template <typename Calendar_Impl>
+concept has_standard_date_conversion_methods = requires {
+    {
+        Calendar_Impl::toDaysSinceEpoch(
+            std::declval<typename Calendar_Impl::YearInt_t>(),
+            std::declval<uint8_t>(),
+            std::declval<uint8_t>()
+        )
+    } -> std::same_as<Days>;
+
+    {
+        Calendar_Impl::fromDaysSinceEpoch(std::declval<Days>())
+    } -> std::same_as<typename Calendar_Impl::Date>;
+
     {
         Calendar_Impl::toUnixTimestamp(
-            std::declval<const typename Calendar_Impl::YearInt_t>(),
-            std::declval<const uint8_t>(),
-            std::declval<const uint8_t>()
+            std::declval<typename Calendar_Impl::YearInt_t>(),
+            std::declval<uint8_t>(),
+            std::declval<uint8_t>()
         )
     } -> std::same_as<stl::UnixTimestamp>;
 
@@ -138,8 +246,51 @@ concept has_date_conversion_methods = requires {
     } -> std::same_as<typename Calendar_Impl::Date>;
 
     {
-        Calendar_Impl::fromTimePoint(std::declval<stl::SystemTimePoint>())
+        Calendar_Impl::fromUnixTimestamp(std::declval<Seconds>())
     } -> std::same_as<typename Calendar_Impl::Date>;
+};
+
+template <typename Calendar_Impl>
+concept has_name_methods = requires {
+    {
+        Calendar_Impl::getMonthName(std::declval<uint8_t>())
+    } -> std::same_as<const char*>;
+
+    {
+        Calendar_Impl::getMonthName(std::declval<typename Calendar_Impl::Month>())
+    } -> std::same_as<const char*>;
+
+    {
+        Calendar_Impl::getMonthName(std::declval<typename Calendar_Impl::Date>())
+    } -> std::same_as<const char*>;
+
+    {
+        Calendar_Impl::getMonthAbbrev(std::declval<uint8_t>())
+    } -> std::same_as<std::string_view>;
+
+    {
+        Calendar_Impl::getMonthAbbrev(std::declval<typename Calendar_Impl::Month>())
+    } -> std::same_as<std::string_view>;
+
+    {
+        Calendar_Impl::getMonthAbbrev(std::declval<typename Calendar_Impl::Date>())
+    } -> std::same_as<std::string_view>;
+
+    {
+        Calendar_Impl::getDayOfWeekName(std::declval<typename Calendar_Impl::DayOfWeek>())
+    } -> std::same_as<const char*>;
+
+    {
+        Calendar_Impl::getDayOfWeekName(std::declval<typename Calendar_Impl::Date>())
+    } -> std::same_as<const char*>;
+
+    {
+        Calendar_Impl::getDayOfWeekAbbrev(std::declval<typename Calendar_Impl::DayOfWeek>())
+    } -> std::same_as<std::string_view>;
+
+    {
+        Calendar_Impl::getDayOfWeekAbbrev(std::declval<typename Calendar_Impl::Date>())
+    } -> std::same_as<std::string_view>;
 };
 
 } // namespace simplydt::concepts::calendar
