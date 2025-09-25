@@ -160,7 +160,7 @@ int main(int argc, char* argv[])
     // Console calendar test:
     {
         constexpr Date::YearInt_t year = 2025;
-        constexpr uint8_t month        = simplydt::gregorian::October;
+        constexpr uint8_t month        = simplydt::gregorian::September;
 
         std::cout
             << "\n\n\t[ ~ " << Calendar::getMonthName(month)
@@ -173,6 +173,7 @@ int main(int argc, char* argv[])
 
         std::cout << std::endl;
         Calendar::WeekDates week = Calendar::getWeek(Date{year, month, 1});
+        const Date today = Calendar::getDate(SystemClock::now());
 
         while (true) {
             for (const Date date : week) {
@@ -181,7 +182,10 @@ int main(int argc, char* argv[])
                     continue;
                 }
 
-                std::cout << "  " << simplydt::toDoubleDigitStr(date.day()) << " |";
+                if (date == today)
+                    std::cout << ">_" << simplydt::toDoubleDigitStr(date.day()) << "_|";
+                else
+                    std::cout << "__" << simplydt::toDoubleDigitStr(date.day()) << "_|";
             }
 
             std::cout << std::endl;
