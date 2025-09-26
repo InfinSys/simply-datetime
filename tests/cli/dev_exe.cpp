@@ -5,8 +5,6 @@
 *
 * ~ CLI Debug Executable Notes / TO-DO List ~
 *
-* -> [] Remove CRTP from time setup?
-*
 * -> [] :: Datetime Output Styles ::
 * -> [] StandardStyle ----> 2004-09-17:00:00:00.000
 * -> [] UnixStyle --------> 2004-09-17T00:00:00.000
@@ -20,7 +18,6 @@
 \* /// \\\ /// \\\ ///  | END |  \\\ /// \\\ /// \\\ */
 
 // Includes...
-#include "simplydt/calendar/gregorian/gregorian_date.hpp"
 #include "simplydt/calendar/gregorian/gregorian_calendar.hpp"
 #include "simplydt/time/utc/utc_time.hpp"
 
