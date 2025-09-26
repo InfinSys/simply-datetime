@@ -431,7 +431,7 @@ struct GregorianCalendar :
      * or if the provided year is unsupported.
      *
      * @return
-     * Number of weeks in month
+     * Number of full 7-day weeks in month
      */
     [[nodiscard]] static constexpr uint8_t getWeeksInMonth(
         const YearInt_t year, const uint8_t month
