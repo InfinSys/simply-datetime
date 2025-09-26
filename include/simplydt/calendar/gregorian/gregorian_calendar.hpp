@@ -440,10 +440,16 @@ struct GregorianCalendar :
         const uint8_t monthTotalDays = DatePolicy::getDaysInMonth(year, month);
 
         if (monthTotalDays == 0)
-            return 0; // Unsupported or invalid
-
-        return static_cast<uint8_t>(monthTotalDays / DAYS_IN_WEEK);
-        // NOTE: This is useless, instead make it number of whole weeks?
+            return 0; // Unsupported year or invalid month
+        
+        uint8_t disqualifiedDays = (
+            (SATURDAY - getDayOfWeekIndex(year, month, 1)) +
+            (getDayOfWeekIndex(year, month, monthTotalDays)) + 2
+        );
+        const uint8_t fullWeeks = static_cast<uint8_t>(
+            (monthTotalDays - disqualifiedDays) / DAYS_IN_WEEK
+        );
+        return fullWeeks;
     }
 
     /*!
@@ -837,12 +843,8 @@ struct GregorianCalendar :
      */
     [[nodiscard]] static constexpr Date getNextWeekend(const Date from_date) noexcept
     {
-        const uint8_t dowDiff = SATURDAY - getDayOfWeekIndex(from_date);
-
-        if (dowDiff == 0)
-            return from_date + Days{DAYS_IN_WEEK};
-
-        return from_date + Days{dowDiff};
+        const uint8_t dowIndex = getDayOfWeekIndex(from_date);
+        return from_date + Days{((SATURDAY - dowIndex + DAYS_IN_WEEK - 1) % 7) + 1};
     }
 
     /*!
@@ -864,10 +866,6 @@ struct GregorianCalendar :
     [[nodiscard]] static constexpr Date getLastWeekend(const Date from_date) noexcept
     {
         const uint8_t dowDiff = SATURDAY - getDayOfWeekIndex(from_date);
-
-        if (dowDiff == 0)
-            return from_date - Days{DAYS_IN_WEEK};
-
         return from_date - Days{DAYS_IN_WEEK - dowDiff};
     }
 
