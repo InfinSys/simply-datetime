@@ -371,7 +371,7 @@ inline constexpr uint8_t MONTH_KEY[gregorian::MONTHS_IN_YEAR] = {
  * @note
  * https://howardhinnant.github.io/date_algorithms.html
  * for more details.
- * 
+ *
  * @details
  * Algorithms sourced from Howard Hinnant for the
  * Gregorian calendar.
