@@ -18,52 +18,8 @@
 #include "simplydt/calendar/gregorian/gregorian_defs.hpp"
 #include "simplydt/common/stl_chrono_defs.hpp"
 
-/*!
- * @brief
- * Algorithms from Howard Hinnant.
- *
- * @note
- * https://howardhinnant.github.io/date_algorithms.html
- * for more details.
- */
-namespace simplydt::gregorian::hinnant
+namespace simplydt::hinnant
 {
-
-/*!
- * @brief
- * Days from 1970-01-01 to 0000-03-01.
- *
- * @details
- * This value shifts the epoch from 1970-01-01
- * to 0000-03-01 (March 1 of year 0) when
- * converting to civil date components or
- * vice-versa when calculating a serial count
- * of days since the Unix epoch. This is crucial
- * because it aligns the algorithm with all known
- * implementations of `std::chrono::system_clock`,
- * which count seconds from 1970-01-01, neglecting
- * leap seconds. This value is what makes the
- * serial date 0 equivalent to 1970-01-01 instead
- * of 0000-03-01.
- */
-constexpr int32_t EPOCH_SHIFT = 719'468;
-
-/*!
- * @brief
- * Total number of days in one Gregorian era.
- *
- * @details
- * Represents the number of days in a 400-year
- * Gregorian cycle. The patterns of the Gregorian
- * calendar repeat themselves over an era,
- * consequently the number of days in a single era
- * are the same for all others. This value is
- * calculated by multiplying the number of days in
- * a year by the number of years in one era, which
- * is then increased by an additional 97 days to
- * account for leap days within the era.
- */
-constexpr uint32_t DAYS_IN_ERA = YEARS_IN_ERA * DAYS_IN_YEAR + 97;
 
 /*!
  * @brief
@@ -81,11 +37,12 @@ constexpr uint32_t DAYS_IN_ERA = YEARS_IN_ERA * DAYS_IN_YEAR + 97;
  * Days since January 1, 1970
  */
 [[nodiscard]] constexpr int32_t toDaysSinceEpoch(
-    Year_Type year, uint8_t month, uint8_t day
+    gregorian::Year_Type year, uint8_t month, uint8_t day
 ) noexcept
 {
     // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
     // Convert {year, month, day} triple into a serial count of days.
+    using namespace simplydt::gregorian;
     year -= month <= February;
     const int era      = year / YEARS_IN_ERA;
     const unsigned yoe = static_cast<unsigned>(year - era * YEARS_IN_ERA);
@@ -115,6 +72,7 @@ constexpr uint32_t DAYS_IN_ERA = YEARS_IN_ERA * DAYS_IN_YEAR + 97;
  */
 [[nodiscard]] constexpr int eraFromSerialDays(int32_t serial_days) noexcept
 {
+    using namespace simplydt::gregorian;
     serial_days += EPOCH_SHIFT;
     return (serial_days >= 0 ? serial_days : serial_days - 146'096) / DAYS_IN_ERA;
 }
@@ -139,6 +97,7 @@ constexpr uint32_t DAYS_IN_ERA = YEARS_IN_ERA * DAYS_IN_YEAR + 97;
  */
 [[nodiscard]] constexpr unsigned dayOfEraFromSerialDays(int32_t serial_days) noexcept
 {
+    using namespace simplydt::gregorian;
     const int era = eraFromSerialDays(serial_days);
     serial_days += EPOCH_SHIFT;
     return static_cast<unsigned>(serial_days - era * DAYS_IN_ERA);
@@ -163,6 +122,7 @@ constexpr uint32_t DAYS_IN_ERA = YEARS_IN_ERA * DAYS_IN_YEAR + 97;
  */
 [[nodiscard]] constexpr unsigned yearOfEraFromSerialDays(int32_t serial_days) noexcept
 {
+    using namespace simplydt::gregorian;
     const unsigned doe = dayOfEraFromSerialDays(serial_days);
     return (doe - doe / 1'460 + doe / 36'524 - doe / 146'096) / DAYS_IN_YEAR;
 }
@@ -188,6 +148,7 @@ constexpr uint32_t DAYS_IN_ERA = YEARS_IN_ERA * DAYS_IN_YEAR + 97;
  */
 [[nodiscard]] constexpr unsigned dayOfYearFromSerialDays(int32_t serial_days) noexcept
 {
+    using namespace simplydt::gregorian;
     const unsigned yoe = yearOfEraFromSerialDays(serial_days);
     return dayOfEraFromSerialDays(serial_days) - (DAYS_IN_YEAR * yoe + yoe / 4 - yoe / 100);
 }
@@ -233,10 +194,11 @@ constexpr uint32_t DAYS_IN_ERA = YEARS_IN_ERA * DAYS_IN_YEAR + 97;
  * @return
  * Calendar date values tuple
  */
-[[nodiscard]] constexpr DateTuple fromDaysSinceEpoch(int32_t serial_days) noexcept
+[[nodiscard]] constexpr gregorian::DateTuple fromDaysSinceEpoch(int32_t serial_days) noexcept
 {
     // CREDITS: Howard Hinnant [Mr. Chrono] - (Ripple Labs)
     // Convert a serial count of days into a {year, month, day} triple.
+    using namespace simplydt::gregorian;
     serial_days += EPOCH_SHIFT;
     const int era = (serial_days >= 0 ? serial_days : serial_days - 146'096) / DAYS_IN_ERA;
     const unsigned doe = static_cast<unsigned>(serial_days - era * DAYS_IN_ERA);
@@ -249,6 +211,6 @@ constexpr uint32_t DAYS_IN_ERA = YEARS_IN_ERA * DAYS_IN_YEAR + 97;
     return DateTuple{y + (m <= February), m, d};
 }
 
-} // namespace simplydt::gregorian::hinnant
+} // namespace simplydt::hinnant
 
 #endif // SIMPLYDT_LIB_GREGORIAN_HELPER_ALGORITHMS_H_

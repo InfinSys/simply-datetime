@@ -78,13 +78,6 @@ constexpr Year_Type YEAR_MINIMUM = 1'601;
  */
 constexpr Year_Type YEAR_MAXIMUM = 2'038; // TODO: Find real limitation...
 
-/*!
- * @brief
- * Total number of calendar years in one Gregorian
- * era.
- */
-constexpr Year_Type YEARS_IN_ERA = 400;
-
 /*! @brief The month of January (1). */
 constexpr uint8_t January = 1;
 
@@ -175,6 +168,30 @@ constexpr uint16_t DAYS_IN_YEAR = 365;
  * year.
  */
 constexpr uint16_t DAYS_IN_LEAP_YEAR = 366;
+
+/*!
+ * @brief
+ * Total number of calendar years in one Gregorian
+ * era.
+ */
+constexpr Year_Type YEARS_IN_ERA = 400;
+
+/*!
+ * @brief
+ * Total number of days in one Gregorian era.
+ *
+ * @details
+ * Represents the number of days in a 400-year
+ * Gregorian cycle. The patterns of the Gregorian
+ * calendar repeat themselves over an era,
+ * consequently the number of days in a single era
+ * are the same for all others. This value is
+ * calculated by multiplying the number of days in
+ * a year by the number of years in one era, which
+ * is then increased by an additional 97 days to
+ * account for leap days within the era.
+ */
+constexpr uint32_t DAYS_IN_ERA = YEARS_IN_ERA * DAYS_IN_YEAR + 97;
 
 /*!
  * @brief
@@ -346,5 +363,41 @@ inline constexpr uint8_t MONTH_KEY[gregorian::MONTHS_IN_YEAR] = {
 };
 
 } // namespace simplydt::sakamoto
+
+/*!
+ * @brief
+ * Howard Hinnant's Algorithm.
+ *
+ * @note
+ * https://howardhinnant.github.io/date_algorithms.html
+ * for more details.
+ * 
+ * @details
+ * Algorithms sourced from Howard Hinnant for the
+ * Gregorian calendar.
+ */
+namespace simplydt::hinnant
+{
+
+/*!
+ * @brief
+ * Days from 1970-01-01 to 0000-03-01.
+ *
+ * @details
+ * This value shifts the epoch from 1970-01-01
+ * to 0000-03-01 (March 1 of year 0) when
+ * converting to civil date components or
+ * vice-versa when calculating a serial count
+ * of days since the Unix epoch. This is crucial
+ * because it aligns the algorithm with all known
+ * implementations of `std::chrono::system_clock`,
+ * which count seconds from 1970-01-01, neglecting
+ * leap seconds. This value is what makes the
+ * serial date 0 equivalent to 1970-01-01 instead
+ * of 0000-03-01.
+ */
+constexpr int32_t EPOCH_SHIFT = 719'468;
+
+} // namespace simplydt::hinnant
 
 #endif // SIMPLYDT_LIB_GREGORIAN_CALENDAR_DEFINITIONS_H_
