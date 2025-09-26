@@ -132,9 +132,6 @@ struct CalendricalSystem {
      */
     [[nodiscard]] static constexpr const char* getMonthName(const Month month_repr) noexcept
     {
-        if (month_repr < 0 || month_repr > std::numeric_limits<uint8_t>::max())
-            return INVALID_LITERAL;
-
         const uint8_t monthIndex = static_cast<uint8_t>(month_repr);
 
         if (!Calendar_Impl::isValidMonth(monthIndex + 1))
@@ -205,9 +202,6 @@ struct CalendricalSystem {
     [[nodiscard]] static constexpr std::string_view getMonthAbbrev(const Month month_repr
     ) noexcept
     {
-        if (month_repr < 0 || month_repr > std::numeric_limits<uint8_t>::max())
-            return std::string_view{INVALID_LITERAL};
-
         const uint8_t monthIndex = static_cast<uint8_t>(month_repr);
 
         if (!Calendar_Impl::isValidMonth(monthIndex + 1))
@@ -251,7 +245,7 @@ struct CalendricalSystem {
      */
     [[nodiscard]] static constexpr Month getMonthEnumRepr(const uint8_t month) noexcept
     {
-        if (!Calendar_Impl::isValidMonth(month))
+        if (month == 0 || !Calendar_Impl::isValidMonth(month))
             return static_cast<Month>(0); // TODO: Fallback value not acceptable here...
 
         const uint8_t monthIndex = month - 1;
@@ -298,9 +292,6 @@ struct CalendricalSystem {
     [[nodiscard]] static constexpr const char* getDayOfWeekName(const DayOfWeek dow_repr
     ) noexcept
     {
-        if (dow_repr < 0 || dow_repr > std::numeric_limits<uint8_t>::max())
-            return INVALID_LITERAL;
-
         const uint8_t dowIndex = static_cast<uint8_t>(dow_repr);
 
         if (!Calendar_Impl::isValidDOWIndex(dowIndex))
@@ -354,9 +345,6 @@ struct CalendricalSystem {
     [[nodiscard]] static constexpr std::string_view getDayOfWeekAbbrev(const DayOfWeek dow_repr
     ) noexcept
     {
-        if (dow_repr < 0 || dow_repr > std::numeric_limits<uint8_t>::max())
-            return std::string_view{INVALID_LITERAL};
-
         const uint8_t dowIndex = static_cast<uint8_t>(dow_repr);
 
         if (!Calendar_Impl::isValidDOWIndex(dowIndex))
@@ -427,13 +415,10 @@ struct CalendricalSystem {
      * @return
      * Calendar date
      */
-    [[nodiscard]] static constexpr Date getDate(
+    [[nodiscard]] inline static constexpr Date getDate(
         const YearInt_t year, const uint8_t month, const uint8_t day
     ) noexcept
     {
-        if (!Calendar_Impl::isValidDate(year, month, day))
-            return Date{};
-
         return Date{year, month, day};
     }
 
@@ -457,9 +442,6 @@ struct CalendricalSystem {
         const YearInt_t year, const Month month, const uint8_t day
     ) noexcept
     {
-        if (month < 0 || month >= std::numeric_limits<uint8_t>::max())
-            return Date{};
-
         const uint8_t numericMonth = static_cast<uint8_t>(month) + 1;
         return Date{year, numericMonth, day};
     }
@@ -608,8 +590,6 @@ struct CalendricalSystem {
 
         const YearInt_t nextYear = from_date.year() + 1;
         return Date{nextYear, fromNumericMonth, 1};
-        // NOTE: Check validity of above date values first before return?
-        // (wrap around to valid?)
     }
 
     /*!
@@ -697,8 +677,6 @@ struct CalendricalSystem {
         const YearInt_t previousYear = from_date.year() - 1;
         daysInMonth = Calendar_Impl::getDaysInMonth(previousYear, toNumericMonth);
         return Date{previousYear, toNumericMonth, daysInMonth};
-        // NOTE: Check validity of above date values first before return?
-        // (wrap around to valid?)
     }
 
   private:
