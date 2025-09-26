@@ -3,6 +3,9 @@
 #     /cffi/src Directory Script
 #=====================================
 
+# TODO: Major changes needed here in due time...
+# (For now, disregard this entire cffi directory)
+
 set(ORIGINAL_BINARY_NAME "${${PRJ_SCOPE}_MAIN_BINARY_NAME}")
 
 set(STATIC_CFFI_BINARY_NAME "${ORIGINAL_BINARY_NAME}_c")
@@ -17,13 +20,6 @@ target_include_directories(
     INTERFACE
     ${PRJ_INCLUDE_DIRS}
     ${PRJ_CFFI_INCLUDE_DIRS}
-)
-
-target_link_libraries(
-    CFFI_LIBRARY_INTERFACE
-
-    INTERFACE
-    ${ORIGINAL_BINARY_NAME}
 )
 
 target_link_libraries(

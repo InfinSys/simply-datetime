@@ -1,5 +1,5 @@
 
-// Copyright (C) 2023-2025 by Jamon T. Bailey and Infinity Systems, LLC. All rights reserved.
+// Copyright (C) 2026 by Jamon T. Bailey and Infinity Systems, LLC. All rights reserved.
 // Released under the terms of the GNU Affero General Public License version 3.
 
 // [ISJTB-CXX-XL20230401-000001]
@@ -22,7 +22,6 @@
 
 extern "C"
 {
-
 /*!
  * @brief
  * Software version major.
@@ -33,7 +32,7 @@ const uint8_t SIMPLYDT_VERSION_MAJOR = 0;
  * @brief
  * Software version minor.
  */
-const uint8_t SIMPLYDT_VERSION_MINOR = 0;
+const uint8_t SIMPLYDT_VERSION_MINOR = 1;
 
 /*!
  * @brief

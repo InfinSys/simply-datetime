@@ -1,0 +1,65 @@
+
+// Copyright (C) 2026 by Jamon T. Bailey and Infinity Systems, LLC. All rights reserved.
+// Released under the terms of the GNU Affero General Public License version 3.
+
+// [ISJTB-CXX-XL20230401-000001]
+
+/*!
+ * @file calendar_api_contract.hpp
+ *
+ * @brief
+ * Conceptual calendar implementation contract.
+ */
+
+
+#ifndef SIMPLYDT_LIB_CALENDAR_CONTRACT_CONCEPT_H_
+#define SIMPLYDT_LIB_CALENDAR_CONTRACT_CONCEPT_H_
+
+#include "simplydt/calendar/concepts/calendar_concepts.hpp"
+#include "simplydt/calendar/concepts/date_api_contract.hpp"
+
+namespace simplydt::concepts
+{
+
+/*!
+ * @brief
+ * Concept of a type that meets the criteria to be
+ * considered a useable calendar implementation.
+ *
+ * @details
+ * A valid calendar type must provide contextual
+ * nested types for library integration and utilize
+ * a date type that satisfies the date contract.
+ * It must include characteristic members defining
+ * calendar properties, name arrays for month and
+ * day identification, and comprehensive structure
+ * validation and query methods. The implementation
+ * must support date queries, standard date
+ * conversion operations, and calendar naming
+ * utilities, through static members.
+ */
+template <typename Calendar_Impl>
+concept contract_abiding_calendar = requires {
+    requires calendar::has_contextual_nested_types<Calendar_Impl>;
+    requires contract_abiding_date<typename Calendar_Impl::Date>;
+    requires calendar::has_characteristic_members<Calendar_Impl>;
+    requires calendar::has_calendar_name_arrays<Calendar_Impl>;
+    requires calendar::has_structure_validation_methods<Calendar_Impl>;
+    requires calendar::has_structure_query_methods<Calendar_Impl>;
+    requires calendar::has_date_query_methods<Calendar_Impl>;
+    requires calendar::has_standard_date_conversion_methods<Calendar_Impl>;
+    requires calendar::has_name_methods<Calendar_Impl>;
+};
+
+#ifndef SIMPLYDT_ENFORCE_CALENDAR_CONTRACT
+/*! @brief Macro for asserting calendar implementation interface contract. */
+#    define SIMPLYDT_ENFORCE_CALENDAR_CONTRACT(Class)                                         \
+        static_assert(                                                                        \
+            simplydt::concepts::contract_abiding_calendar<Class>,                             \
+            #Class " implementation does not fulfill the public API contract."                \
+        )
+#endif
+
+} // namespace simplydt::concepts
+
+#endif // SIMPLYDT_LIB_CALENDAR_CONTRACT_CONCEPT_H_

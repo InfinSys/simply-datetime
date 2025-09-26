@@ -14,12 +14,3 @@ target_compile_features(
     PUBLIC
     cxx_std_20
 )
-
-set(SIMPLYDT_TARGET_NAME "${${PRJ_SCOPE}_MAIN_BINARY_NAME}")
-
-target_link_libraries(
-    dev_cli_debug
-
-    PUBLIC
-    ${SIMPLYDT_TARGET_NAME}
-)
