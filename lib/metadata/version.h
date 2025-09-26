@@ -32,7 +32,7 @@ const uint8_t SIMPLYDT_VERSION_MAJOR = 0;
  * @brief
  * Software version minor.
  */
-const uint8_t SIMPLYDT_VERSION_MINOR = 0;
+const uint8_t SIMPLYDT_VERSION_MINOR = 1;
 
 /*!
  * @brief

@@ -6,7 +6,7 @@
 
 <div>
     <a href="https://github.com/InfinSys/simply-datetime/releases">
-        <img src="https://img.shields.io/badge/version-0.0.0-blue">
+        <img src="https://img.shields.io/badge/version-0.1.0-blue">
     </a>
 </div></br>
 
