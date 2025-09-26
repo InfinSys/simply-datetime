@@ -48,7 +48,7 @@ struct DateValidationPolicy {
      * @return
      * True if leap year
      */
-    [[nodiscard]] static constexpr bool isLeapYear(const Year_Type year) noexcept
+    [[nodiscard]] inline static constexpr bool isLeapYear(const Year_Type year) noexcept
     {
         return (year % 4) == 0 && (year % 100 != 0 || year % YEARS_IN_ERA == 0);
     }
@@ -65,7 +65,7 @@ struct DateValidationPolicy {
      * @return
      * True if supported year
      */
-    [[nodiscard]] static constexpr bool isValidYear(const Year_Type year) noexcept
+    [[nodiscard]] inline static constexpr bool isValidYear(const Year_Type year) noexcept
     {
         return year >= YEAR_MINIMUM && year <= YEAR_MAXIMUM;
     }
@@ -83,7 +83,7 @@ struct DateValidationPolicy {
      * @return
      * True if valid numerical month
      */
-    [[nodiscard]] static constexpr bool isValidMonth(const uint8_t month) noexcept
+    [[nodiscard]] inline static constexpr bool isValidMonth(const uint8_t month) noexcept
     {
         return month >= MIN_MONTH_OF_YEAR && month <= MAX_MONTH_OF_YEAR;
     }
@@ -152,11 +152,8 @@ struct DateValidationPolicy {
         const Year_Type year, const uint8_t month, const uint8_t day
     ) noexcept
     {
-        if (!isValidYear(year))
-            return false;
-
         const uint8_t monthTotalDays = getDaysInMonth(year, month);
-        return day <= monthTotalDays;
+        return monthTotalDays != 0 && day != 0 && day <= monthTotalDays;
     }
 };
 
