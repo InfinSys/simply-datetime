@@ -115,7 +115,8 @@ struct UTCTime : public SerialTimeStandard<UTCTime, Seconds, Time_t> {
      */
     [[nodiscard]] constexpr uint8_t hour12() const noexcept
     {
-        return Base::hourFromSerialSecs(this->serialUnits) % 12;
+        const uint8_t hour24 = Base::hourFromSerialSecs(this->serialUnits);
+        return (hour24 % 12) + ((hour24 == 12 || hour24 == 0) * 12);
     }
 
     /*!
@@ -127,7 +128,7 @@ struct UTCTime : public SerialTimeStandard<UTCTime, Seconds, Time_t> {
      */
     [[nodiscard]] constexpr const char* hourPhaseStr() const noexcept
     {
-        if (this->hour() >= 12)
+        if (Base::hourFromSerialSecs(this->serialUnits) >= 12)
             return MeridiemPhases[PM];
 
         return MeridiemPhases[AM];
@@ -142,7 +143,7 @@ struct UTCTime : public SerialTimeStandard<UTCTime, Seconds, Time_t> {
      */
     [[nodiscard]] constexpr MeridiemPhase hourPhaseEnumRepr() const noexcept
     {
-        if (this->hour() >= 12)
+        if (Base::hourFromSerialSecs(this->serialUnits) >= 12)
             return MeridiemPhase::PM;
 
         return MeridiemPhase::AM;
