@@ -141,9 +141,11 @@ int main(int argc, char* argv[])
         constexpr Date rtc2                = Calendar::fromUnixTimestamp(ts);
         constexpr Date next                = Calendar::getNextWeekday(jtb);
         constexpr Date last                = Calendar::getLastWeekday(next);
+        constexpr Date mvv                 = Calendar::getNextWeekend(jtb);
         constexpr Date weekend             = Calendar::getLastWeekend(jtb);
         constexpr Calendar::WeekDates week = Calendar::getWeek(2'025, 0);
         constexpr uint8_t wkIndex          = Calendar::getWeekIndex(2'025, 9, 22);
+        constexpr uint8_t wks              = Calendar::getWeeksInMonth(2025, 9);
         constexpr Date today               = Calendar::getDate(2'025, 9, 23);
         const Date rightNow                = Calendar::getDate(SystemClock::now());
         constexpr Date nxt      = Calendar::getNextDate(jtb, simplydt::gregorian::MONDAY);
