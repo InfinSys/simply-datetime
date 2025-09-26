@@ -317,9 +317,6 @@ struct CalendricalSystem {
      */
     [[nodiscard]] static constexpr const char* getDayOfWeekName(const Date date) noexcept
     {
-        if (!Calendar_Impl::isValidDate(date))
-            return INVALID_LITERAL;
-
         const uint8_t dowIndex = Calendar_Impl::getDayOfWeekIndex(date);
         return Calendar_Impl::DAY_OF_WEEK_NAMES[dowIndex];
     }
