@@ -5,15 +5,15 @@
 // [ISJTB-CXX-XL20230401-000001]
 
 /*!
- * @file helper_algorithms.hpp
+ * @file hinnant_algorithms.hpp
  *
  * @brief
  * Gregorian calendar helper algorithms.
  */
 
 
-#ifndef SIMPLYDT_LIB_GREGORIAN_HELPER_ALGORITHMS_H_
-#define SIMPLYDT_LIB_GREGORIAN_HELPER_ALGORITHMS_H_
+#ifndef SIMPLYDT_LIB_HOWARD_HINNANT_GREGORIAN_ALGORITHMS_H_
+#define SIMPLYDT_LIB_HOWARD_HINNANT_GREGORIAN_ALGORITHMS_H_
 
 #include "simplydt/calendar/gregorian/gregorian_defs.hpp"
 #include "simplydt/common/stl_chrono_defs.hpp"
@@ -213,4 +213,4 @@ namespace simplydt::hinnant
 
 } // namespace simplydt::hinnant
 
-#endif // SIMPLYDT_LIB_GREGORIAN_HELPER_ALGORITHMS_H_
+#endif // SIMPLYDT_LIB_HOWARD_HINNANT_GREGORIAN_ALGORITHMS_H_

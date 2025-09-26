@@ -19,7 +19,7 @@
 #include "simplydt/calendar/date/abstract_date.hpp"
 #include "simplydt/calendar/gregorian/date_validation.hpp"
 #include "simplydt/calendar/gregorian/gregorian_defs.hpp"
-#include "simplydt/calendar/gregorian/helper_algorithms.hpp"
+#include "simplydt/calendar/gregorian/hinnant_algorithms.hpp"
 #include "simplydt/common/string_utils.hpp"
 
 namespace simplydt::gregorian
