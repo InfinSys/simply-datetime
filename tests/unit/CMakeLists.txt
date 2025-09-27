@@ -20,5 +20,13 @@ target_link_libraries(
     gtest_main
 )
 
-# Unit-testing Source
-# TODO: Add unit-testing source dirs...
+# Simply Datetime requires C++ 20+
+target_compile_features(
+    googletest_external
+
+    INTERFACE
+    cxx_std_20
+)
+
+# Unit-Tests Sources
+add_subdirectory(gregorian_date)
