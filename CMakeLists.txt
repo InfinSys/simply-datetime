@@ -15,7 +15,7 @@ cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
 
 set(PRJ_NAME "Simply_Datetime")
 set(PRJ_SCOPE "SIMPLYDT")
-set(PRJ_C_STANDARD 23)
+set(PRJ_C_STANDARD 17)
 set(PRJ_CXX_STANDARD 20)
 
 project(
