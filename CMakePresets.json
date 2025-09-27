@@ -13,6 +13,7 @@
                 "CMAKE_CXX_COMPILER": "cl.exe",
                 "CMAKE_ASM_COMPILER": "cl.exe",
                 "SIMPLYDT_CLI_DEBUG": "ON",
+                "SIMPLYDT_UNIT_TEST": "ON",
                 "SIMPLYDT_C_LIB": "ON",
                 "SIMPLYDT_FORMAT": "ON"
             }
@@ -41,6 +42,7 @@
                 "CMAKE_CXX_COMPILER": "g++",
                 "CMAKE_ASM_COMPILER": "gcc",
                 "SIMPLYDT_CLI_DEBUG": "ON",
+                "SIMPLYDT_UNIT_TEST": "ON",
                 "SIMPLYDT_C_LIB": "ON",
                 "SIMPLYDT_FORMAT": "ON"
             }
@@ -69,6 +71,7 @@
                 "CMAKE_CXX_COMPILER": "clang++",
                 "CMAKE_ASM_COMPILER": "clang",
                 "SIMPLYDT_CLI_DEBUG": "ON",
+                "SIMPLYDT_UNIT_TEST": "ON",
                 "SIMPLYDT_C_LIB": "ON",
                 "SIMPLYDT_FORMAT": "ON"
             }
